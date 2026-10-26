@@ -1575,6 +1575,7 @@ export function initIsometricStudio() {
 
       // App State
       let lightingState = 'day'; // 'day' | 'night'
+      let isHDEnhanced = true; // HD Graphic Quality Enhancement (입체 그림자 & 대기 효과)
       let activeBrush = 'b01_cottage_red';
       let currentBrushRotation = 0; // 0, 90, 180, 270
       let activeCategory = 'all';
@@ -2114,7 +2115,10 @@ export function initIsometricStudio() {
         ctx.save();
         ctx.translate(camera.x, camera.y);
         ctx.scale(camera.zoom, camera.zoom);
-        ctx.imageSmoothingEnabled = false;
+        ctx.imageSmoothingEnabled = isHDEnhanced;
+        if (isHDEnhanced) {
+          ctx.imageSmoothingQuality = 'high';
+        }
 
         // Painter algorithm depth-sorted rendering (0 to 30)
         for (let depth = 0; depth <= (ROWS + COLS - 2); depth++) {
@@ -2124,6 +2128,17 @@ export function initIsometricStudio() {
               const tid = currentGrid[i][j];
               const ox = ORIGIN_X + (j - i) * HALF_W;
               const oy = ORIGIN_Y + (i + j) * QUARTER_W;
+
+              // HD Dynamic Isometric Ground Cast Shadow for buildings & elevated structures
+              if (isHDEnhanced && (tid.startsWith('b') || tid.startsWith('d08') || tid.startsWith('d01') || tid.startsWith('d02') || tid.startsWith('s05') || tid.startsWith('s08'))) {
+                ctx.save();
+                ctx.beginPath();
+                ctx.ellipse(ox + 72, oy + 96, 42, 18, -0.32, 0, Math.PI * 2);
+                ctx.fillStyle = (lightingState === 'night') ? 'rgba(4, 7, 18, 0.44)' : 'rgba(28, 20, 16, 0.22)';
+                ctx.fill();
+                ctx.restore();
+              }
+
               let img = imageCache[tid];
               if (!img || !img.complete) {
                 img = getOrCreateRotatedImage(getBaseTileId(tid), getTileRotation(tid));
@@ -2141,6 +2156,22 @@ export function initIsometricStudio() {
               }
               if (img && img.complete) {
                 ctx.drawImage(img, ox, oy);
+              }
+
+              // HD Water ripple & specular shimmer
+              if (isHDEnhanced && isAnimated && (tid.startsWith('d11') || tid.includes('canal') || tid.includes('water') || tid.includes('river') || tid.includes('lake') || tid.startsWith('m01') || tid.startsWith('m07') || tid.startsWith('m14'))) {
+                const t = animTime * 2.2 + (i * 17 + j * 23);
+                const sp1 = Math.max(0, Math.sin(t));
+                const sp2 = Math.max(0, Math.sin(t + 2.1));
+                if (sp1 > 0.3) {
+                  ctx.fillStyle = `rgba(255, 255, 255, ${sp1 * 0.45})`;
+                  ctx.fillRect(ox + 48 + ((i * 7) % 24), oy + 86 + ((j * 5) % 18), 3, 1);
+                  ctx.fillRect(ox + 49 + ((i * 7) % 24), oy + 85 + ((j * 5) % 18), 1, 3);
+                }
+                if (sp2 > 0.3) {
+                  ctx.fillStyle = `rgba(255, 255, 255, ${sp2 * 0.40})`;
+                  ctx.fillRect(ox + 64 + ((j * 9) % 20), oy + 96 + ((i * 3) % 16), 2, 1);
+                }
               }
             }
           }
@@ -2195,6 +2226,72 @@ export function initIsometricStudio() {
             const eSpr = isFlap ? entityImgCache.eagle_down : entityImgCache.eagle_up;
             if (eSpr && eSpr.img && eSpr.img.complete) {
               ctx.drawImage(eSpr.img, ex - eSpr.w / 2, ey - eSpr.h / 2);
+            }
+          }
+        }
+
+        // HD Atmospheric Particles & Solar Wash
+        if (isHDEnhanced) {
+          if (lightingState === 'day') {
+            // Warm sunlit golden overlay
+            ctx.save();
+            ctx.globalCompositeOperation = 'soft-light';
+            ctx.fillStyle = 'rgba(255, 232, 190, 0.18)';
+            ctx.fillRect(-PAD * 2, -PAD * 2, (ROWS + COLS) * HALF_W + 4 * PAD, HALF_W + (ROWS + COLS) * QUARTER_W + 4 * PAD);
+            ctx.restore();
+
+            // Floating Cherry Blossom Petals in the breeze (흩날리는 봄바람 벚꽃잎)
+            if (isAnimated) {
+              ctx.save();
+              for (let k = 0; k < 36; k++) {
+                const pProg = (animTime * 0.10 + k * 0.028) % 1.0;
+                const px = ORIGIN_X - 180 + ((k * 61 + pProg * 1400) % 1500);
+                const py = ORIGIN_Y - 40 + ((k * 41 + pProg * 880 + Math.sin(animTime * 1.8 + k) * 20) % 950);
+                const rot = animTime * 1.4 + k;
+                ctx.save();
+                ctx.translate(px, py);
+                ctx.rotate(rot);
+                ctx.fillStyle = 'rgba(255, 185, 202, 0.78)';
+                ctx.beginPath();
+                ctx.ellipse(0, 0, 3.2, 1.8, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+              }
+              ctx.restore();
+            }
+          } else {
+            // Night Mode Stars in sky backdrop
+            if (isAnimated) {
+              ctx.save();
+              for (let s = 0; s < 50; s++) {
+                const sx = ORIGIN_X - 350 + (s * 53) % 1800;
+                const sy = ORIGIN_Y - 120 + (s * 37) % 1200;
+                const dist = Math.hypot(sx - WORLD_CENTER_X, sy - WORLD_CENTER_Y);
+                if (dist > 380) {
+                  const twinkle = 0.3 + 0.7 * Math.abs(Math.sin(animTime * 1.4 + s * 1.7));
+                  ctx.fillStyle = `rgba(225, 240, 255, ${twinkle * 0.85})`;
+                  ctx.fillRect(sx, sy, 1.5, 1.5);
+                }
+              }
+              ctx.restore();
+
+              // Luminous Floating Fireflies (은은한 밤하늘 반딧불이)
+              ctx.save();
+              for (let f = 0; f < 30; f++) {
+                const fx = ORIGIN_X + 120 + ((f * 53 + Math.sin(animTime * 0.45 + f) * 60) % 920);
+                const fy = ORIGIN_Y + 120 + ((f * 41 + Math.cos(animTime * 0.55 + f * 1.2) * 45) % 640);
+                const pulse = 0.2 + 0.8 * Math.max(0, Math.sin(animTime * 2.2 + f * 1.5));
+                const rad = 2 + pulse * 7;
+                const fGrad = ctx.createRadialGradient(fx, fy, 0.5, fx, fy, rad);
+                fGrad.addColorStop(0, `rgba(225, 255, 140, ${pulse * 0.95})`);
+                fGrad.addColorStop(0.4, `rgba(160, 240, 90, ${pulse * 0.45})`);
+                fGrad.addColorStop(1, 'rgba(120, 220, 60, 0)');
+                ctx.fillStyle = fGrad;
+                ctx.beginPath();
+                ctx.arc(fx, fy, rad, 0, Math.PI * 2);
+                ctx.fill();
+              }
+              ctx.restore();
             }
           }
         }
@@ -2527,6 +2624,23 @@ export function initIsometricStudio() {
         footerRotateBtn.addEventListener('click', rotateBrush);
       }
 
+      const graphicsToggleBtn = document.getElementById('builder-graphics-toggle');
+      if (graphicsToggleBtn) {
+        graphicsToggleBtn.addEventListener('click', function() {
+          isHDEnhanced = !isHDEnhanced;
+          if (isHDEnhanced) {
+            graphicsToggleBtn.classList.add('active');
+            graphicsToggleBtn.innerHTML = '✨ 그래픽 고도화 (HD)';
+            graphicsToggleBtn.title = '클래식 픽셀 모드로 전환 (Switch to Classic Pixel)';
+          } else {
+            graphicsToggleBtn.classList.remove('active');
+            graphicsToggleBtn.innerHTML = '▦ 클래식 픽셀';
+            graphicsToggleBtn.title = '그래픽 고도화 모드로 전환 (Switch to HD Enhanced)';
+          }
+          requestRender();
+        });
+      }
+
       const lightingToggleBtn = document.getElementById('builder-lighting-toggle');
       if (lightingToggleBtn) {
         lightingToggleBtn.addEventListener('click', function() {
@@ -2703,6 +2817,17 @@ export function initIsometricStudio() {
                     const tid = currentGrid[i][j];
                     const ox = ORIGIN_X + (j - i) * HALF_W;
                     const oy = ORIGIN_Y + (i + j) * QUARTER_W;
+
+                    // HD Dynamic Isometric Ground Cast Shadow for snapshot
+                    if (isHDEnhanced && (tid.startsWith('b') || tid.startsWith('d08') || tid.startsWith('d01') || tid.startsWith('d02') || tid.startsWith('s05') || tid.startsWith('s08'))) {
+                      offCtx.save();
+                      offCtx.beginPath();
+                      offCtx.ellipse(ox + 72, oy + 96, 42, 18, -0.32, 0, Math.PI * 2);
+                      offCtx.fillStyle = (lightingState === 'night') ? 'rgba(4, 7, 18, 0.44)' : 'rgba(28, 20, 16, 0.22)';
+                      offCtx.fill();
+                      offCtx.restore();
+                    }
+
                     let img = imageCache[tid];
                     if (!img || !img.complete) {
                       img = getOrCreateRotatedImage(getBaseTileId(tid), getTileRotation(tid));
@@ -2720,6 +2845,22 @@ export function initIsometricStudio() {
                     }
                     if (img && img.complete) {
                       offCtx.drawImage(img, ox, oy);
+                    }
+
+                    // HD Water sparkles in snapshot
+                    if (isHDEnhanced && isAnimated && (tid.startsWith('d11') || tid.includes('canal') || tid.includes('water') || tid.includes('river') || tid.includes('lake') || tid.startsWith('m01') || tid.startsWith('m07') || tid.startsWith('m14'))) {
+                      const t = animTime * 2.2 + (i * 17 + j * 23);
+                      const sp1 = Math.max(0, Math.sin(t));
+                      const sp2 = Math.max(0, Math.sin(t + 2.1));
+                      if (sp1 > 0.3) {
+                        offCtx.fillStyle = `rgba(255, 255, 255, ${sp1 * 0.45})`;
+                        offCtx.fillRect(ox + 48 + ((i * 7) % 24), oy + 86 + ((j * 5) % 18), 3, 1);
+                        offCtx.fillRect(ox + 49 + ((i * 7) % 24), oy + 85 + ((j * 5) % 18), 1, 3);
+                      }
+                      if (sp2 > 0.3) {
+                        offCtx.fillStyle = `rgba(255, 255, 255, ${sp2 * 0.40})`;
+                        offCtx.fillRect(ox + 64 + ((j * 9) % 20), oy + 96 + ((i * 3) % 16), 2, 1);
+                      }
                     }
                   }
                 }
@@ -2808,6 +2949,33 @@ export function initIsometricStudio() {
                   }
                 }
                 offCtx.restore();
+              }
+
+              if (isHDEnhanced && lightingState === 'day') {
+                offCtx.save();
+                offCtx.globalCompositeOperation = 'soft-light';
+                offCtx.fillStyle = 'rgba(255, 232, 190, 0.18)';
+                offCtx.fillRect(0, 0, worldW, worldH);
+                offCtx.restore();
+
+                if (isAnimated) {
+                  offCtx.save();
+                  for (let k = 0; k < 36; k++) {
+                    const pProg = (animTime * 0.10 + k * 0.028) % 1.0;
+                    const px = ORIGIN_X - 180 + ((k * 61 + pProg * 1400) % 1500);
+                    const py = ORIGIN_Y - 40 + ((k * 41 + pProg * 880 + Math.sin(animTime * 1.8 + k) * 20) % 950);
+                    const rot = animTime * 1.4 + k;
+                    offCtx.save();
+                    offCtx.translate(px, py);
+                    offCtx.rotate(rot);
+                    offCtx.fillStyle = 'rgba(255, 185, 202, 0.78)';
+                    offCtx.beginPath();
+                    offCtx.ellipse(0, 0, 3.2, 1.8, 0, 0, Math.PI * 2);
+                    offCtx.fill();
+                    offCtx.restore();
+                  }
+                  offCtx.restore();
+                }
               }
 
               const filename = (lightingState === 'night') ? 'joseon-village-night-16x16.png' : 'joseon-village-16x16.png';

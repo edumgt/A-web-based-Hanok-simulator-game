@@ -13,6 +13,7 @@ const STUDIO_MARKUP = `  <!-- Top utility bar -->
 
     <div class="top-bar-right">
       <button type="button" class="builder-text-btn" id="builder-rotate-btn" title="건축 중인 가옥 90도 회전 (단축키: R)"><span class="rotate-icon">↻</span> 90° 회전 (<span id="top-rotate-label">0°</span>)</button>
+      <button type="button" class="builder-text-btn active" id="builder-graphics-toggle" title="그래픽 고도화 모드 (입체 그림자 & 대기 효과 토글)">✨ 그래픽 고도화 (HD)</button>
       <button type="button" class="builder-text-btn" id="builder-lighting-toggle" title="낮/밤 조명 모드 전환">☀️ 낮 (Day)</button>
       <button type="button" class="builder-text-btn active" id="builder-animate-toggle" title="애니메이션 토글">애니메이션</button>
       <button type="button" class="builder-text-btn" id="builder-undo-btn">실행취소</button>
