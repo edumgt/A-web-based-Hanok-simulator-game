@@ -83,6 +83,47 @@
       flex: 1;
     }
 
+    /* Era Switcher: Joseon, Modern Seoul, Future Seoul */
+    .era-selector-wrap {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      background: #eeebe5;
+      border: 1px solid var(--hairline-strong);
+      padding: 2px;
+      border-radius: 6px;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .era-tab-btn {
+      background: transparent;
+      border: none;
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--ink-secondary);
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.16s ease;
+      white-space: nowrap;
+    }
+
+    .era-tab-btn:hover {
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .era-tab-btn.active {
+      background: #ffffff;
+      color: var(--ink);
+      font-weight: 600;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+    }
+
     .top-bar-status {
       font-family: var(--mono);
       font-size: 0.78rem;
