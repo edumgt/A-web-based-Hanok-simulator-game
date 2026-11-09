@@ -5,6 +5,7 @@ import {
   MODERN_SEOUL_LABELS,
   FUTURE_SEOUL_LABELS
 } from './modernSeoulTiles.js';
+import { trafficEngine } from './trafficEngine.js';
 
 let studioInitialized = false;
 
@@ -2123,6 +2124,7 @@ export function initIsometricStudio() {
       function applyEra(eraKey, shouldRender = true) {
         if (!ERA_CONFIG[eraKey]) return;
         currentEra = eraKey;
+        trafficEngine.setEra(eraKey);
 
         // 1. Update Top Bar era buttons
         const tabBtns = document.querySelectorAll('.era-tab-btn');
@@ -2308,6 +2310,7 @@ export function initIsometricStudio() {
           if (newF !== animFrame) {
             animFrame = newF;
           }
+          trafficEngine.update(dt);
           renderCanvas();
           animLoopId = requestAnimationFrame(tick);
         }
@@ -2452,6 +2455,9 @@ export function initIsometricStudio() {
             }
           }
         }
+
+        // Living Traffic & Citizens Simulation Pass
+        trafficEngine.render(ctx, camera);
 
         // HD Atmospheric Particles & Solar Wash
         if (isHDEnhanced) {
@@ -2916,6 +2922,23 @@ export function initIsometricStudio() {
         });
       }
 
+      const trafficToggleBtn = document.getElementById('builder-traffic-toggle');
+      if (trafficToggleBtn) {
+        trafficToggleBtn.addEventListener('click', function() {
+          const enabled = trafficEngine.toggle();
+          if (enabled) {
+            trafficToggleBtn.classList.add('active');
+            trafficToggleBtn.innerHTML = '🚗 트래픽 ON';
+            trafficToggleBtn.title = '살아 움직이는 차량 & 보행자 시뮬레이션 토글 (현재 ON)';
+          } else {
+            trafficToggleBtn.classList.remove('active');
+            trafficToggleBtn.innerHTML = '🚗 트래픽 OFF';
+            trafficToggleBtn.title = '살아 움직이는 차량 & 보행자 시뮬레이션 토글 (현재 OFF)';
+          }
+          requestRender();
+        });
+      }
+
       if (undoBtn) {
         undoBtn.addEventListener('click', undo);
       }
@@ -3159,6 +3182,9 @@ export function initIsometricStudio() {
                 }
               }
 
+              // Living Traffic Simulation in Snapshot
+              trafficEngine.render(offCtx, { x: 0, y: 0, zoom: 1 });
+
               if (lightingState === 'night') {
                 offCtx.save();
                 offCtx.globalCompositeOperation = 'multiply';
@@ -3291,6 +3317,12 @@ export function initIsometricStudio() {
       }
 
       // Initialize
+      trafficEngine.init(
+        () => currentGrid,
+        () => currentEra,
+        () => lightingState,
+        () => isHDEnhanced
+      );
       applyEra('joseon', false);
       setActiveBrush(activeBrush);
       renderPaletteTray();

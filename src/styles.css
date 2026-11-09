@@ -211,6 +211,30 @@
       box-shadow: 0 0 8px rgba(201, 147, 59, 0.35);
     }
 
+    #builder-traffic-toggle {
+      border: 1px solid rgba(49, 130, 206, 0.35);
+      background: rgba(49, 130, 206, 0.08);
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: #2b6cb0;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    #builder-traffic-toggle:hover {
+      background: rgba(49, 130, 206, 0.16);
+      border-color: #3182ce;
+      color: #1a365d;
+    }
+
+    #builder-traffic-toggle.active {
+      background: #ebf8ff;
+      border-color: #3182ce;
+      color: #2b6cb0;
+      font-weight: 600;
+      box-shadow: 0 0 8px rgba(49, 130, 206, 0.3);
+    }
+
     .zoom-group {
       display: flex;
       align-items: center;
