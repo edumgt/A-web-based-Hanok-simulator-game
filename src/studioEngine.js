@@ -6,6 +6,7 @@ import {
   FUTURE_SEOUL_LABELS
 } from './modernSeoulTiles.js';
 import { trafficEngine } from './trafficEngine.js';
+import { scenicEnvironment } from './scenicEnvironment.js';
 
 let studioInitialized = false;
 
@@ -2333,9 +2334,8 @@ export function initIsometricStudio() {
         ctx.save();
         ctx.scale(dpr, dpr);
 
-        // Stage Background
-        ctx.fillStyle = (lightingState === 'night') ? '#080a12' : '#121620';
-        ctx.fillRect(0, 0, rect.width, rect.height);
+        // Stage Sky Backdrop
+        scenicEnvironment.renderScreenSky(ctx, rect.width, rect.height, lightingState, animTime, isHDEnhanced);
 
         // Camera Transform
         ctx.save();
@@ -2345,6 +2345,9 @@ export function initIsometricStudio() {
         if (isHDEnhanced) {
           ctx.imageSmoothingQuality = 'high';
         }
+
+        // Scenic World-Space Landscape (Mountains, River & Sea, Shorelines, Foundation)
+        scenicEnvironment.renderWorldBackdrop(ctx, animTime, lightingState, isHDEnhanced, currentEra);
 
         // Painter algorithm depth-sorted rendering (0 to 30)
         for (let depth = 0; depth <= (ROWS + COLS - 2); depth++) {
@@ -2458,6 +2461,9 @@ export function initIsometricStudio() {
 
         // Living Traffic & Citizens Simulation Pass
         trafficEngine.render(ctx, camera);
+
+        // Scenic Forefront details (coastal water ripples and sparkles)
+        scenicEnvironment.renderForefront(ctx, animTime, lightingState, isHDEnhanced);
 
         // HD Atmospheric Particles & Solar Wash
         if (isHDEnhanced) {
@@ -3075,6 +3081,10 @@ export function initIsometricStudio() {
               offCtx.fillStyle = (lightingState === 'night') ? '#080a12' : '#121620';
               offCtx.fillRect(0, 0, worldW, worldH);
 
+              // Scenic Sky & Landscape Backdrop for Snapshot Export
+              scenicEnvironment.renderScreenSky(offCtx, worldW, worldH, lightingState, animTime, isHDEnhanced);
+              scenicEnvironment.renderWorldBackdrop(offCtx, animTime, lightingState, isHDEnhanced, currentEra);
+
               for (let depth = 0; depth <= (ROWS + COLS - 2); depth++) {
                 for (let i = 0; i < ROWS; i++) {
                   const j = depth - i;
@@ -3184,6 +3194,9 @@ export function initIsometricStudio() {
 
               // Living Traffic Simulation in Snapshot
               trafficEngine.render(offCtx, { x: 0, y: 0, zoom: 1 });
+
+              // Scenic Forefront details for Snapshot
+              scenicEnvironment.renderForefront(offCtx, animTime, lightingState, isHDEnhanced);
 
               if (lightingState === 'night') {
                 offCtx.save();
