@@ -1,10 +1,18 @@
 import React, { useEffect } from 'react';
 import { initIsometricStudio } from './studioEngine.js';
+import { koreaMapEngine } from './koreaMapEngine.js';
+import { KOREA_MAP_MARKUP } from './koreaMapMarkup.js';
 import './styles.css';
 
-const STUDIO_MARKUP = `  <!-- Top utility bar -->
+const STUDIO_MARKUP = `
+<div id="studio-screen" class="studio-screen">
+  <!-- Top utility bar -->
   <header class="top-bar">
     <div class="top-bar-left">
+      <button type="button" class="builder-back-map-btn" id="builder-back-map-btn" title="한국 전체 지도로 돌아가기">
+        <span class="map-icon">🗺️</span> 전국 지도
+      </button>
+      <div class="top-bar-divider"></div>
       <span class="top-bar-title" id="app-title-display">서울 타임 빌더</span>
       <span class="top-bar-subtitle" id="app-subtitle-display">16&times;16 studio &bull; 조선 &bull; 현대 &bull; 미래</span>
     </div>
@@ -131,17 +139,19 @@ const STUDIO_MARKUP = `  <!-- Top utility bar -->
       </div>
     </div>
   </div>
+</div>
 `;
 
 export default function App() {
   useEffect(() => {
     initIsometricStudio();
+    koreaMapEngine.init();
   }, []);
 
   return (
     <div
-      style={{ width: '100%', height: '100%' }}
-      dangerouslySetInnerHTML={{ __html: STUDIO_MARKUP }}
+      style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}
+      dangerouslySetInnerHTML={{ __html: KOREA_MAP_MARKUP + STUDIO_MARKUP }}
     />
   );
 }

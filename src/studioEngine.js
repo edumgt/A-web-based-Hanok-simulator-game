@@ -2941,7 +2941,16 @@ export function initIsometricStudio() {
             trafficToggleBtn.innerHTML = '🚗 트래픽 OFF';
             trafficToggleBtn.title = '살아 움직이는 차량 & 보행자 시뮬레이션 토글 (현재 OFF)';
           }
-          requestRender();
+        requestRender();
+        });
+      }
+
+      const backMapBtn = document.getElementById('builder-back-map-btn');
+      if (backMapBtn) {
+        backMapBtn.addEventListener('click', function() {
+          if (typeof window.showKoreaIntroMap === 'function') {
+            window.showKoreaIntroMap();
+          }
         });
       }
 
@@ -3344,6 +3353,44 @@ export function initIsometricStudio() {
       if (isAnimated) {
         startAnimationLoop();
       }
+
+      window.__studioController = {
+        enterStudio: function(eraKey, presetName) {
+          if (eraKey) {
+            applyEra(eraKey, false);
+          }
+          if (presetName && PRESETS[presetName]) {
+            currentGrid = JSON.parse(JSON.stringify(PRESETS[presetName]));
+          }
+          resizeCanvas();
+          centerCamera();
+          requestRender();
+          if (isAnimated && !animLoopId) {
+            startAnimationLoop();
+          }
+        },
+        applyEra: function(eraKey) {
+          applyEra(eraKey);
+        },
+        loadPreset: function(pName) {
+          if (PRESETS[pName]) {
+            pushUndo();
+            if (pName === 'gangnam' || pName === 'apartments') {
+              if (currentEra !== 'modern') applyEra('modern', false);
+            } else if (pName === 'future_city') {
+              if (currentEra !== 'future') applyEra('future', false);
+            } else if (pName === 'village' || pName === 'market' || pName === 'riverside') {
+              if (currentEra !== 'joseon') applyEra('joseon', false);
+            }
+            currentGrid = JSON.parse(JSON.stringify(PRESETS[pName]));
+            centerCamera();
+            requestRender();
+          }
+        },
+        centerCamera: centerCamera,
+        resizeCanvas: resizeCanvas,
+        requestRender: requestRender
+      };
     })();
 
 }
