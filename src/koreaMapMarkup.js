@@ -16,10 +16,10 @@ export const KOREA_MAP_MARKUP = `
       <div class="map-emblem">🇰🇷</div>
       <div class="map-brand-titles">
         <div class="map-brand-row">
-          <h1 class="map-main-title">대한민국 현대 전도 &bull; 팔도 타임 빌더</h1>
+          <h1 class="map-main-title" data-i18n="mainTitle">대한민국 현대 전도 &bull; 팔도 타임 빌더</h1>
           <span class="gis-status-badge">LIVE GIS ATLAS v3.2</span>
         </div>
-        <p class="map-sub-title">17개 광역지자체 &bull; KTX 고속철도망 &bull; 조선 600년 한양부터 2099 네오 서울 메가시티까지</p>
+        <p class="map-sub-title" data-i18n="subTitle">17개 광역지자체 &bull; KTX 고속철도망 &bull; 조선 600년 한양부터 2099 네오 서울 메가시티까지</p>
       </div>
     </div>
 
@@ -35,8 +35,15 @@ export const KOREA_MAP_MARKUP = `
       <button type="button" class="map-filter-pill" data-filter="north">이북권 (평양)</button>
     </div>
 
-    <!-- Quick CTA & Layer Controls -->
+    <!-- Quick CTA, Language & Layer Controls -->
     <div class="map-top-actions">
+      <div class="map-lang-selector" id="map-lang-selector" role="group" aria-label="Language Selector">
+        <button type="button" class="lang-pill active" data-lang="ko" title="한국어">🇰🇷 한국어</button>
+        <button type="button" class="lang-pill" data-lang="en" title="English">🇺🇸 EN</button>
+        <button type="button" class="lang-pill" data-lang="zh" title="中文">🇨🇳 中文</button>
+        <button type="button" class="lang-pill" data-lang="ja" title="日本語">🇯🇵 日本語</button>
+        <button type="button" class="lang-pill" data-lang="es" title="Español">🇪🇸 ES</button>
+      </div>
       <div class="map-layer-toggles">
         <button type="button" class="layer-toggle-btn active" id="toggle-layer-ktx" title="KTX/SRT 고속철도망 표시 토글">
           🚆 KTX 망
@@ -46,7 +53,7 @@ export const KOREA_MAP_MARKUP = `
         </button>
       </div>
       <button type="button" class="map-direct-enter-btn" id="map-direct-enter-btn" title="활성화된 서울 건축 스튜디오로 바로 입장">
-        <span class="btn-sparkle">✨</span> 서울 스튜디오 입장 &rarr;
+        <span class="btn-sparkle">✨</span> <span id="map-direct-enter-label">서울 스튜디오 입장 &rarr;</span>
       </button>
     </div>
   </header>
@@ -130,7 +137,7 @@ export const KOREA_MAP_MARKUP = `
           <!-- Graticule Coordinate Labels -->
           <g class="graticule-labels" font-family="'JetBrains Mono', monospace" font-size="9" fill="#475569" opacity="0.6">
             <text x="30" y="200">40°00'N</text>
-            <text x="30" y="400">38°00'N (38선)</text>
+            <text x="30" y="400" id="svg-i18n-parallel38">38°00'N (38선)</text>
             <text x="30" y="600">36°00'N</text>
             <text x="30" y="800">34°00'N</text>
             <text x="200" y="985">126°00'E</text>
@@ -143,18 +150,18 @@ export const KOREA_MAP_MARKUP = `
           <g class="sea-labels-modern" font-family="'Newsreader', Georgia, serif">
             <!-- West Sea (Yellow Sea) -->
             <g transform="translate(130, 480)" text-anchor="middle" opacity="0.38">
-              <text font-size="28" font-weight="600" fill="#94a3b8" letter-spacing="6">西 海</text>
-              <text y="24" font-size="11" font-family="'Plus Jakarta Sans', sans-serif" fill="#64748b">황해 &bull; 서해 영해 (Yellow Sea)</text>
+              <text id="svg-i18n-westSeaTitle" font-size="28" font-weight="600" fill="#94a3b8" letter-spacing="6">西 海</text>
+              <text id="svg-i18n-westSeaSub" y="24" font-size="11" font-family="'Plus Jakarta Sans', sans-serif" fill="#64748b">황해 &bull; 서해 영해 (Yellow Sea)</text>
             </g>
             <!-- East Sea -->
             <g transform="translate(710, 360)" text-anchor="middle" opacity="0.38">
-              <text font-size="28" font-weight="600" fill="#94a3b8" letter-spacing="6">東 海</text>
-              <text y="24" font-size="11" font-family="'Plus Jakarta Sans', sans-serif" fill="#64748b">대한민국 동해 (East Sea)</text>
+              <text id="svg-i18n-eastSeaTitle" font-size="28" font-weight="600" fill="#94a3b8" letter-spacing="6">東 海</text>
+              <text id="svg-i18n-eastSeaSub" y="24" font-size="11" font-family="'Plus Jakarta Sans', sans-serif" fill="#64748b">대한민국 동해 (East Sea)</text>
             </g>
             <!-- South Sea & Korea Strait -->
             <g transform="translate(480, 890)" text-anchor="middle" opacity="0.38">
-              <text font-size="28" font-weight="600" fill="#94a3b8" letter-spacing="6">南 海</text>
-              <text y="24" font-size="11" font-family="'Plus Jakarta Sans', sans-serif" fill="#64748b">대한해협 &bull; 남해 (South Sea)</text>
+              <text id="svg-i18n-southSeaTitle" font-size="28" font-weight="600" fill="#94a3b8" letter-spacing="6">南 海</text>
+              <text id="svg-i18n-southSeaSub" y="24" font-size="11" font-family="'Plus Jakarta Sans', sans-serif" fill="#64748b">대한해협 &bull; 남해 (South Sea)</text>
             </g>
           </g>
 
@@ -275,8 +282,8 @@ export const KOREA_MAP_MARKUP = `
           <!-- Modern Military Demarcation Line (DMZ / 휴전선) -->
           <g class="dmz-layer" stroke="#f43f5e" stroke-width="1.8" stroke-dasharray="5 3">
             <path d="M 270,360 L 315,355 L 375,342 L 435,325 L 485,305"/>
-            <rect x="360" y="328" width="80" height="15" rx="3" fill="#0f172a" stroke="#f43f5e" stroke-width="0.8"/>
-            <text x="400" y="339" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="bold" fill="#f43f5e" text-anchor="middle">DMZ 휴전선 (MDL)</text>
+            <rect id="svg-i18n-dmzBox" x="352" y="328" width="96" height="15" rx="3" fill="#0f172a" stroke="#f43f5e" stroke-width="0.8"/>
+            <text id="svg-i18n-dmzLabel" x="400" y="339" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="bold" fill="#f43f5e" text-anchor="middle">DMZ 휴전선 (MDL)</text>
           </g>
 
           <!-- Modern Major River Systems (Han, Nakdong, Geum, Yeongsan) -->
@@ -298,23 +305,23 @@ export const KOREA_MAP_MARKUP = `
               <ellipse cx="285" cy="920" rx="55" ry="28" fill="url(#modernLandGrad)" stroke="#38bdf8" stroke-width="1.8"/>
               <!-- Hallasan peak -->
               <path d="M 280,922 L 285,912 L 290,922 Z" fill="#e2b474"/>
-              <text x="285" y="938" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" fill="#e2b474" text-anchor="middle">한라산 1,947m</text>
+              <text id="svg-i18n-hallasan" x="285" y="938" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" fill="#e2b474" text-anchor="middle">한라산 1,947m</text>
               <!-- CJU Jeju Airport Marker -->
-              <text x="285" y="902" font-size="8" fill="#38bdf8" text-anchor="middle">✈️ CJU 제주국제공항</text>
+              <text id="svg-i18n-cjuAirport" x="285" y="902" font-size="8" fill="#38bdf8" text-anchor="middle">✈️ CJU 제주국제공항</text>
             </g>
 
             <!-- Ulleungdo & Dokdo Sovereign Territory -->
             <g id="islands-dokdo-ulleung">
               <!-- Ulleungdo -->
               <ellipse cx="690" cy="450" rx="16" ry="13" fill="url(#modernLandGrad)" stroke="#38bdf8" stroke-width="1.5"/>
-              <text x="690" y="475" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="bold" fill="#e2e8f0" text-anchor="middle">울릉도</text>
+              <text id="svg-i18n-ulleungdo" x="690" y="475" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="bold" fill="#e2e8f0" text-anchor="middle">울릉도</text>
 
               <!-- Dokdo Sovereignty Box & Coordinates -->
               <ellipse cx="765" cy="470" rx="8" ry="7" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5"/>
               <ellipse cx="778" cy="475" rx="7" ry="6" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5"/>
               <g transform="translate(772, 498)">
                 <rect x="-55" y="-12" width="110" height="24" rx="4" fill="#0f172a" stroke="#e2b474" stroke-width="1"/>
-                <text x="0" y="0" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="bold" fill="#e2b474" text-anchor="middle">독도 🇰🇷 DOKDO</text>
+                <text id="svg-i18n-dokdoTitle" x="0" y="0" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="bold" fill="#e2b474" text-anchor="middle">독도 🇰🇷 DOKDO</text>
                 <text x="0" y="9" font-family="'JetBrains Mono', monospace" font-size="6.5" fill="#94a3b8" text-anchor="middle">37°14'26"N 131°52'10"E</text>
               </g>
             </g>
@@ -325,7 +332,7 @@ export const KOREA_MAP_MARKUP = `
               <!-- Cross Dual Runways -->
               <line x1="-8" y1="-5" x2="8" y2="5" stroke="#38bdf8" stroke-width="1.5"/>
               <line x1="-5" y1="-8" x2="5" y2="8" stroke="#38bdf8" stroke-width="1.5"/>
-              <text x="0" y="16" font-family="'JetBrains Mono', monospace" font-size="7.5" font-weight="bold" fill="#10b981" text-anchor="middle">ICN 인천공항</text>
+              <text id="svg-i18n-icnAirport" x="0" y="16" font-family="'JetBrains Mono', monospace" font-size="7.5" font-weight="bold" fill="#10b981" text-anchor="middle">ICN 인천공항</text>
             </g>
 
             <!-- Geoje Island (거제도) -->
@@ -385,10 +392,10 @@ export const KOREA_MAP_MARKUP = `
 
             <!-- High-Tech Seoul Capital Banner -->
             <g class="city-label-banner active" transform="translate(16, -14)">
-              <rect x="0" y="-13" width="186" height="28" rx="6" fill="#0f172a" stroke="#e2b474" stroke-width="1.8"/>
-              <text x="10" y="5" font-family="'Plus Jakarta Sans', sans-serif" font-size="11.5" font-weight="bold" fill="#e2b474">🌟 서울특별시</text>
-              <rect x="106" y="-8" width="72" height="18" rx="4" fill="#e2b474"/>
-              <text x="142" y="5" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="bold" fill="#0f172a" text-anchor="middle">3대 시대 플레이</text>
+              <rect id="pin-rect-seoul" x="0" y="-13" width="194" height="28" rx="6" fill="#0f172a" stroke="#e2b474" stroke-width="1.8"/>
+              <text id="pin-label-seoul" x="10" y="5" font-family="'Plus Jakarta Sans', sans-serif" font-size="11.5" font-weight="bold" fill="#e2b474">🌟 서울특별시</text>
+              <rect id="pin-tag-rect-seoul" x="110" y="-8" width="76" height="18" rx="4" fill="#e2b474"/>
+              <text id="pin-tag-seoul" x="148" y="5" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="bold" fill="#0f172a" text-anchor="middle">3대 시대 플레이</text>
             </g>
           </g>
 
@@ -516,11 +523,11 @@ export const KOREA_MAP_MARKUP = `
 
         <!-- Modern Map Footer Legend -->
         <div class="map-modern-legend">
-          <div class="legend-item"><span class="legend-marker gold-star">★</span> 수도/활성화</div>
-          <div class="legend-item"><span class="legend-line ktx-blue"></span> KTX 고속철도</div>
-          <div class="legend-item"><span class="legend-line hwy-amber"></span> 고속도로</div>
-          <div class="legend-item"><span class="legend-dot metro"></span> 광역시/거점</div>
-          <div class="legend-item"><span class="legend-line dmz-red"></span> DMZ 휴전선</div>
+          <div class="legend-item"><span class="legend-marker gold-star">★</span> <span data-i18n-legend="capital">수도/활성화</span></div>
+          <div class="legend-item"><span class="legend-line ktx-blue"></span> <span data-i18n-legend="ktx">KTX 고속철도</span></div>
+          <div class="legend-item"><span class="legend-line hwy-amber"></span> <span data-i18n-legend="highway">고속도로</span></div>
+          <div class="legend-item"><span class="legend-dot metro"></span> <span data-i18n-legend="metro">광역시/거점</span></div>
+          <div class="legend-item"><span class="legend-line dmz-red"></span> <span data-i18n-legend="dmz">DMZ 휴전선</span></div>
         </div>
       </div>
     </div>

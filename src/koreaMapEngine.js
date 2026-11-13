@@ -1,4 +1,5 @@
 import { MODERN_CITIES_REGISTRY } from './koreaModernMapData.js';
+import { MAP_UI_TRANSLATIONS, CITY_LOCALIZATIONS } from './koreaMapI18n.js';
 
 export const CITIES_DATA = MODERN_CITIES_REGISTRY;
 
@@ -8,6 +9,7 @@ class KoreaMapEngine {
     this.selectedEra = 'joseon';
     this.selectedPreset = 'village';
     this.activeFilter = 'all';
+    this.currentLang = 'ko';
     this.showKtx = true;
     this.showExpressways = true;
     this.initialized = false;
@@ -17,12 +19,45 @@ class KoreaMapEngine {
     if (this.initialized) return;
     this.initialized = true;
 
+    try {
+      const savedLang = localStorage.getItem('koreaMapLang');
+      if (savedLang && MAP_UI_TRANSLATIONS[savedLang]) {
+        this.currentLang = savedLang;
+      }
+    } catch {
+      // Ignore storage access restrictions
+    }
+
     this.bindEvents();
-    this.renderCityDossier('seoul');
+    this.applyLanguage(this.currentLang);
     this.highlightCityPin('seoul');
   }
 
+  getLocalizedCity(cityId) {
+    const base = CITIES_DATA[cityId] || CITIES_DATA['seoul'];
+    if (this.currentLang === 'ko') {
+      const koPin = CITY_LOCALIZATIONS[base.id]?.ko;
+      return koPin ? { ...base, ...koPin } : base;
+    }
+    const loc = CITY_LOCALIZATIONS[base.id]?.[this.currentLang] || {};
+    return {
+      ...base,
+      ...loc
+    };
+  }
+
   bindEvents() {
+    // Language selector buttons
+    const langBtns = document.querySelectorAll('#map-lang-selector .lang-pill');
+    langBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang');
+        if (lang && MAP_UI_TRANSLATIONS[lang]) {
+          this.setLanguage(lang);
+        }
+      });
+    });
+
     // City pin clicks on SVG map
     const pins = document.querySelectorAll('.map-city-pin');
     pins.forEach(pin => {
@@ -114,6 +149,134 @@ class KoreaMapEngine {
     }
   }
 
+  setLanguage(lang) {
+    if (!MAP_UI_TRANSLATIONS[lang]) return;
+    this.currentLang = lang;
+    try {
+      localStorage.setItem('koreaMapLang', lang);
+    } catch {
+      // Ignore storage restrictions
+    }
+    this.applyLanguage(lang);
+  }
+
+  applyLanguage(lang) {
+    const t = MAP_UI_TRANSLATIONS[lang] || MAP_UI_TRANSLATIONS.ko;
+
+    // 1. Active language button
+    document.querySelectorAll('#map-lang-selector .lang-pill').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+
+    // 2. Top bar header & actions
+    const mainTitleEl = document.querySelector('[data-i18n="mainTitle"]');
+    if (mainTitleEl) mainTitleEl.textContent = t.mainTitle;
+
+    const subTitleEl = document.querySelector('[data-i18n="subTitle"]');
+    if (subTitleEl) subTitleEl.textContent = t.subTitle;
+
+    document.querySelectorAll('.map-filter-pill').forEach(pill => {
+      const key = pill.getAttribute('data-filter');
+      if (key && t.filters[key]) {
+        pill.textContent = t.filters[key];
+      }
+    });
+
+    const ktxBtn = document.getElementById('toggle-layer-ktx');
+    if (ktxBtn) ktxBtn.textContent = t.toggles.ktx;
+
+    const roadsBtn = document.getElementById('toggle-layer-roads');
+    if (roadsBtn) roadsBtn.textContent = t.toggles.roads;
+
+    const directEnterLabel = document.getElementById('map-direct-enter-label');
+    if (directEnterLabel) directEnterLabel.textContent = t.directEnterBtn;
+
+    // 3. SVG map static labels
+    const svgMap = {
+      'svg-i18n-parallel38': t.svg.parallel38,
+      'svg-i18n-westSeaTitle': t.svg.westSeaTitle,
+      'svg-i18n-westSeaSub': t.svg.westSeaSub,
+      'svg-i18n-eastSeaTitle': t.svg.eastSeaTitle,
+      'svg-i18n-eastSeaSub': t.svg.eastSeaSub,
+      'svg-i18n-southSeaTitle': t.svg.southSeaTitle,
+      'svg-i18n-southSeaSub': t.svg.southSeaSub,
+      'svg-i18n-dmzLabel': t.svg.dmzLabel,
+      'svg-i18n-hallasan': t.svg.hallasan,
+      'svg-i18n-cjuAirport': t.svg.cjuAirport,
+      'svg-i18n-ulleungdo': t.svg.ulleungdo,
+      'svg-i18n-dokdoTitle': t.svg.dokdoTitle,
+      'svg-i18n-icnAirport': t.svg.icnAirport
+    };
+    Object.entries(svgMap).forEach(([id, text]) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    });
+
+    // Resize DMZ box cleanly around translated text
+    const dmzText = document.getElementById('svg-i18n-dmzLabel');
+    const dmzBox = document.getElementById('svg-i18n-dmzBox');
+    if (dmzText && dmzBox) {
+      const len = typeof dmzText.getComputedTextLength === 'function' ? dmzText.getComputedTextLength() : 84;
+      const boxW = Math.max(76, Math.ceil(len) + 18);
+      dmzBox.setAttribute('width', String(boxW));
+      dmzBox.setAttribute('x', String(400 - boxW / 2));
+    }
+
+    // 4. SVG city pin labels & dynamic banner box fitting
+    const leftAlignedCities = new Set(['incheon', 'gwangju', 'sejong', 'jeonju']);
+    document.querySelectorAll('.map-city-pin').forEach(pin => {
+      const cityId = pin.getAttribute('data-city-id');
+      if (!cityId) return;
+      const locCity = this.getLocalizedCity(cityId);
+      const pinText = locCity.pinLabel || locCity.nameShort;
+
+      if (cityId === 'seoul') {
+        const labelEl = document.getElementById('pin-label-seoul');
+        const tagEl = document.getElementById('pin-tag-seoul');
+        const tagRectEl = document.getElementById('pin-tag-rect-seoul');
+        const outerRectEl = document.getElementById('pin-rect-seoul');
+        if (labelEl) labelEl.textContent = pinText;
+        if (tagEl) tagEl.textContent = t.svg.seoulPlayTag;
+        if (labelEl && tagEl && tagRectEl && outerRectEl) {
+          const labelW = typeof labelEl.getComputedTextLength === 'function' ? labelEl.getComputedTextLength() : 90;
+          const tagW = typeof tagEl.getComputedTextLength === 'function' ? tagEl.getComputedTextLength() : 66;
+          const tagBoxW = Math.max(60, Math.ceil(tagW) + 14);
+          const tagX = Math.ceil(10 + labelW + 10);
+          tagRectEl.setAttribute('x', String(tagX));
+          tagRectEl.setAttribute('width', String(tagBoxW));
+          tagEl.setAttribute('x', String(tagX + tagBoxW / 2));
+          outerRectEl.setAttribute('width', String(tagX + tagBoxW + 8));
+        }
+        return;
+      }
+
+      const banner = pin.querySelector('.city-label-banner');
+      if (!banner) return;
+      const textEl = banner.querySelector('text');
+      const rectEl = banner.querySelector('rect');
+      if (textEl) textEl.textContent = pinText;
+      if (textEl && rectEl) {
+        const textW = typeof textEl.getComputedTextLength === 'function' ? textEl.getComputedTextLength() : 72;
+        const boxW = Math.max(66, Math.ceil(textW) + 18);
+        rectEl.setAttribute('width', String(boxW));
+        if (leftAlignedCities.has(cityId)) {
+          banner.setAttribute('transform', `translate(-${boxW + 8}, 4)`);
+        }
+      }
+    });
+
+    // 5. Footer legend
+    document.querySelectorAll('[data-i18n-legend]').forEach(el => {
+      const key = el.getAttribute('data-i18n-legend');
+      if (key && t.legend[key]) {
+        el.textContent = t.legend[key];
+      }
+    });
+
+    // 6. Re-render active dossier in selected language
+    this.renderCityDossier(this.selectedCityId);
+  }
+
   selectCity(cityId) {
     this.selectedCityId = cityId;
     const city = CITIES_DATA[cityId];
@@ -154,7 +317,8 @@ class KoreaMapEngine {
   }
 
   renderCityDossier(cityId) {
-    const city = CITIES_DATA[cityId] || CITIES_DATA['seoul'];
+    const city = this.getLocalizedCity(cityId);
+    const t = MAP_UI_TRANSLATIONS[this.currentLang] || MAP_UI_TRANSLATIONS.ko;
     const container = document.getElementById('map-city-dossier-content');
     if (!container) return;
 
@@ -164,7 +328,7 @@ class KoreaMapEngine {
     if (city.eras && city.eras.length > 0) {
       erasHtml = `
         <div class="dossier-section">
-          <div class="dossier-section-title">선택 가능한 시대 & 테마</div>
+          <div class="dossier-section-title">${t.dossier.erasTitle}</div>
           <div class="dossier-era-grid">
             ${city.eras.map(era => `
               <button type="button" class="dossier-era-card ${this.selectedEra === era.id ? 'active' : ''}" data-era-id="${era.id}" data-preset-id="${era.preset}">
@@ -198,7 +362,7 @@ class KoreaMapEngine {
     if (city.ktx && city.ktx.length > 0) {
       ktxPillsHtml = `
         <div class="dossier-section">
-          <div class="dossier-section-title">고속철도 및 모빌리티 연계</div>
+          <div class="dossier-section-title">${t.dossier.transitTitle}</div>
           <div class="dossier-transit-tags">
             ${city.ktx.map(k => `<span class="transit-tag ktx">🚆 ${k}</span>`).join('')}
             ${city.airports ? city.airports.map(a => `<span class="transit-tag airport">✈️ ${a}</span>`).join('') : ''}
@@ -211,7 +375,7 @@ class KoreaMapEngine {
     if (city.presets && city.presets.length > 0) {
       quickPresetsHtml = `
         <div class="dossier-section">
-          <div class="dossier-section-title">추천 16×16 레이아웃 프리셋으로 바로 시작</div>
+          <div class="dossier-section-title">${t.dossier.presetsTitle}</div>
           <div class="dossier-preset-pills">
             ${city.presets.map(p => `
               <button type="button" class="dossier-preset-pill ${this.selectedPreset === p.id ? 'active' : ''}" data-era-id="${p.era}" data-preset-id="${p.id}">
@@ -232,7 +396,7 @@ class KoreaMapEngine {
         <h2 class="dossier-title">
           <span class="dossier-icon">${city.icon}</span> ${city.name}
         </h2>
-        <div class="dossier-sub">${city.hanja} &bull; ${city.regionName} &bull; 인구 ${city.population || '집계중'} (${city.area || ''})</div>
+        <div class="dossier-sub">${city.hanja} &bull; ${city.regionName} &bull; ${t.dossier.populationLabel} ${city.population || '-'} (${city.area || ''})</div>
       </div>
 
       <div class="dossier-tagline">${city.tagline}</div>
@@ -271,7 +435,7 @@ class KoreaMapEngine {
     // Update launch button text
     const launchBtn = document.getElementById('dossier-launch-btn');
     if (launchBtn) {
-      launchBtn.innerHTML = `<span>${city.nameShort} 16×16 스튜디오 입장하기</span> <span class="arrow-icon">&rarr;</span>`;
+      launchBtn.innerHTML = `<span>${city.nameShort} ${t.dossier.launchSuffix}</span> <span class="arrow-icon">&rarr;</span>`;
     }
   }
 
