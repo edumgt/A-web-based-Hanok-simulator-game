@@ -2095,9 +2095,11 @@ export function initIsometricStudio() {
       }
 
       // Era Configuration & Dynamic Switching System
+      let activeStudioCity = null;
       const ERA_CONFIG = {
         joseon: {
           title: '서울 타임 빌더 - 🏯 조선시대 한양',
+          eraLabel: '🏯 조선시대 한양',
           subtitle: '16×16 studio • 조선 전통 한옥 & 기와집 & 읍성 마을',
           tiles: joseonAssets ? joseonAssets.tiles : {},
           labels: JOSEON_LABELS,
@@ -2106,6 +2108,7 @@ export function initIsometricStudio() {
         },
         modern: {
           title: '서울 타임 빌더 - 🏙️ 현재 서울 (Modern Seoul)',
+          eraLabel: '🏙️ 현대 도심 스튜디오',
           subtitle: '16×16 studio • 대단지 아파트 & 강남 오피스 빌딩 & 롯데월드타워',
           tiles: modernAssets || {},
           labels: MODERN_SEOUL_LABELS,
@@ -2114,6 +2117,7 @@ export function initIsometricStudio() {
         },
         future: {
           title: '서울 타임 빌더 - 🚀 미래 서울 (Seoul 2099)',
+          eraLabel: '🚀 2099 미래 스마트시티',
           subtitle: '16×16 studio • 네오 사이버 메가타워 & UAM 플라잉카 & 퀀텀 코어',
           tiles: futureAssets || {},
           labels: FUTURE_SEOUL_LABELS,
@@ -2135,7 +2139,13 @@ export function initIsometricStudio() {
 
         const titleEl = document.getElementById('app-title-display');
         const subtitleEl = document.getElementById('app-subtitle-display');
-        if (titleEl) titleEl.textContent = ERA_CONFIG[eraKey].title;
+        if (titleEl) {
+          if (activeStudioCity && activeStudioCity.id && activeStudioCity.id !== 'seoul') {
+            titleEl.textContent = `${activeStudioCity.nameShort} 스튜디오 - ${ERA_CONFIG[eraKey].eraLabel}`;
+          } else {
+            titleEl.textContent = ERA_CONFIG[eraKey].title;
+          }
+        }
         if (subtitleEl) subtitleEl.textContent = ERA_CONFIG[eraKey].subtitle;
 
         const config = ERA_CONFIG[eraKey];
@@ -3355,9 +3365,12 @@ export function initIsometricStudio() {
       }
 
       window.__studioController = {
-        enterStudio: function(eraKey, presetName) {
+        enterStudio: function(eraKey, presetName, cityMeta) {
+          activeStudioCity = cityMeta || null;
           if (eraKey) {
             applyEra(eraKey, false);
+          } else {
+            applyEra(currentEra, false);
           }
           if (presetName && PRESETS[presetName]) {
             currentGrid = JSON.parse(JSON.stringify(PRESETS[presetName]));

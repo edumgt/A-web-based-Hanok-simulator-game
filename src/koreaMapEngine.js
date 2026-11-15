@@ -323,16 +323,24 @@ class KoreaMapEngine {
       });
     }
 
-    // Region filter pills inside LNB
+    // Region filter pills inside LNB (sync labels and dynamic counts)
+    const allCities = Object.values(CITIES_DATA);
     document.querySelectorAll('.map-filter-pill').forEach(pill => {
       const key = pill.getAttribute('data-filter');
       const labelSpan = pill.querySelector('.lnb-nav-label');
+      const countSpan = pill.querySelector('.lnb-nav-count');
       if (key && t.filters[key]) {
         if (labelSpan) {
           labelSpan.textContent = t.filters[key];
         } else {
           pill.textContent = t.filters[key];
         }
+      }
+      if (countSpan && key) {
+        const count = key === 'all'
+          ? allCities.length
+          : allCities.filter(c => c.region === key).length;
+        countSpan.textContent = String(count);
       }
     });
 
@@ -380,7 +388,7 @@ class KoreaMapEngine {
     }
 
     // 4. SVG city & national park pin labels & dynamic banner box fitting
-    const leftAlignedCities = new Set(['incheon', 'gwangju', 'sejong', 'byeonsan']);
+    const leftAlignedCities = new Set(['incheon', 'songdo', 'gwangju', 'sejong', 'byeonsan']);
     document.querySelectorAll('.map-city-pin').forEach(pin => {
       const cityId = pin.getAttribute('data-city-id');
       if (!cityId) return;
@@ -432,8 +440,9 @@ class KoreaMapEngine {
       }
     });
 
-    // 6. Re-render LNB directory, top context crumb, and dossier
+    // 6. Re-render LNB directory, LNB studio links, top context crumb, and dossier
     this.renderLnbDirectory();
+    this.renderLnbStudioLinks();
     this.updateContextBreadcrumb();
     this.renderCityDossier(this.selectedCityId);
   }
@@ -514,19 +523,28 @@ class KoreaMapEngine {
     const container = document.getElementById('lnb-city-directory');
     if (!container) return;
 
+    const t = MAP_UI_TRANSLATIONS[this.currentLang] || MAP_UI_TRANSLATIONS.ko;
+    const enterShort = t.lnb?.studioEnterShort || '스튜디오 →';
     const cities = Object.values(CITIES_DATA).filter(c => this.activeFilter === 'all' || c.region === this.activeFilter);
+
     container.innerHTML = cities.map(c => {
       const loc = this.getLocalizedCity(c.id);
       const isSelected = c.id === this.selectedCityId;
       const isPark = c.category === 'park';
+      const primaryEra = (c.eras && c.eras[0]) || { id: 'modern', preset: 'gangnam' };
       return `
-        <button type="button" class="lnb-dir-item ${isSelected ? 'active' : ''} ${isPark ? 'is-park' : ''}" data-city-id="${c.id}">
-          <span class="dir-item-icon">${c.icon}</span>
-          <span class="dir-item-text">
-            <span class="dir-item-name">${loc.nameShort}</span>
-            <span class="dir-item-sub">${loc.regionName}</span>
-          </span>
-        </button>
+        <div class="lnb-dir-row ${isSelected ? 'active' : ''} ${isPark ? 'is-park' : ''}">
+          <button type="button" class="lnb-dir-item ${isSelected ? 'active' : ''} ${isPark ? 'is-park' : ''}" data-city-id="${c.id}">
+            <span class="dir-item-icon">${c.icon}</span>
+            <span class="dir-item-text">
+              <span class="dir-item-name">${loc.nameShort}</span>
+              <span class="dir-item-sub">${loc.regionName}</span>
+            </span>
+          </button>
+          <button type="button" class="lnb-dir-studio-link" data-city-id="${c.id}" data-era-id="${primaryEra.id}" data-preset-id="${primaryEra.preset}" title="${loc.nameShort} ${enterShort}">
+            ${enterShort}
+          </button>
+        </div>
       `;
     }).join('');
 
@@ -536,6 +554,67 @@ class KoreaMapEngine {
         if (cityId && CITIES_DATA[cityId]) {
           this.selectCity(cityId);
           this.closeLnb();
+        }
+      });
+    });
+
+    container.querySelectorAll('.lnb-dir-studio-link').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const cityId = btn.getAttribute('data-city-id');
+        const eraId = btn.getAttribute('data-era-id');
+        const presetId = btn.getAttribute('data-preset-id');
+        if (cityId && CITIES_DATA[cityId]) {
+          this.launchStudio(cityId, eraId, presetId);
+        }
+      });
+    });
+  }
+
+  renderLnbStudioLinks() {
+    const container = document.getElementById('lnb-studio-links');
+    if (!container) return;
+
+    const t = MAP_UI_TRANSLATIONS[this.currentLang] || MAP_UI_TRANSLATIONS.ko;
+    const enterShort = t.lnb?.studioEnterShort || '스튜디오 →';
+    const cities = Object.values(CITIES_DATA).filter(c => this.activeFilter === 'all' || c.region === this.activeFilter);
+
+    container.innerHTML = cities.map(c => {
+      const loc = this.getLocalizedCity(c.id);
+      const isSelected = c.id === this.selectedCityId;
+      const isPark = c.category === 'park';
+      const eras = loc.eras || c.eras || [];
+      const primaryEra = eras[0] || { id: 'modern', preset: 'gangnam' };
+
+      return `
+        <div class="lnb-studio-row ${isSelected ? 'active' : ''} ${isPark ? 'is-park' : ''}">
+          <div class="lnb-studio-row-head">
+            <button type="button" class="lnb-studio-city-link" data-city-id="${c.id}" data-era-id="${primaryEra.id}" data-preset-id="${primaryEra.preset}">
+              <span class="studio-link-icon">${c.icon}</span>
+              <span class="studio-link-name">${loc.nameShort}</span>
+              <span class="studio-link-arrow">${enterShort}</span>
+            </button>
+          </div>
+          ${eras.length > 0 ? `
+            <div class="lnb-studio-era-links">
+              ${eras.map(era => `
+                <button type="button" class="lnb-studio-era-btn" data-city-id="${c.id}" data-era-id="${era.id}" data-preset-id="${era.preset}">
+                  ${era.label}
+                </button>
+              `).join('')}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }).join('');
+
+    container.querySelectorAll('.lnb-studio-city-link, .lnb-studio-era-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cityId = btn.getAttribute('data-city-id');
+        const eraId = btn.getAttribute('data-era-id');
+        const presetId = btn.getAttribute('data-preset-id');
+        if (cityId && CITIES_DATA[cityId]) {
+          this.launchStudio(cityId, eraId, presetId);
         }
       });
     });
@@ -553,6 +632,7 @@ class KoreaMapEngine {
 
     this.highlightCityPin(cityId);
     this.renderLnbDirectory();
+    this.renderLnbStudioLinks();
     this.updateContextBreadcrumb();
     this.renderCityDossier(cityId);
   }
@@ -582,6 +662,7 @@ class KoreaMapEngine {
     });
 
     this.renderLnbDirectory();
+    this.renderLnbStudioLinks();
     this.updateContextBreadcrumb();
   }
 
@@ -713,12 +794,29 @@ class KoreaMapEngine {
 
     if (!mapScreen || !studioScreen) return;
 
+    const targetCity = CITIES_DATA[cityId] || CITIES_DATA.seoul;
+    const resolvedEra = eraId || targetCity.eras?.[0]?.id || 'joseon';
+    const resolvedPreset = presetId || targetCity.eras?.[0]?.preset || 'village';
+
+    this.selectedCityId = targetCity.id;
+    this.selectedEra = resolvedEra;
+    this.selectedPreset = resolvedPreset;
+    this.highlightCityPin(targetCity.id);
+    this.renderLnbDirectory();
+    this.renderLnbStudioLinks();
+    this.updateContextBreadcrumb();
+    this.renderCityDossier(targetCity.id);
+
     if (this.isLnbOpen) {
       this.closeLnb();
     }
 
     if (window.__studioController) {
-      window.__studioController.enterStudio(eraId || 'joseon', presetId || 'village');
+      const locCity = this.getLocalizedCity(targetCity.id);
+      window.__studioController.enterStudio(resolvedEra, resolvedPreset, {
+        id: targetCity.id,
+        nameShort: locCity.nameShort || targetCity.nameShort
+      });
     }
 
     mapScreen.classList.add('fade-out');

@@ -55,6 +55,10 @@ export const KOREA_MAP_MARKUP = `
         <span class="rail-glyph" aria-hidden="true">🏞️</span>
         <span class="rail-caption" data-i18n-lnb="railPlaces">명소</span>
       </button>
+      <button type="button" class="rail-icon-btn" data-lnb-target="lnb-sec-studios" title="각 지역 스튜디오 바로가기">
+        <span class="rail-glyph" aria-hidden="true">🏗️</span>
+        <span class="rail-caption" data-i18n-lnb="railStudios">스튜디오</span>
+      </button>
       <button type="button" class="rail-icon-btn" data-lnb-target="lnb-sec-layers" title="지도 인프라 레이어">
         <span class="rail-glyph" aria-hidden="true">🚆</span>
         <span class="rail-caption" data-i18n-lnb="railLayers">레이어</span>
@@ -89,11 +93,11 @@ export const KOREA_MAP_MARKUP = `
           <div class="lnb-nav-list" role="tablist" aria-label="권역 선택">
             <button type="button" class="lnb-nav-item map-filter-pill active" data-filter="all">
               <span class="lnb-nav-label">전국 전체</span>
-              <span class="lnb-nav-count">14</span>
+              <span class="lnb-nav-count">15</span>
             </button>
             <button type="button" class="lnb-nav-item map-filter-pill" data-filter="capital">
-              <span class="lnb-nav-label">수도권 (서울·경기·인천)</span>
-              <span class="lnb-nav-count">3</span>
+              <span class="lnb-nav-label">수도권 (서울·인천·송도·수원)</span>
+              <span class="lnb-nav-count">4</span>
             </button>
             <button type="button" class="lnb-nav-item map-filter-pill" data-filter="chungcheong">
               <span class="lnb-nav-label">충청·세종 (대전·세종)</span>
@@ -126,6 +130,14 @@ export const KOREA_MAP_MARKUP = `
         <section class="lnb-section" id="lnb-sec-directory">
           <h2 class="lnb-section-heading" data-i18n-lnb="directoryTitle">주요 도시 및 국립공원</h2>
           <div class="lnb-directory-list" id="lnb-city-directory">
+            <!-- Dynamically populated by koreaMapEngine.js -->
+          </div>
+        </section>
+
+        <!-- LNB Section 2B: Direct Studio Launch Links -->
+        <section class="lnb-section" id="lnb-sec-studios">
+          <h2 class="lnb-section-heading" data-i18n-lnb="studioLinksTitle">각 지역 스튜디오 바로가기</h2>
+          <div class="lnb-studio-links-list" id="lnb-studio-links">
             <!-- Dynamically populated by koreaMapEngine.js -->
           </div>
         </section>
@@ -522,6 +534,19 @@ export const KOREA_MAP_MARKUP = `
             <g class="city-label-banner" transform="translate(-104, 4)">
               <rect class="pin-banner-bg" x="0" y="-11" width="96" height="20" rx="4" stroke="#10b981" stroke-width="1.2"/>
               <text class="pin-banner-text" x="8" y="3" font-size="10.5" font-weight="600">✈️ 인천광역시</text>
+            </g>
+          </g>
+
+          <!-- Incheon Bridge & Songdo Reclaimed Smart Bay Connector -->
+          <path d="M 295,407 Q 297,428 306,444" fill="none" stroke="#06b6d4" stroke-width="1.4" stroke-dasharray="2.5 2" opacity="0.75"/>
+
+          <!-- 3B. INCHEON SONGDO INTERNATIONAL CITY -->
+          <g class="map-city-pin" data-city-id="songdo" transform="translate(306, 444)" cursor="pointer">
+            <circle cx="0" cy="0" r="6.5" fill="#06b6d4"/>
+            <circle cx="0" cy="0" r="3" fill="#ffffff"/>
+            <g class="city-label-banner" transform="translate(-102, 4)">
+              <rect class="pin-banner-bg" x="0" y="-11" width="94" height="20" rx="4" stroke="#06b6d4" stroke-width="1.2"/>
+              <text class="pin-banner-text" x="8" y="3" font-size="10.5" font-weight="600">🌉 인천 송도</text>
             </g>
           </g>
 

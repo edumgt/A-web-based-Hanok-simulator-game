@@ -343,6 +343,38 @@ export const MODERN_CITIES_REGISTRY = {
       { id: 'future_city', label: '미래 에어로시티', era: 'future' }
     ]
   },
+  songdo: {
+    id: 'songdo',
+    name: '인천 송도국제도시 (Songdo)',
+    nameShort: '인천 송도',
+    hanja: '松島國際都市 • 仁川 延壽',
+    tier: '글로벌 바이오 · 스마트 국제도시',
+    population: '215,000명 (IFEZ)',
+    area: '53.4 km²',
+    region: 'capital',
+    regionName: '수도권 (인천 연수)',
+    status: 'ready',
+    statusBadge: '🌉 스튜디오 탐방 가능',
+    coords: { x: 306, y: 444 },
+    icon: '🌉',
+    ktx: ['인천발 KTX 송도역(예정)', 'GTX-B 인천대입구(예정)', '인천 1호선'],
+    airports: ['인천국제공항 (인천대교 20분)'],
+    tagline: '센트럴파크 해수로 마천루 & 글로벌 바이오 · UAM 스마트시티',
+    desc: '인천경제자유구역(IFEZ)의 핵심 거점이자 세계 최대 바이오의약품 생산 클러스터입니다. 센트럴파크 수변 스카이라인, 포스코타워-송도, 인천대교가 어우러진 대한민국 대표 미래형 국제도시를 스튜디오에서 직접 탐방하세요.',
+    stats: [
+      { label: '핵심 랜드마크', value: '센트럴파크 • 인천대교 • G타워' },
+      { label: '특화 지형', value: '서해 매립 수변 & 마천루' }
+    ],
+    eras: [
+      { id: 'modern', label: '🏙️ 현대 송도', sub: '센트럴파크 & 마천루', preset: 'apartments' },
+      { id: 'future', label: '🚀 송도 2099', sub: '바이오 · UAM 스마트시티', preset: 'future_city' }
+    ],
+    presets: [
+      { id: 'apartments', label: '송도 센트럴·마천루', era: 'modern' },
+      { id: 'gangnam', label: '국제업무단지', era: 'modern' },
+      { id: 'future_city', label: '2099 송도 스마트시티', era: 'future' }
+    ]
+  },
   daegu: {
     id: 'daegu',
     name: '대구광역시 (Daegu)',

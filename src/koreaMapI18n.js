@@ -20,11 +20,14 @@ export const MAP_UI_TRANSLATIONS = {
       brandSub: '국토 공간 아틀라스',
       regionTitle: '권역 탐색',
       directoryTitle: '주요 도시 및 국립공원',
+      studioLinksTitle: '각 지역 스튜디오 바로가기',
+      studioEnterShort: '스튜디오 →',
       layersTitle: '지도 인프라 레이어',
       languageTitle: '언어 설정',
       themeTitle: '화면 테마',
       railRegions: '권역',
       railPlaces: '명소',
+      railStudios: '스튜디오',
       railLayers: '레이어',
       railLang: '언어',
       railTheme: '테마'
@@ -38,7 +41,7 @@ export const MAP_UI_TRANSLATIONS = {
     },
     filters: {
       all: '전국 전체',
-      capital: '수도권 (서울·경기·인천)',
+      capital: '수도권 (서울·인천·송도·수원)',
       chungcheong: '충청·세종 (대전·세종)',
       yeongnam: '영남권 (부산·대구·경주)',
       honam: '호남권 (광주·전주·변산)',
@@ -92,11 +95,14 @@ export const MAP_UI_TRANSLATIONS = {
       brandSub: 'National Spatial Atlas',
       regionTitle: 'Regions',
       directoryTitle: 'Cities & National Parks',
+      studioLinksTitle: 'Direct Studio Links',
+      studioEnterShort: 'Studio →',
       layersTitle: 'Map Layers',
       languageTitle: 'Language',
       themeTitle: 'Appearance',
       railRegions: 'Regions',
       railPlaces: 'Places',
+      railStudios: 'Studios',
       railLayers: 'Layers',
       railLang: 'Lang',
       railTheme: 'Theme'
@@ -110,7 +116,7 @@ export const MAP_UI_TRANSLATIONS = {
     },
     filters: {
       all: 'Nationwide',
-      capital: 'Capital Area',
+      capital: 'Capital Area (Seoul·Incheon·Songdo)',
       chungcheong: 'Chungcheong & Sejong',
       yeongnam: 'Yeongnam',
       honam: 'Honam & Byeonsan',
@@ -164,11 +170,14 @@ export const MAP_UI_TRANSLATIONS = {
       brandSub: '国土空间地图集',
       regionTitle: '区域筛选',
       directoryTitle: '主要城市与国立公园',
+      studioLinksTitle: '各城市工作室直达',
+      studioEnterShort: '进入 →',
       layersTitle: '地图图层控制',
       languageTitle: '语言设置',
       themeTitle: '界面主题',
       railRegions: '区域',
       railPlaces: '地标',
+      railStudios: '工作室',
       railLayers: '图层',
       railLang: '语言',
       railTheme: '主题'
@@ -182,7 +191,7 @@ export const MAP_UI_TRANSLATIONS = {
     },
     filters: {
       all: '全国全部',
-      capital: '首都圈 (首尔/仁川/水原)',
+      capital: '首都圈 (首尔/仁川/松岛/水原)',
       chungcheong: '忠清·世宗',
       yeongnam: '岭南圈 (釜山/大邱/庆州)',
       honam: '湖南圈 (光州/全州/边山)',
@@ -236,11 +245,14 @@ export const MAP_UI_TRANSLATIONS = {
       brandSub: '国土空間アトラス',
       regionTitle: 'エリア検索',
       directoryTitle: '主要都市・国立公園',
+      studioLinksTitle: '各地スタジオ直通リンク',
+      studioEnterShort: '開く →',
       layersTitle: '地図レイヤー',
       languageTitle: '言語設定',
       themeTitle: '画面テーマ',
       railRegions: 'エリア',
       railPlaces: '名所',
+      railStudios: 'スタジオ',
       railLayers: 'レイヤー',
       railLang: '言語',
       railTheme: 'テーマ'
@@ -254,7 +266,7 @@ export const MAP_UI_TRANSLATIONS = {
     },
     filters: {
       all: '全国すべて',
-      capital: '首都圏 (ソウル/仁川/水原)',
+      capital: '首都圏 (ソウル/仁川/松島/水原)',
       chungcheong: '忠清・世宗',
       yeongnam: '嶺南圏 (釜山/大邱/慶州)',
       honam: '湖南圏 (光州/全州/辺山)',
@@ -308,11 +320,14 @@ export const MAP_UI_TRANSLATIONS = {
       brandSub: 'Atlas Espacial Nacional',
       regionTitle: 'Regiones',
       directoryTitle: 'Ciudades y Parques Nacionales',
+      studioLinksTitle: 'Accesos Directos al Estudio',
+      studioEnterShort: 'Estudio →',
       layersTitle: 'Capas del Mapa',
       languageTitle: 'Idioma',
       themeTitle: 'Apariencia',
       railRegions: 'Región',
       railPlaces: 'Lugares',
+      railStudios: 'Estudios',
       railLayers: 'Capas',
       railLang: 'Idioma',
       railTheme: 'Tema'
@@ -326,7 +341,7 @@ export const MAP_UI_TRANSLATIONS = {
     },
     filters: {
       all: 'Todo el País',
-      capital: 'Área Capital',
+      capital: 'Área Capital (Seúl·Songdo)',
       chungcheong: 'Chungcheong y Sejong',
       yeongnam: 'Yeongnam',
       honam: 'Honam y Byeonsan',
@@ -697,6 +712,113 @@ export const CITY_LOCALIZATIONS = {
       presets: [
         { id: 'apartments', label: 'Torres Songdo', era: 'modern' },
         { id: 'future_city', label: 'Aerociudad Futura', era: 'future' }
+      ]
+    }
+  },
+  songdo: {
+    ko: { pinLabel: '🌉 인천 송도' },
+    en: {
+      pinLabel: '🌉 Incheon Songdo',
+      name: 'Incheon Songdo Int\'l City',
+      nameShort: 'Incheon Songdo',
+      tier: 'Global Bio & Smart Free Economic Zone',
+      population: '215,000 (IFEZ)',
+      regionName: 'Capital Area (Yeonsu, Incheon)',
+      statusBadge: '🌉 Studio Ready',
+      ktx: ['Incheon KTX Songdo (Planned)', 'GTX-B Songdo', 'Incheon Line 1'],
+      airports: ['Incheon Int\'l Airport (20m via Incheon Bridge)'],
+      tagline: 'Central Park Canal Skyline & Global Bio-UAM Smart City',
+      desc: 'Anchor hub of the Incheon Free Economic Zone (IFEZ) and the world\'s leading biopharmaceutical manufacturing cluster, uniting Central Park waterfront skyscrapers with the landmark Incheon Bridge.',
+      stats: [
+        { label: 'Landmarks', value: 'Central Park • Incheon Bridge • G-Tower' },
+        { label: 'Terrain', value: 'Reclaimed Smart Bay & Skyscrapers' }
+      ],
+      eras: [
+        { id: 'modern', label: '🏙️ Modern Songdo', sub: 'Central Park & Towers', preset: 'apartments' },
+        { id: 'future', label: '🚀 Songdo 2099', sub: 'Bio & UAM Smart City', preset: 'future_city' }
+      ],
+      presets: [
+        { id: 'apartments', label: 'Songdo Central Park', era: 'modern' },
+        { id: 'gangnam', label: 'Int\'l Business District', era: 'modern' },
+        { id: 'future_city', label: '2099 Smart Bay', era: 'future' }
+      ]
+    },
+    zh: {
+      pinLabel: '🌉 仁川松岛',
+      name: '仁川松岛国际都市 (Songdo)',
+      nameShort: '仁川松岛',
+      tier: '全球生物医药与智慧自由经济区',
+      population: '215,000人 (IFEZ)',
+      regionName: '首都圈 (仁川延寿)',
+      statusBadge: '🌉 可进入工作室探索',
+      ktx: ['仁川KTX松岛站(规划)', 'GTX-B松岛(仁川大入口)', '仁川1号线'],
+      airports: ['仁川国际机场 (经仁川大桥20分钟)'],
+      tagline: '中央公园滨水天际线与全球生物·UAM智慧都市',
+      desc: '仁川经济自由区(IFEZ)核心门户与世界级生物制药产业集群，将松岛中央公园海水道摩天楼群与仁川大桥海上地标融为一体。',
+      stats: [
+        { label: '核心地标', value: '中央公园 • 仁川大桥 • G塔' },
+        { label: '特色地形', value: '西海填海滨水与超高层天际线' }
+      ],
+      eras: [
+        { id: 'modern', label: '🏙️ 现代松岛', sub: '中央公园与摩天楼', preset: 'apartments' },
+        { id: 'future', label: '🚀 松岛 2099', sub: '生物与UAM智慧城', preset: 'future_city' }
+      ],
+      presets: [
+        { id: 'apartments', label: '松岛中央公园', era: 'modern' },
+        { id: 'gangnam', label: '国际商务区', era: 'modern' },
+        { id: 'future_city', label: '2099智慧海湾', era: 'future' }
+      ]
+    },
+    ja: {
+      pinLabel: '🌉 仁川・松島',
+      name: '仁川 松島国際都市 (Songdo)',
+      nameShort: '仁川・松島',
+      tier: 'グローバルバイオ・スマート国際都市',
+      population: '215,000人 (IFEZ)',
+      regionName: '首都圏 (仁川延寿)',
+      statusBadge: '🌉 スタジオ探索可能',
+      ktx: ['仁川発KTX松島駅(予定)', 'GTX-B松島', '仁川1号線'],
+      airports: ['仁川国際空港 (仁川大橋で約20分)'],
+      tagline: 'セントラルパーク水辺スカイライン＆バイオ・UAMスマートシティ',
+      desc: '仁川経済自由区域(IFEZ)の中核拠点であり世界有数のバイオ医薬クラスター。セントラルパークの超高層ビル群と仁川大橋が調和する未来型国際都市です。',
+      stats: [
+        { label: '名所', value: 'セントラルパーク • 仁川大橋 • Gタワー' },
+        { label: '特化地形', value: '西海埋立ウォーターフロント' }
+      ],
+      eras: [
+        { id: 'modern', label: '🏙️ 現代松島', sub: 'セントラルパーク高層街', preset: 'apartments' },
+        { id: 'future', label: '🚀 松島 2099', sub: 'バイオ・UAM未来都市', preset: 'future_city' }
+      ],
+      presets: [
+        { id: 'apartments', label: '松島セントラル', era: 'modern' },
+        { id: 'gangnam', label: '国際業務団地', era: 'modern' },
+        { id: 'future_city', label: '2099スマートベイ', era: 'future' }
+      ]
+    },
+    es: {
+      pinLabel: '🌉 Songdo, Incheon',
+      name: 'Ciudad Internacional de Songdo',
+      nameShort: 'Songdo',
+      tier: 'Ciudad Inteligente y Hub Bio Global',
+      population: '215,000 hab. (IFEZ)',
+      regionName: 'Área Capital (Incheon)',
+      statusBadge: '🌉 Estudio Disponible',
+      ktx: ['KTX Incheon Songdo', 'GTX-B Songdo', 'Línea 1 Incheon'],
+      airports: ['Aerop. Incheon (20 min por Puente Incheon)'],
+      tagline: 'Horizonte de Central Park y Ciudad Inteligente Bio-UAM',
+      desc: 'Núcleo de la Zona Económica Libre de Incheon (IFEZ) y polo biofarmacéutico mundial, donde los rascacielos de Central Park se conectan con el Puente de Incheon.',
+      stats: [
+        { label: 'Hitos', value: 'Central Park • Puente Incheon • G-Tower' },
+        { label: 'Terreno', value: 'Bahía Inteligente y Rascacielos' }
+      ],
+      eras: [
+        { id: 'modern', label: '🏙️ Songdo Moderno', sub: 'Central Park y Torres', preset: 'apartments' },
+        { id: 'future', label: '🚀 Songdo 2099', sub: 'Ciudad Bio y UAM', preset: 'future_city' }
+      ],
+      presets: [
+        { id: 'apartments', label: 'Central Park Songdo', era: 'modern' },
+        { id: 'gangnam', label: 'Distrito Internacional', era: 'modern' },
+        { id: 'future_city', label: 'Bahía Inteligente 2099', era: 'future' }
       ]
     }
   },
