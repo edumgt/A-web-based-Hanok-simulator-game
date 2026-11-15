@@ -30,6 +30,7 @@ const STUDIO_MARKUP = `
       <button type="button" class="builder-text-btn active" id="builder-traffic-toggle" title="살아 움직이는 차량 & 보행자 시뮬레이션 토글 (현재 ON)">🚗 트래픽 ON</button>
       <button type="button" class="builder-text-btn active" id="builder-graphics-toggle" title="그래픽 고도화 모드 (입체 그림자 & 대기 효과 토글)">✨ 그래픽 고도화 (HD)</button>
       <button type="button" class="builder-text-btn" id="builder-lighting-toggle" title="낮/밤 조명 모드 전환">☀️ 낮 (Day)</button>
+      <button type="button" class="builder-text-btn studio-theme-toggle-btn" id="studio-theme-toggle" title="화이트 / 다크 모드 전환">🌙 다크</button>
       <button type="button" class="builder-text-btn active" id="builder-animate-toggle" title="애니메이션 토글">애니메이션</button>
       <button type="button" class="builder-text-btn" id="builder-undo-btn">실행취소</button>
       <div class="zoom-group">

@@ -13,21 +13,43 @@ export const MAP_LANGUAGES = [
 
 export const MAP_UI_TRANSLATIONS = {
   ko: {
-    mainTitle: '대한민국 현대 전도 • 팔도 타임 빌더',
-    subTitle: '17개 광역지자체 • KTX 고속철도망 • 조선 600년 한양부터 2099 네오 서울 메가시티까지',
+    mainTitle: '대한민국 현대 전도',
+    subTitle: '17개 광역지자체 · KTX 고속철도망 · 국립공원',
+    menuBtn: '탐색 메뉴',
+    lnb: {
+      brandSub: '국토 공간 아틀라스',
+      regionTitle: '권역 탐색',
+      directoryTitle: '주요 도시 및 국립공원',
+      layersTitle: '지도 인프라 레이어',
+      languageTitle: '언어 설정',
+      themeTitle: '화면 테마',
+      railRegions: '권역',
+      railPlaces: '명소',
+      railLayers: '레이어',
+      railLang: '언어',
+      railTheme: '테마'
+    },
+    theme: {
+      lightFull: '☀️ 화이트 모드',
+      darkFull: '🌙 다크 모드',
+      lightShort: '☀️ 화이트',
+      darkShort: '🌙 다크',
+      toggleTitle: '화이트 / 다크 모드 전환'
+    },
     filters: {
-      all: '전국 (All)',
-      capital: '수도권 (서울/경기/인천)',
-      chungcheong: '충청·세종 (대전/세종)',
-      yeongnam: '영남권 (부산/대구/울산/경주)',
-      honam: '호남권 (광주/전주)',
-      gangwon: '강원권 (강릉/원주)',
+      all: '전국 전체',
+      capital: '수도권 (서울·경기·인천)',
+      chungcheong: '충청·세종 (대전·세종)',
+      yeongnam: '영남권 (부산·대구·경주)',
+      honam: '호남권 (광주·전주·변산)',
+      gangwon: '강원권 (강릉·원주)',
       jeju: '제주권',
       north: '이북권 (평양)'
     },
     toggles: {
-      ktx: '🚆 KTX 망',
-      roads: '🛣️ 고속도로'
+      ktx: 'KTX / SRT 고속철도망',
+      roads: '주요 고속도로망',
+      parks: '국립공원 및 자연보전구역'
     },
     directEnterBtn: '서울 스튜디오 입장 →',
     svg: {
@@ -51,10 +73,11 @@ export const MAP_UI_TRANSLATIONS = {
       ktx: 'KTX 고속철도',
       highway: '고속도로',
       metro: '광역시/거점',
+      park: '국립공원',
       dmz: 'DMZ 휴전선'
     },
     dossier: {
-      populationLabel: '인구',
+      populationLabel: '규모/인구',
       transitTitle: '고속철도 및 모빌리티 연계',
       erasTitle: '선택 가능한 시대 & 테마',
       presetsTitle: '추천 16×16 레이아웃 프리셋으로 바로 시작',
@@ -62,21 +85,43 @@ export const MAP_UI_TRANSLATIONS = {
     }
   },
   en: {
-    mainTitle: 'Modern Korea GIS Atlas • Paldo Time Builder',
-    subTitle: '17 Provinces & Metros • KTX High-Speed Rail • From Joseon Hanyang to 2099 Neo Seoul',
+    mainTitle: 'Modern Korea Atlas',
+    subTitle: '17 Provinces · KTX High-Speed Rail · National Parks',
+    menuBtn: 'Explore',
+    lnb: {
+      brandSub: 'National Spatial Atlas',
+      regionTitle: 'Regions',
+      directoryTitle: 'Cities & National Parks',
+      layersTitle: 'Map Layers',
+      languageTitle: 'Language',
+      themeTitle: 'Appearance',
+      railRegions: 'Regions',
+      railPlaces: 'Places',
+      railLayers: 'Layers',
+      railLang: 'Lang',
+      railTheme: 'Theme'
+    },
+    theme: {
+      lightFull: '☀️ Light Mode',
+      darkFull: '🌙 Dark Mode',
+      lightShort: '☀️ Light',
+      darkShort: '🌙 Dark',
+      toggleTitle: 'Switch Light / Dark mode'
+    },
     filters: {
       all: 'Nationwide',
       capital: 'Capital Area',
       chungcheong: 'Chungcheong & Sejong',
       yeongnam: 'Yeongnam',
-      honam: 'Honam',
+      honam: 'Honam & Byeonsan',
       gangwon: 'Gangwon',
       jeju: 'Jeju',
       north: 'Northern (Pyongyang)'
     },
     toggles: {
-      ktx: '🚆 KTX Rail',
-      roads: '🛣️ Expressways'
+      ktx: 'KTX / SRT Rail Network',
+      roads: 'Major Expressways',
+      parks: 'National Parks & Reserves'
     },
     directEnterBtn: 'Enter Seoul Studio →',
     svg: {
@@ -100,10 +145,11 @@ export const MAP_UI_TRANSLATIONS = {
       ktx: 'KTX High-Speed Rail',
       highway: 'Expressway',
       metro: 'Metro / Hub',
+      park: 'National Park',
       dmz: 'DMZ Line'
     },
     dossier: {
-      populationLabel: 'Pop.',
+      populationLabel: 'Scale / Pop.',
       transitTitle: 'High-Speed Rail & Aviation Connectivity',
       erasTitle: 'Available Eras & Themes',
       presetsTitle: 'Quick-Start 16×16 Layout Presets',
@@ -111,21 +157,43 @@ export const MAP_UI_TRANSLATIONS = {
     }
   },
   zh: {
-    mainTitle: '大韩民国现代全图 • 八道时空建造者',
-    subTitle: '17个广域行政区 • KTX高速铁路网 • 从朝鲜汉阳到2099未来首尔巨型都市',
+    mainTitle: '大韩民国现代全图',
+    subTitle: '17个广域行政区 · KTX高铁网 · 国立公园',
+    menuBtn: '导航菜单',
+    lnb: {
+      brandSub: '国土空间地图集',
+      regionTitle: '区域筛选',
+      directoryTitle: '主要城市与国立公园',
+      layersTitle: '地图图层控制',
+      languageTitle: '语言设置',
+      themeTitle: '界面主题',
+      railRegions: '区域',
+      railPlaces: '地标',
+      railLayers: '图层',
+      railLang: '语言',
+      railTheme: '主题'
+    },
+    theme: {
+      lightFull: '☀️ 浅色模式',
+      darkFull: '🌙 深色模式',
+      lightShort: '☀️ 浅色',
+      darkShort: '🌙 深色',
+      toggleTitle: '切换浅色 / 深色模式'
+    },
     filters: {
-      all: '全国 (All)',
+      all: '全国全部',
       capital: '首都圈 (首尔/仁川/水原)',
       chungcheong: '忠清·世宗',
       yeongnam: '岭南圈 (釜山/大邱/庆州)',
-      honam: '湖南圈 (光州/全州)',
+      honam: '湖南圈 (光州/全州/边山)',
       gangwon: '江原圈 (江陵)',
       jeju: '济州圈',
       north: '北部圈 (平壤)'
     },
     toggles: {
-      ktx: '🚆 KTX高铁网',
-      roads: '🛣️ 高速公路'
+      ktx: 'KTX / SRT 高铁网',
+      roads: '主要高速公路网',
+      parks: '国立公园与自然保护区'
     },
     directEnterBtn: '进入首尔工作室 →',
     svg: {
@@ -149,10 +217,11 @@ export const MAP_UI_TRANSLATIONS = {
       ktx: 'KTX 高速铁路',
       highway: '高速公路',
       metro: '广域市 / 枢纽',
+      park: '国立公园',
       dmz: 'DMZ 停战线'
     },
     dossier: {
-      populationLabel: '人口',
+      populationLabel: '规模/人口',
       transitTitle: '高速铁路与交通枢纽',
       erasTitle: '可选时代与城市主题',
       presetsTitle: '选择 16×16 推荐布局快速开始',
@@ -160,21 +229,43 @@ export const MAP_UI_TRANSLATIONS = {
     }
   },
   ja: {
-    mainTitle: '大韓民国 現代全図 • 八道タイムビルダー',
-    subTitle: '17広域自治体 • KTX高速鉄道網 • 朝鮮600年の漢陽から2099ネオソウルまで',
+    mainTitle: '大韓民国 現代全図',
+    subTitle: '17広域自治体 · KTX高速鉄道網 · 国立公園',
+    menuBtn: 'メニュー',
+    lnb: {
+      brandSub: '国土空間アトラス',
+      regionTitle: 'エリア検索',
+      directoryTitle: '主要都市・国立公園',
+      layersTitle: '地図レイヤー',
+      languageTitle: '言語設定',
+      themeTitle: '画面テーマ',
+      railRegions: 'エリア',
+      railPlaces: '名所',
+      railLayers: 'レイヤー',
+      railLang: '言語',
+      railTheme: 'テーマ'
+    },
+    theme: {
+      lightFull: '☀️ ライトモード',
+      darkFull: '🌙 ダークモード',
+      lightShort: '☀️ ライト',
+      darkShort: '🌙 ダーク',
+      toggleTitle: 'ライト / ダークモード切替'
+    },
     filters: {
-      all: '全国 (All)',
+      all: '全国すべて',
       capital: '首都圏 (ソウル/仁川/水原)',
       chungcheong: '忠清・世宗',
       yeongnam: '嶺南圏 (釜山/大邱/慶州)',
-      honam: '湖南圏 (光州/全州)',
+      honam: '湖南圏 (光州/全州/辺山)',
       gangwon: '江原圏 (江陵)',
       jeju: '済州圏',
       north: '北朝鮮圏 (平壌)'
     },
     toggles: {
-      ktx: '🚆 KTX 鉄道網',
-      roads: '🛣️ 高速道路'
+      ktx: 'KTX / SRT 高速鉄道網',
+      roads: '主要高速道路網',
+      parks: '国立公園・自然保全区域'
     },
     directEnterBtn: 'ソウルスタジオへ →',
     svg: {
@@ -198,10 +289,11 @@ export const MAP_UI_TRANSLATIONS = {
       ktx: 'KTX 高速鉄道',
       highway: '高速道路',
       metro: '広域市 / 拠点',
+      park: '国立公園',
       dmz: 'DMZ 軍事境界線'
     },
     dossier: {
-      populationLabel: '人口',
+      populationLabel: '規模/人口',
       transitTitle: '高速鉄道・空港アクセス',
       erasTitle: '選択可能な時代とテーマ',
       presetsTitle: 'おすすめ 16×16 プリセットですぐ開始',
@@ -209,21 +301,43 @@ export const MAP_UI_TRANSLATIONS = {
     }
   },
   es: {
-    mainTitle: 'Atlas Moderno de Corea • Constructor Temporal',
-    subTitle: '17 Provincias • Red KTX de Alta Velocidad • De la Hanyang Joseon a Neo Seúl 2099',
+    mainTitle: 'Atlas Moderno de Corea',
+    subTitle: '17 Provincias · Red KTX · Parques Nacionales',
+    menuBtn: 'Explorar',
+    lnb: {
+      brandSub: 'Atlas Espacial Nacional',
+      regionTitle: 'Regiones',
+      directoryTitle: 'Ciudades y Parques Nacionales',
+      layersTitle: 'Capas del Mapa',
+      languageTitle: 'Idioma',
+      themeTitle: 'Apariencia',
+      railRegions: 'Región',
+      railPlaces: 'Lugares',
+      railLayers: 'Capas',
+      railLang: 'Idioma',
+      railTheme: 'Tema'
+    },
+    theme: {
+      lightFull: '☀️ Modo Claro',
+      darkFull: '🌙 Modo Oscuro',
+      lightShort: '☀️ Claro',
+      darkShort: '🌙 Oscuro',
+      toggleTitle: 'Cambiar entre modo claro y oscuro'
+    },
     filters: {
       all: 'Todo el País',
       capital: 'Área Capital',
       chungcheong: 'Chungcheong y Sejong',
       yeongnam: 'Yeongnam',
-      honam: 'Honam',
+      honam: 'Honam y Byeonsan',
       gangwon: 'Gangwon',
       jeju: 'Jeju',
       north: 'Norte (Pionyang)'
     },
     toggles: {
-      ktx: '🚆 Red KTX',
-      roads: '🛣️ Autopistas'
+      ktx: 'Red Ferroviaria KTX / SRT',
+      roads: 'Autopistas Principales',
+      parks: 'Parques Nacionales'
     },
     directEnterBtn: 'Ir al Estudio de Seúl →',
     svg: {
@@ -247,10 +361,11 @@ export const MAP_UI_TRANSLATIONS = {
       ktx: 'Tren KTX',
       highway: 'Autopista',
       metro: 'Metrópoli / Centro',
+      park: 'Parque Nacional',
       dmz: 'Línea DMZ'
     },
     dossier: {
-      populationLabel: 'Pob.',
+      populationLabel: 'Escala / Pob.',
       transitTitle: 'Tren de Alta Velocidad y Aviación',
       erasTitle: 'Eras y Temas Disponibles',
       presetsTitle: 'Iniciar con Diseños 16×16 Recomendados',
@@ -1373,6 +1488,109 @@ export const CITY_LOCALIZATIONS = {
       ],
       eras: [{ id: 'joseon', label: '🏯 Río Taedong', sub: 'Ribera Histórica', preset: 'village' }],
       presets: [{ id: 'village', label: 'Ciudad Antigua Taedong', era: 'joseon' }]
+    }
+  },
+  byeonsan: {
+    ko: { pinLabel: '🏞️ 변산반도 국립공원' },
+    en: {
+      pinLabel: '🏞️ Byeonsanbando',
+      name: 'Byeonsanbando National Park',
+      nameShort: 'Byeonsan',
+      tier: 'National Park No. 19 (Marine & Mountain)',
+      population: '2.2M Visitors/yr',
+      regionName: 'Honam (Buan, Jeonbuk)',
+      statusBadge: 'National Park Studio',
+      ktx: ['Honam KTX Jeongeup Sta. (30m)', 'Seohaean Expwy Buan IC'],
+      airports: ['Gunsan Airport (40 min)'],
+      tagline: 'Chaeseokgang Coastal Cliffs & Ancient Naesosa Fir Forest',
+      desc: 'Designated in 1988 as Korea\'s 19th National Park and only peninsula-type marine-mountain reserve, featuring Cretaceous sedimentary cliffs at Chaeseokgang and the millennium-old Naesosa Temple valley.',
+      stats: [
+        { label: 'Landmarks', value: 'Chaeseokgang • Jeokbyeokgang • Naesosa' },
+        { label: 'Geology', value: 'West Coast National Geopark' }
+      ],
+      eras: [
+        { id: 'joseon', label: '🏯 Naebyeonsan Valley', sub: 'Naesosa & Pine Forest', preset: 'riverside' },
+        { id: 'modern', label: '🌊 Chaeseokgang Coast', sub: 'Yellow Sea Eco-Reserve', preset: 'meadow' }
+      ],
+      presets: [
+        { id: 'riverside', label: 'Naesosa Valley', era: 'joseon' },
+        { id: 'meadow', label: 'Coastal Reserve', era: 'joseon' }
+      ]
+    },
+    zh: {
+      pinLabel: '🏞️ 边山半岛国立公园',
+      name: '边山半岛国立公园 (Byeonsanbando)',
+      nameShort: '边山半岛',
+      tier: '韩国第19号国立公园 (海岸·山岳复合型)',
+      population: '年访客220万人次',
+      regionName: '湖南圈 (全北扶安)',
+      statusBadge: '国立公园可探索',
+      ktx: ['湖南线 KTX 井邑站 (30分钟)', '西海岸高速扶安IC'],
+      airports: ['群山机场 (40分钟)'],
+      tagline: '采石江海蚀绝壁与千年古刹来苏寺杉木林',
+      desc: '1988年指定为韩国第19号国立公园，是韩国唯一的半岛型海洋山岳复合国立公园，兼具采石江白垩纪沉积岩海崖与内边山来苏寺溪谷奇景。',
+      stats: [
+        { label: '核心名胜', value: '采石江 • 赤壁江 • 来苏寺 • 直沼瀑布' },
+        { label: '地质生态', value: '西海岸国家地质公园 • 海蚀崖' }
+      ],
+      eras: [
+        { id: 'joseon', label: '🏯 内边山来苏寺', sub: '山林溪谷与松林', preset: 'riverside' },
+        { id: 'modern', label: '🌊 外边山采石江', sub: '西海海岸生态区', preset: 'meadow' }
+      ],
+      presets: [
+        { id: 'riverside', label: '边山溪谷·来苏寺', era: 'joseon' },
+        { id: 'meadow', label: '西海海岸自然林', era: 'joseon' }
+      ]
+    },
+    ja: {
+      pinLabel: '🏞️ 辺山半島国立公園',
+      name: '辺山半島国立公園 (Byeonsanbando)',
+      nameShort: '辺山半島',
+      tier: '韓国第19号 国立公園 (海上・山岳型)',
+      population: '年間220万人来訪',
+      regionName: '湖南圏 (全北・扶安)',
+      statusBadge: '国立公園探索可能',
+      ktx: ['湖南線 KTX 井邑駅 (30分)', '西海岸高速道路 扶安IC'],
+      airports: ['群山空港 (40分)'],
+      tagline: '彩石江の海食崖と古刹・来蘇寺のモミ並木が織りなす名勝',
+      desc: '1988年に指定された韓国唯一の半島型海上・山岳複合国立公園。中生代白亜紀の地層が輝く彩石江と、千年古刹・来蘇寺や直沼滝を巡ることができます。',
+      stats: [
+        { label: '主要名所', value: '彩石江 • 赤壁江 • 来蘇寺 • 直沼滝' },
+        { label: '自然遺産', value: '西海岸国家ジオパーク • 海食崖' }
+      ],
+      eras: [
+        { id: 'joseon', label: '🏯 内辺山・来蘇寺', sub: '渓谷と古刹の森', preset: 'riverside' },
+        { id: 'modern', label: '🌊 外辺山・彩石江', sub: '西海沿岸自然保護区', preset: 'meadow' }
+      ],
+      presets: [
+        { id: 'riverside', label: '辺山渓谷・来蘇寺', era: 'joseon' },
+        { id: 'meadow', label: '西海沿岸エコ自然林', era: 'joseon' }
+      ]
+    },
+    es: {
+      pinLabel: '🏞️ P.N. Byeonsanbando',
+      name: 'Parque Nacional Byeonsanbando',
+      nameShort: 'Byeonsan',
+      tier: 'Parque Nacional N.º 19 (Marino y Montaña)',
+      population: '2.2M visitas/año',
+      regionName: 'Honam (Buan, Jeonbuk)',
+      statusBadge: 'Parque Nacional Activo',
+      ktx: ['Estación KTX Jeongeup (30m)'],
+      airports: ['Aerop. Gunsan (40 min)'],
+      tagline: 'Acantilados de Chaeseokgang y Bosques Milenarios de Naesosa',
+      desc: 'Único parque nacional peninsular de Corea que combina acantilados sedimentarios del Cretácico frente al Mar Oeste con valles interiores y el templo Naesosa.',
+      stats: [
+        { label: 'Hitos', value: 'Chaeseokgang • Jeokbyeokgang • Naesosa' },
+        { label: 'Geología', value: 'Geoparque Nacional de la Costa Oeste' }
+      ],
+      eras: [
+        { id: 'joseon', label: '🏯 Valle Naesosa', sub: 'Templo y Pinares', preset: 'riverside' },
+        { id: 'modern', label: '🌊 Costa Chaeseokgang', sub: 'Reserva Mar Oeste', preset: 'meadow' }
+      ],
+      presets: [
+        { id: 'riverside', label: 'Valle de Naesosa', era: 'joseon' },
+        { id: 'meadow', label: 'Reserva Costera', era: 'joseon' }
+      ]
     }
   }
 };

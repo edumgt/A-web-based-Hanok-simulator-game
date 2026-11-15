@@ -1,5 +1,5 @@
 import { MODERN_CITIES_REGISTRY } from './koreaModernMapData.js';
-import { MAP_UI_TRANSLATIONS, CITY_LOCALIZATIONS } from './koreaMapI18n.js';
+import { MAP_LANGUAGES, MAP_UI_TRANSLATIONS, CITY_LOCALIZATIONS } from './koreaMapI18n.js';
 
 export const CITIES_DATA = MODERN_CITIES_REGISTRY;
 
@@ -10,8 +10,11 @@ class KoreaMapEngine {
     this.selectedPreset = 'village';
     this.activeFilter = 'all';
     this.currentLang = 'ko';
+    this.currentTheme = 'dark';
     this.showKtx = true;
     this.showExpressways = true;
+    this.showParks = true;
+    this.isLnbOpen = false;
     this.initialized = false;
   }
 
@@ -24,10 +27,15 @@ class KoreaMapEngine {
       if (savedLang && MAP_UI_TRANSLATIONS[savedLang]) {
         this.currentLang = savedLang;
       }
+      const savedTheme = localStorage.getItem('appTheme');
+      if (savedTheme === 'light' || savedTheme === 'dark') {
+        this.currentTheme = savedTheme;
+      }
     } catch {
       // Ignore storage access restrictions
     }
 
+    this.applyTheme(this.currentTheme);
     this.bindEvents();
     this.applyLanguage(this.currentLang);
     this.highlightCityPin('seoul');
@@ -46,7 +54,84 @@ class KoreaMapEngine {
     };
   }
 
+  openLnb(focusSectionId) {
+    const drawer = document.getElementById('map-lnb-offcanvas');
+    const backdrop = document.getElementById('map-lnb-backdrop');
+    const openBtn = document.getElementById('lnb-open-btn');
+    if (!drawer) return;
+
+    this.isLnbOpen = true;
+    drawer.classList.add('open');
+    if (backdrop) backdrop.classList.add('visible');
+    if (openBtn) openBtn.setAttribute('aria-expanded', 'true');
+
+    if (focusSectionId) {
+      const target = document.getElementById(focusSectionId);
+      if (target) {
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 80);
+      }
+    }
+  }
+
+  closeLnb() {
+    const drawer = document.getElementById('map-lnb-offcanvas');
+    const backdrop = document.getElementById('map-lnb-backdrop');
+    const openBtn = document.getElementById('lnb-open-btn');
+    if (!drawer) return;
+
+    this.isLnbOpen = false;
+    drawer.classList.remove('open');
+    if (backdrop) backdrop.classList.remove('visible');
+    if (openBtn) openBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  toggleLnb() {
+    if (this.isLnbOpen) {
+      this.closeLnb();
+    } else {
+      this.openLnb();
+    }
+  }
+
   bindEvents() {
+    // LNB Offcanvas open/close triggers
+    const openBtn = document.getElementById('lnb-open-btn');
+    if (openBtn) {
+      openBtn.addEventListener('click', () => this.toggleLnb());
+    }
+
+    const closeBtn = document.getElementById('lnb-close-btn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => this.closeLnb());
+    }
+
+    const backdrop = document.getElementById('map-lnb-backdrop');
+    if (backdrop) {
+      backdrop.addEventListener('click', () => this.closeLnb());
+    }
+
+    const contextCrumb = document.getElementById('map-context-crumb');
+    if (contextCrumb) {
+      contextCrumb.addEventListener('click', () => this.openLnb());
+    }
+
+    // Left quick-rail buttons open offcanvas & focus target section
+    document.querySelectorAll('.rail-icon-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-lnb-target');
+        this.openLnb(targetId);
+      });
+    });
+
+    // Escape closes offcanvas
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.isLnbOpen) {
+        this.closeLnb();
+      }
+    });
+
     // Language selector buttons
     const langBtns = document.querySelectorAll('#map-lang-selector .lang-pill');
     langBtns.forEach(btn => {
@@ -58,7 +143,27 @@ class KoreaMapEngine {
       });
     });
 
-    // City pin clicks on SVG map
+    // Theme toggle buttons (Map Top Bar, Studio Top Bar, and LNB Drawer)
+    const mapThemeBtn = document.getElementById('map-theme-toggle');
+    if (mapThemeBtn) {
+      mapThemeBtn.addEventListener('click', () => this.toggleTheme());
+    }
+
+    const studioThemeBtn = document.getElementById('studio-theme-toggle');
+    if (studioThemeBtn) {
+      studioThemeBtn.addEventListener('click', () => this.toggleTheme());
+    }
+
+    document.querySelectorAll('#map-theme-selector .theme-choice-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const choice = btn.getAttribute('data-theme-choice');
+        if (choice === 'light' || choice === 'dark') {
+          this.setTheme(choice);
+        }
+      });
+    });
+
+    // City & National Park pin clicks on SVG map
     const pins = document.querySelectorAll('.map-city-pin');
     pins.forEach(pin => {
       pin.addEventListener('click', () => {
@@ -69,12 +174,19 @@ class KoreaMapEngine {
       });
     });
 
-    // Province polygon hover and click interaction
+    // Byeonsanbando National Park polygon click
+    const byeonsanPoly = document.getElementById('park-byeonsan-poly');
+    if (byeonsanPoly) {
+      byeonsanPoly.addEventListener('click', () => {
+        this.selectCity('byeonsan');
+      });
+    }
+
+    // Province polygon click interaction
     const provinces = document.querySelectorAll('.province-polygon');
     provinces.forEach(prov => {
       prov.addEventListener('click', () => {
         const provId = prov.getAttribute('data-province');
-        // Map province to representative city
         const provCityMap = {
           seoul: 'seoul',
           gyeonggi: 'suwon',
@@ -95,7 +207,7 @@ class KoreaMapEngine {
       });
     });
 
-    // Region filter buttons
+    // Region filter buttons in LNB
     const filterBtns = document.querySelectorAll('.map-filter-pill');
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -112,6 +224,7 @@ class KoreaMapEngine {
       ktxToggleBtn.addEventListener('click', () => {
         this.showKtx = !this.showKtx;
         ktxToggleBtn.classList.toggle('active', this.showKtx);
+        ktxToggleBtn.setAttribute('aria-pressed', String(this.showKtx));
         const ktxLayer = document.getElementById('layer-ktx');
         if (ktxLayer) {
           ktxLayer.style.display = this.showKtx ? 'inline' : 'none';
@@ -125,10 +238,31 @@ class KoreaMapEngine {
       roadsToggleBtn.addEventListener('click', () => {
         this.showExpressways = !this.showExpressways;
         roadsToggleBtn.classList.toggle('active', this.showExpressways);
+        roadsToggleBtn.setAttribute('aria-pressed', String(this.showExpressways));
         const roadsLayer = document.getElementById('layer-expressways');
         if (roadsLayer) {
           roadsLayer.style.display = this.showExpressways ? 'inline' : 'none';
         }
+      });
+    }
+
+    // Layer toggle: National Parks
+    const parksToggleBtn = document.getElementById('toggle-layer-parks');
+    if (parksToggleBtn) {
+      parksToggleBtn.addEventListener('click', () => {
+        this.showParks = !this.showParks;
+        parksToggleBtn.classList.toggle('active', this.showParks);
+        parksToggleBtn.setAttribute('aria-pressed', String(this.showParks));
+        const parksLayer = document.getElementById('layer-parks');
+        if (parksLayer) {
+          parksLayer.style.display = this.showParks ? 'inline' : 'none';
+        }
+        document.querySelectorAll('.map-city-pin.park-pin').forEach(pin => {
+          const cityId = pin.getAttribute('data-city-id');
+          const city = CITIES_DATA[cityId];
+          const matchesRegion = this.activeFilter === 'all' || (city && city.region === this.activeFilter);
+          pin.style.display = this.showParks && matchesRegion ? '' : 'none';
+        });
       });
     }
 
@@ -168,28 +302,52 @@ class KoreaMapEngine {
       btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
     });
 
-    // 2. Top bar header & actions
-    const mainTitleEl = document.querySelector('[data-i18n="mainTitle"]');
-    if (mainTitleEl) mainTitleEl.textContent = t.mainTitle;
-
-    const subTitleEl = document.querySelector('[data-i18n="subTitle"]');
-    if (subTitleEl) subTitleEl.textContent = t.subTitle;
-
-    document.querySelectorAll('.map-filter-pill').forEach(pill => {
-      const key = pill.getAttribute('data-filter');
-      if (key && t.filters[key]) {
-        pill.textContent = t.filters[key];
-      }
+    // 2. Top bar & LNB header labels
+    document.querySelectorAll('[data-i18n="mainTitle"]').forEach(el => {
+      el.textContent = t.mainTitle;
     });
 
-    const ktxBtn = document.getElementById('toggle-layer-ktx');
-    if (ktxBtn) ktxBtn.textContent = t.toggles.ktx;
-
-    const roadsBtn = document.getElementById('toggle-layer-roads');
-    if (roadsBtn) roadsBtn.textContent = t.toggles.roads;
+    const menuLabelEl = document.getElementById('lnb-trigger-label');
+    if (menuLabelEl && t.menuBtn) menuLabelEl.textContent = t.menuBtn;
 
     const directEnterLabel = document.getElementById('map-direct-enter-label');
     if (directEnterLabel) directEnterLabel.textContent = t.directEnterBtn;
+
+    // LNB headings & rail captions
+    if (t.lnb) {
+      document.querySelectorAll('[data-i18n-lnb]').forEach(el => {
+        const key = el.getAttribute('data-i18n-lnb');
+        if (key && t.lnb[key]) {
+          el.textContent = t.lnb[key];
+        }
+      });
+    }
+
+    // Region filter pills inside LNB
+    document.querySelectorAll('.map-filter-pill').forEach(pill => {
+      const key = pill.getAttribute('data-filter');
+      const labelSpan = pill.querySelector('.lnb-nav-label');
+      if (key && t.filters[key]) {
+        if (labelSpan) {
+          labelSpan.textContent = t.filters[key];
+        } else {
+          pill.textContent = t.filters[key];
+        }
+      }
+    });
+
+    // Layer toggle labels inside LNB
+    const ktxLabel = document.getElementById('toggle-label-ktx');
+    if (ktxLabel) ktxLabel.textContent = t.toggles.ktx;
+
+    const roadsLabel = document.getElementById('toggle-label-roads');
+    if (roadsLabel) roadsLabel.textContent = t.toggles.roads;
+
+    const parksLabel = document.getElementById('toggle-label-parks');
+    if (parksLabel && t.toggles.parks) parksLabel.textContent = t.toggles.parks;
+
+    // Theme labels (5-language localized)
+    this.syncThemeLabels(lang);
 
     // 3. SVG map static labels
     const svgMap = {
@@ -212,7 +370,6 @@ class KoreaMapEngine {
       if (el) el.textContent = text;
     });
 
-    // Resize DMZ box cleanly around translated text
     const dmzText = document.getElementById('svg-i18n-dmzLabel');
     const dmzBox = document.getElementById('svg-i18n-dmzBox');
     if (dmzText && dmzBox) {
@@ -222,8 +379,8 @@ class KoreaMapEngine {
       dmzBox.setAttribute('x', String(400 - boxW / 2));
     }
 
-    // 4. SVG city pin labels & dynamic banner box fitting
-    const leftAlignedCities = new Set(['incheon', 'gwangju', 'sejong', 'jeonju']);
+    // 4. SVG city & national park pin labels & dynamic banner box fitting
+    const leftAlignedCities = new Set(['incheon', 'gwangju', 'sejong', 'byeonsan']);
     document.querySelectorAll('.map-city-pin').forEach(pin => {
       const cityId = pin.getAttribute('data-city-id');
       if (!cityId) return;
@@ -256,11 +413,13 @@ class KoreaMapEngine {
       const rectEl = banner.querySelector('rect');
       if (textEl) textEl.textContent = pinText;
       if (textEl && rectEl) {
-        const textW = typeof textEl.getComputedTextLength === 'function' ? textEl.getComputedTextLength() : 72;
+        const textW = typeof textEl.getComputedTextLength === 'function' ? textEl.getComputedTextLength() : 76;
         const boxW = Math.max(66, Math.ceil(textW) + 18);
         rectEl.setAttribute('width', String(boxW));
         if (leftAlignedCities.has(cityId)) {
           banner.setAttribute('transform', `translate(-${boxW + 8}, 4)`);
+        } else {
+          banner.setAttribute('transform', 'translate(14, 4)');
         }
       }
     });
@@ -273,8 +432,113 @@ class KoreaMapEngine {
       }
     });
 
-    // 6. Re-render active dossier in selected language
+    // 6. Re-render LNB directory, top context crumb, and dossier
+    this.renderLnbDirectory();
+    this.updateContextBreadcrumb();
     this.renderCityDossier(this.selectedCityId);
+  }
+
+  setTheme(theme) {
+    if (theme !== 'light' && theme !== 'dark') return;
+    this.currentTheme = theme;
+    try {
+      localStorage.setItem('appTheme', theme);
+    } catch {
+      // Ignore storage restrictions
+    }
+    this.applyTheme(theme);
+  }
+
+  toggleTheme() {
+    const nextTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+    this.setTheme(nextTheme);
+  }
+
+  applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    this.syncThemeLabels(this.currentLang);
+  }
+
+  syncThemeLabels(lang) {
+    const t = MAP_UI_TRANSLATIONS[lang] || MAP_UI_TRANSLATIONS.ko;
+    const themeMeta = t.theme || MAP_UI_TRANSLATIONS.ko.theme;
+    const isLight = this.currentTheme === 'light';
+
+    const mapToggleBtn = document.getElementById('map-theme-toggle');
+    const mapToggleLabel = document.getElementById('map-theme-toggle-label');
+    if (mapToggleLabel) {
+      mapToggleLabel.textContent = isLight ? themeMeta.lightShort : themeMeta.darkShort;
+    }
+    if (mapToggleBtn) {
+      mapToggleBtn.setAttribute('title', themeMeta.toggleTitle);
+      mapToggleBtn.setAttribute('aria-label', themeMeta.toggleTitle);
+      mapToggleBtn.setAttribute('aria-pressed', String(isLight));
+    }
+
+    const studioToggleBtn = document.getElementById('studio-theme-toggle');
+    if (studioToggleBtn) {
+      studioToggleBtn.textContent = isLight ? themeMeta.lightShort : themeMeta.darkShort;
+      studioToggleBtn.setAttribute('title', themeMeta.toggleTitle);
+      studioToggleBtn.setAttribute('aria-pressed', String(!isLight));
+    }
+
+    const lnbLightBtn = document.getElementById('lnb-theme-light');
+    const lnbDarkBtn = document.getElementById('lnb-theme-dark');
+    if (lnbLightBtn) {
+      lnbLightBtn.textContent = themeMeta.lightFull;
+      lnbLightBtn.classList.toggle('active', isLight);
+      lnbLightBtn.setAttribute('aria-pressed', String(isLight));
+    }
+    if (lnbDarkBtn) {
+      lnbDarkBtn.textContent = themeMeta.darkFull;
+      lnbDarkBtn.classList.toggle('active', !isLight);
+      lnbDarkBtn.setAttribute('aria-pressed', String(!isLight));
+    }
+  }
+
+  updateContextBreadcrumb() {
+    const t = MAP_UI_TRANSLATIONS[this.currentLang] || MAP_UI_TRANSLATIONS.ko;
+    const locCity = this.getLocalizedCity(this.selectedCityId);
+    const langMeta = MAP_LANGUAGES.find(l => l.code === this.currentLang) || MAP_LANGUAGES[0];
+
+    const regionEl = document.getElementById('crumb-region');
+    const cityEl = document.getElementById('crumb-city');
+    const langEl = document.getElementById('crumb-lang');
+
+    if (regionEl) regionEl.textContent = t.filters[this.activeFilter] || t.filters.all;
+    if (cityEl) cityEl.textContent = locCity.nameShort;
+    if (langEl) langEl.textContent = `${langMeta.flag} ${langMeta.label}`;
+  }
+
+  renderLnbDirectory() {
+    const container = document.getElementById('lnb-city-directory');
+    if (!container) return;
+
+    const cities = Object.values(CITIES_DATA).filter(c => this.activeFilter === 'all' || c.region === this.activeFilter);
+    container.innerHTML = cities.map(c => {
+      const loc = this.getLocalizedCity(c.id);
+      const isSelected = c.id === this.selectedCityId;
+      const isPark = c.category === 'park';
+      return `
+        <button type="button" class="lnb-dir-item ${isSelected ? 'active' : ''} ${isPark ? 'is-park' : ''}" data-city-id="${c.id}">
+          <span class="dir-item-icon">${c.icon}</span>
+          <span class="dir-item-text">
+            <span class="dir-item-name">${loc.nameShort}</span>
+            <span class="dir-item-sub">${loc.regionName}</span>
+          </span>
+        </button>
+      `;
+    }).join('');
+
+    container.querySelectorAll('.lnb-dir-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cityId = btn.getAttribute('data-city-id');
+        if (cityId && CITIES_DATA[cityId]) {
+          this.selectCity(cityId);
+          this.closeLnb();
+        }
+      });
+    });
   }
 
   selectCity(cityId) {
@@ -282,13 +546,14 @@ class KoreaMapEngine {
     const city = CITIES_DATA[cityId];
     if (!city) return;
 
-    // Reset era to first available
     if (city.eras && city.eras.length > 0) {
       this.selectedEra = city.eras[0].id;
       this.selectedPreset = city.eras[0].preset;
     }
 
     this.highlightCityPin(cityId);
+    this.renderLnbDirectory();
+    this.updateContextBreadcrumb();
     this.renderCityDossier(cityId);
   }
 
@@ -308,12 +573,16 @@ class KoreaMapEngine {
       const city = CITIES_DATA[cityId];
       if (!city) return;
 
-      if (filter === 'all' || city.region === filter) {
+      const hiddenByParkToggle = pin.classList.contains('park-pin') && !this.showParks;
+      if (!hiddenByParkToggle && (filter === 'all' || city.region === filter)) {
         pin.style.display = '';
       } else {
         pin.style.display = 'none';
       }
     });
+
+    this.renderLnbDirectory();
+    this.updateContextBreadcrumb();
   }
 
   renderCityDossier(cityId) {
@@ -323,6 +592,8 @@ class KoreaMapEngine {
     if (!container) return;
 
     const isSeoul = city.id === 'seoul';
+    const isPark = city.category === 'park';
+    const badgeVariant = isSeoul ? 'gold' : (isPark ? 'emerald' : 'blue');
 
     let erasHtml = '';
     if (city.eras && city.eras.length > 0) {
@@ -389,9 +660,10 @@ class KoreaMapEngine {
 
     container.innerHTML = `
       <div class="dossier-header">
-        <div class="dossier-badge-row">
-          <span class="dossier-badge ${isSeoul ? 'gold' : 'blue'}">${city.statusBadge}</span>
-          <span class="dossier-tier-badge">${city.tier}</span>
+        <div class="dossier-meta-line">
+          <span class="dossier-status-text ${badgeVariant}">${city.statusBadge}</span>
+          <span aria-hidden="true">·</span>
+          <span>${city.tier}</span>
         </div>
         <h2 class="dossier-title">
           <span class="dossier-icon">${city.icon}</span> ${city.name}
@@ -408,7 +680,6 @@ class KoreaMapEngine {
       ${quickPresetsHtml}
     `;
 
-    // Re-bind era card clicks
     const eraCards = container.querySelectorAll('.dossier-era-card');
     eraCards.forEach(card => {
       card.addEventListener('click', () => {
@@ -419,7 +690,6 @@ class KoreaMapEngine {
       });
     });
 
-    // Re-bind preset pill clicks
     const presetPills = container.querySelectorAll('.dossier-preset-pill');
     presetPills.forEach(pill => {
       pill.addEventListener('click', () => {
@@ -427,12 +697,10 @@ class KoreaMapEngine {
         pill.classList.add('active');
         this.selectedEra = pill.getAttribute('data-era-id');
         this.selectedPreset = pill.getAttribute('data-preset-id');
-        // Auto launch on direct preset pill click
         this.launchStudio(this.selectedCityId, this.selectedEra, this.selectedPreset);
       });
     });
 
-    // Update launch button text
     const launchBtn = document.getElementById('dossier-launch-btn');
     if (launchBtn) {
       launchBtn.innerHTML = `<span>${city.nameShort} ${t.dossier.launchSuffix}</span> <span class="arrow-icon">&rarr;</span>`;
@@ -445,12 +713,14 @@ class KoreaMapEngine {
 
     if (!mapScreen || !studioScreen) return;
 
-    // Apply Era and Preset in studio engine
+    if (this.isLnbOpen) {
+      this.closeLnb();
+    }
+
     if (window.__studioController) {
       window.__studioController.enterStudio(eraId || 'joseon', presetId || 'village');
     }
 
-    // Cinematic fade-zoom transition
     mapScreen.classList.add('fade-out');
     studioScreen.classList.add('active');
 
@@ -484,7 +754,6 @@ class KoreaMapEngine {
 
 export const koreaMapEngine = new KoreaMapEngine();
 
-// Global helper for studio top bar back button
 window.showKoreaIntroMap = function() {
   koreaMapEngine.returnToMap();
 };

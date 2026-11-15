@@ -632,5 +632,37 @@ export const MODERN_CITIES_REGISTRY = {
     presets: [
       { id: 'village', label: '대동강 마을', era: 'joseon' }
     ]
+  },
+  byeonsan: {
+    id: 'byeonsan',
+    name: '변산반도 국립공원 (Byeonsanbando)',
+    nameShort: '변산반도',
+    hanja: '邊山半島國立公園',
+    tier: '대한민국 제19호 국립공원 (해상·산악형)',
+    population: '연 220만명 방문',
+    area: '154.7 km²',
+    region: 'honam',
+    regionName: '호남권 (전북 부안)',
+    category: 'park',
+    status: 'ready',
+    statusBadge: '국립공원 탐방 가능',
+    coords: { x: 276, y: 628 },
+    icon: '🏞️',
+    ktx: ['호남선 KTX 정읍역 (30분 연계)', '서해안고속도로 부안IC'],
+    airports: ['새만금 · 군산공항 (40분)'],
+    tagline: '채석강의 해식절벽과 내소사 전나무숲이 어우러진 서해 명승',
+    desc: '1988년 대한민국 제19호 국립공원으로 지정된 국내 유일의 반도형 해상·산악 복합 국립공원입니다. 중생대 백악기 퇴적층이 빚은 채석강·적벽강 해안 절경(외변산)과 천년고찰 내소사·직소폭포·의상봉(내변산)을 16×16 스튜디오에서 체험할 수 있습니다.',
+    stats: [
+      { label: '주요 명소', value: '채석강 • 적벽강 • 내소사 • 직소폭포' },
+      { label: '지질·자연', value: '서해안 국가지질공원 • 해식절벽' }
+    ],
+    eras: [
+      { id: 'joseon', label: '🏯 내변산 & 사찰', sub: '내소사 계곡과 소나무', preset: 'riverside' },
+      { id: 'modern', label: '🌊 외변산 채석강', sub: '서해 해안 생태지대', preset: 'meadow' }
+    ],
+    presets: [
+      { id: 'riverside', label: '변산 계곡·내소사', era: 'joseon' },
+      { id: 'meadow', label: '서해 해안·자연림', era: 'joseon' }
+    ]
   }
 };
