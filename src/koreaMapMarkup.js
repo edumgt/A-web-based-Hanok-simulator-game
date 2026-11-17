@@ -48,27 +48,50 @@ export const KOREA_MAP_MARKUP = `
     <!-- Compact Left Quick Rail (Desktop) -->
     <nav class="map-lnb-rail" aria-label="Quick Map Navigation">
       <button type="button" class="rail-icon-btn" data-lnb-target="lnb-sec-regions" title="권역 탐색">
-        <span class="rail-glyph" aria-hidden="true">🗺️</span>
+        <svg class="rail-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
+          <line x1="9" y1="3" x2="9" y2="18"/>
+          <line x1="15" y1="6" x2="15" y2="21"/>
+        </svg>
         <span class="rail-caption" data-i18n-lnb="railRegions">권역</span>
       </button>
       <button type="button" class="rail-icon-btn" data-lnb-target="lnb-sec-directory" title="주요 도시 및 국립공원">
-        <span class="rail-glyph" aria-hidden="true">🏞️</span>
+        <svg class="rail-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 21s-6-5.33-6-10a6 6 0 1 1 12 0c0 4.67-6 10-6 10z"/>
+          <circle cx="12" cy="11" r="2.2"/>
+        </svg>
         <span class="rail-caption" data-i18n-lnb="railPlaces">명소</span>
       </button>
       <button type="button" class="rail-icon-btn" data-lnb-target="lnb-sec-studios" title="각 지역 스튜디오 바로가기">
-        <span class="rail-glyph" aria-hidden="true">🏗️</span>
+        <svg class="rail-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+          <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+          <line x1="12" y1="22.08" x2="12" y2="12"/>
+        </svg>
         <span class="rail-caption" data-i18n-lnb="railStudios">스튜디오</span>
       </button>
       <button type="button" class="rail-icon-btn" data-lnb-target="lnb-sec-layers" title="지도 인프라 레이어">
-        <span class="rail-glyph" aria-hidden="true">🚆</span>
+        <svg class="rail-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+          <polyline points="2 12 12 17 22 12"/>
+          <polyline points="2 17 12 22 22 17"/>
+        </svg>
         <span class="rail-caption" data-i18n-lnb="railLayers">레이어</span>
       </button>
       <button type="button" class="rail-icon-btn" data-lnb-target="lnb-sec-language" title="언어 설정">
-        <span class="rail-glyph" aria-hidden="true">🌐</span>
+        <svg class="rail-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="9.5"/>
+          <line x1="2.5" y1="12" x2="21.5" y2="12"/>
+          <path d="M12 2.5a14 14 0 0 1 0 19 14 14 0 0 1 0-19z"/>
+        </svg>
         <span class="rail-caption" data-i18n-lnb="railLang">언어</span>
       </button>
       <button type="button" class="rail-icon-btn" data-lnb-target="lnb-sec-theme" title="화면 테마">
-        <span class="rail-glyph" aria-hidden="true">🌓</span>
+        <svg class="rail-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 3v18"/>
+          <path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" opacity="0.22"/>
+        </svg>
         <span class="rail-caption" data-i18n-lnb="railTheme">테마</span>
       </button>
     </nav>
@@ -84,6 +107,15 @@ export const KOREA_MAP_MARKUP = `
           <div class="lnb-brand-sub" data-i18n-lnb="brandSub">국토 공간 아틀라스</div>
         </div>
         <button type="button" class="lnb-close-btn" id="lnb-close-btn" aria-label="Close Menu">&times;</button>
+      </div>
+
+      <div class="lnb-search-wrap">
+        <svg class="lnb-search-icon" viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <circle cx="8.5" cy="8.5" r="5.5"/>
+          <line x1="12.5" y1="12.5" x2="17" y2="17"/>
+        </svg>
+        <input type="search" id="lnb-search-input" class="lnb-search-input" placeholder="도시 · 국립공원 검색..." autocomplete="off" />
+        <button type="button" id="lnb-search-clear" class="lnb-search-clear" aria-label="Clear search" hidden>&times;</button>
       </div>
 
       <div class="lnb-scroll-body">
@@ -146,6 +178,10 @@ export const KOREA_MAP_MARKUP = `
         <section class="lnb-section" id="lnb-sec-layers">
           <h2 class="lnb-section-heading" data-i18n-lnb="layersTitle">지도 인프라 레이어</h2>
           <div class="lnb-toggle-list">
+            <button type="button" class="lnb-switch-row active" id="toggle-layer-satellite" aria-pressed="true">
+              <span class="switch-label" id="toggle-label-satellite">실사 위성·지형 지도</span>
+              <span class="switch-track"><span class="switch-thumb"></span></span>
+            </button>
             <button type="button" class="lnb-switch-row active" id="toggle-layer-ktx" aria-pressed="true">
               <span class="switch-label" id="toggle-label-ktx">KTX / SRT 고속철도망</span>
               <span class="switch-track"><span class="switch-thumb"></span></span>
@@ -184,13 +220,13 @@ export const KOREA_MAP_MARKUP = `
       </div>
     </aside>
 
-    <!-- Center: High-Precision Modern Vector Map -->
+    <!-- Center: High-Precision Photorealistic Satellite + Vector GIS Map -->
     <div class="map-viewport-wrap">
       <div class="map-canvas-card">
         <!-- GIS Geodetic Coordinates Readout -->
         <div class="gis-telemetry-corner top-left">
           <span class="telemetry-value">KGD2002 / WGS84</span>
-          <span class="telemetry-sub">37°33'59"N · 126°58'41"E</span>
+          <span class="telemetry-sub" id="gis-active-coords">37°33'59"N · 126°58'41"E</span>
         </div>
 
         <div class="gis-telemetry-corner top-right">
@@ -206,31 +242,22 @@ export const KOREA_MAP_MARKUP = `
           </div>
         </div>
 
-        <!-- High Precision Modern Korea SVG Map -->
+        <!-- High Precision Modern Korea Satellite & Vector SVG Map -->
         <svg id="korea-peninsula-svg" class="korea-peninsula-svg modern-svg" viewBox="0 0 860 1000" preserveAspectRatio="xMidYMid meet">
           <defs>
-            <!-- Modern Ocean Depth Radial Gradient -->
+            <!-- Modern Ocean Depth Radial Gradient (Fallback when satellite imagery off) -->
             <radialGradient id="modernOceanGrad" cx="45%" cy="50%" r="65%">
               <stop offset="0%" class="ocean-stop-1"/>
               <stop offset="60%" class="ocean-stop-2"/>
               <stop offset="100%" class="ocean-stop-3"/>
             </radialGradient>
 
-            <!-- Modern Land Gradient -->
+            <!-- Modern Land Gradient (Fallback when satellite imagery off) -->
             <linearGradient id="modernLandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" class="land-stop-1"/>
               <stop offset="50%" class="land-stop-2"/>
               <stop offset="100%" class="land-stop-3"/>
             </linearGradient>
-
-            <!-- Glowing KTX Pulse Filter -->
-            <filter id="ktxNeonGlow" x="-30%" y="-30%" width="160%" height="160%">
-              <feGaussianBlur stdDeviation="3.5" result="blur"/>
-              <feMerge>
-                <feMergeNode in="blur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
 
             <!-- Active Seoul Gold Beacon Glow -->
             <filter id="seoulGoldGlow" x="-50%" y="-50%" width="200%" height="200%">
@@ -245,263 +272,171 @@ export const KOREA_MAP_MARKUP = `
                 <feMergeNode in="SourceGraphic"/>
               </feMerge>
             </filter>
-
-            <!-- Coordinate Grid Pattern (Latitude / Longitude) -->
-            <pattern id="latLonGrid" width="100" height="100" patternUnits="userSpaceOnUse">
-              <path class="grid-line-path" d="M 100 0 L 0 0 0 100" fill="none" stroke-width="0.8"/>
-              <circle class="grid-dot-node" cx="0" cy="0" r="1.5"/>
-            </pattern>
           </defs>
 
-          <!-- Latitude/Longitude Spatial Grid Background -->
+          <!-- Vector Fallback Ocean Backdrop -->
           <rect width="860" height="1000" fill="url(#modernOceanGrad)"/>
-          <rect width="860" height="1000" fill="url(#latLonGrid)"/>
+
+          <!-- High-Resolution Photorealistic Satellite & Shaded-Relief Raster Layer -->
+          <image id="korea-satellite-layer" class="korea-satellite-layer" x="0" y="0" width="860" height="1000" preserveAspectRatio="none"/>
+
+          <!-- Calibrated WGS84 Geographic Graticule (Parallels & Meridians) -->
+          <g class="graticule-lines" fill="none" stroke-width="0.75">
+            <line x1="0" y1="145" x2="860" y2="145"/>
+            <line x1="0" y1="325" x2="860" y2="325"/>
+            <line x1="0" y1="505" x2="860" y2="505" stroke-dasharray="4 4"/>
+            <line x1="0" y1="685" x2="860" y2="685"/>
+            <line x1="0" y1="865" x2="860" y2="865"/>
+            <line x1="148" y1="0" x2="148" y2="1000"/>
+            <line x1="292" y1="0" x2="292" y2="1000"/>
+            <line x1="436" y1="0" x2="436" y2="1000"/>
+            <line x1="580" y1="0" x2="580" y2="1000"/>
+            <line x1="724" y1="0" x2="724" y2="1000"/>
+          </g>
 
           <!-- Graticule Coordinate Labels -->
           <g class="graticule-labels" font-family="'JetBrains Mono', monospace" font-size="9">
-            <text x="30" y="200">40°00'N</text>
-            <text x="30" y="400" id="svg-i18n-parallel38">38°00'N (38선)</text>
-            <text x="30" y="600">36°00'N</text>
-            <text x="30" y="800">34°00'N</text>
-            <text x="200" y="985">126°00'E</text>
-            <text x="400" y="985">128°00'E</text>
-            <text x="600" y="985">130°00'E</text>
-            <text x="750" y="985">132°00'E</text>
+            <text x="20" y="140">42°00'N</text>
+            <text x="20" y="320">40°00'N</text>
+            <text x="20" y="500" id="svg-i18n-parallel38">38°00'N (38선)</text>
+            <text x="20" y="680">36°00'N</text>
+            <text x="20" y="860">34°00'N</text>
+            <text x="148" y="986" text-anchor="middle">124°00'E</text>
+            <text x="292" y="986" text-anchor="middle">126°00'E</text>
+            <text x="436" y="986" text-anchor="middle">128°00'E</text>
+            <text x="580" y="986" text-anchor="middle">130°00'E</text>
+            <text x="724" y="986" text-anchor="middle">132°00'E</text>
           </g>
 
           <!-- Sea Territorial Waters Names -->
           <g class="sea-labels-modern" font-family="'Plus Jakarta Sans', sans-serif">
             <!-- West Sea (Yellow Sea) -->
-            <g transform="translate(130, 480)" text-anchor="middle">
-              <text id="svg-i18n-westSeaTitle" class="sea-title-text" font-size="28" font-weight="600" letter-spacing="6">西 海</text>
-              <text id="svg-i18n-westSeaSub" class="sea-sub-text" y="24" font-size="11">황해 &bull; 서해 영해 (Yellow Sea)</text>
+            <g transform="translate(135, 595)" text-anchor="middle">
+              <text id="svg-i18n-westSeaTitle" class="sea-title-text" font-size="26" font-weight="600" letter-spacing="6">西 海</text>
+              <text id="svg-i18n-westSeaSub" class="sea-sub-text" y="22" font-size="10.5">황해 &bull; 서해 영해 (Yellow Sea)</text>
             </g>
             <!-- East Sea -->
-            <g transform="translate(710, 360)" text-anchor="middle">
-              <text id="svg-i18n-eastSeaTitle" class="sea-title-text" font-size="28" font-weight="600" letter-spacing="6">東 海</text>
-              <text id="svg-i18n-eastSeaSub" class="sea-sub-text" y="24" font-size="11">대한민국 동해 (East Sea)</text>
+            <g transform="translate(685, 390)" text-anchor="middle">
+              <text id="svg-i18n-eastSeaTitle" class="sea-title-text" font-size="26" font-weight="600" letter-spacing="6">東 海</text>
+              <text id="svg-i18n-eastSeaSub" class="sea-sub-text" y="22" font-size="10.5">대한민국 동해 (East Sea)</text>
             </g>
             <!-- South Sea & Korea Strait -->
-            <g transform="translate(480, 890)" text-anchor="middle">
-              <text id="svg-i18n-southSeaTitle" class="sea-title-text" font-size="28" font-weight="600" letter-spacing="6">南 海</text>
-              <text id="svg-i18n-southSeaSub" class="sea-sub-text" y="24" font-size="11">대한해협 &bull; 남해 (South Sea)</text>
+            <g transform="translate(520, 892)" text-anchor="middle">
+              <text id="svg-i18n-southSeaTitle" class="sea-title-text" font-size="26" font-weight="600" letter-spacing="6">南 海</text>
+              <text id="svg-i18n-southSeaSub" class="sea-sub-text" y="22" font-size="10.5">대한해협 &bull; 남해 (South Sea)</text>
             </g>
           </g>
 
-          <!-- Bathymetry Depth Isolines (해저 등심선) -->
-          <g class="bathymetry" stroke-width="1.2" fill="none">
-            <path d="M 120,200 C 180,400 180,700 240,900"/>
-            <path d="M 680,100 C 620,400 640,700 600,850"/>
-            <path d="M 200,850 C 350,840 500,820 620,800"/>
-          </g>
+          <!-- ================= REALISTIC PENINSULA COASTLINE & ISLANDS ================= -->
 
-          <!-- ================= MODERN PENINSULA LANDMASS & PROVINCES ================= -->
+          <!-- Authentic WGS84 Korean Peninsula Mainland Coastline (Hydrated from KOREA_MAINLAND_GEO) -->
+          <path id="korea-peninsula-base" class="korea-peninsula-base" d="" stroke-width="1.5" stroke-linejoin="round"/>
 
-          <!-- Base Korean Peninsula Outer Silhouette (with Byeonsanbando western peninsula headland sculpted) -->
-          <path id="korea-peninsula-base" class="korea-peninsula-base" d="
-            M 180,90
-            C 210,95 280,75 360,65
-            C 430,55 520,50 620,70
-            C 630,90 610,130 580,150
-            C 550,170 510,185 480,210
-            C 460,230 450,260 460,290
-            C 475,320 495,350 510,380
-            C 525,410 540,460 550,510
-            C 560,560 575,610 560,650
-            C 550,680 540,710 520,735
-            C 490,755 450,765 410,775
-            C 360,785 320,800 290,785
-            C 270,770 260,740 250,700
-            C 242,665 268,645 270,636
-            C 256,632 256,615 272,612
-            C 280,602 282,585 286,570
-            C 296,545 298,515 280,480
-            C 260,450 270,420 295,395
-            C 310,380 280,355 260,335
-            C 235,310 220,280 230,240
-            C 240,200 220,165 195,140
-            C 175,120 170,105 180,90
-            Z
-          " fill="url(#modernLandGrad)" stroke-width="2.5"/>
+          <!-- Authentic Korean Islands Outlines (Hydrated from KOREA_ISLANDS_GEO) -->
+          <g id="korea-islands-vector" class="korea-islands-vector" stroke-width="1.2" stroke-linejoin="round"></g>
 
-          <!-- 17 Modern Administrative Division Sectors -->
+          <!-- Subtle Metropolitan Sector Rings / Seoul Focus -->
           <g id="modern-provinces-layer" class="modern-provinces-layer">
-            <!-- Gyeonggi-do -->
-            <path class="province-polygon" data-province="gyeonggi" d="
-              M 315,365 
-              C 340,350 375,340 405,355 
-              C 425,370 435,400 425,435 
-              C 415,465 390,475 355,470 
-              C 325,465 305,445 310,410 
-              C 295,400 290,380 315,365 Z
-            " fill="rgba(59, 130, 246, 0.08)" stroke="#3b82f6" stroke-width="1.2" stroke-dasharray="3 2"/>
-
-            <!-- Gangwon State -->
-            <path class="province-polygon" data-province="gangwon" d="
-              M 405,345 
-              C 435,320 460,300 475,325 
-              C 490,350 515,390 530,440 
-              C 515,465 470,470 435,460 
-              C 420,430 415,380 405,345 Z
-            " fill="rgba(139, 92, 246, 0.07)" stroke="#8b5cf6" stroke-width="1.2" stroke-dasharray="3 2"/>
-
-            <!-- Chungnam & Daejeon/Sejong -->
-            <path class="province-polygon" data-province="chungnam" d="
-              M 310,465 
-              C 345,465 375,475 390,505 
-              C 400,535 385,570 350,575 
-              C 315,580 280,560 270,520 
-              C 260,480 285,465 310,465 Z
-            " fill="rgba(6, 182, 212, 0.07)" stroke="#06b6d4" stroke-width="1.2" stroke-dasharray="3 2"/>
-
-            <!-- Chungbuk -->
-            <path class="province-polygon" data-province="chungbuk" d="
-              M 390,460 
-              C 425,455 450,470 470,490 
-              C 455,530 425,550 400,545 
-              C 385,525 380,485 390,460 Z
-            " fill="rgba(245, 158, 11, 0.07)" stroke="#f59e0b" stroke-width="1.2" stroke-dasharray="3 2"/>
-
-            <!-- Gyeongbuk & Daegu -->
-            <path class="province-polygon" data-province="gyeongbuk" d="
-              M 470,470 
-              C 525,450 545,510 565,600 
-              C 570,640 535,665 490,660 
-              C 455,640 445,580 445,530 
-              C 450,495 460,480 470,470 Z
-            " fill="rgba(236, 72, 153, 0.07)" stroke="#ec4899" stroke-width="1.2" stroke-dasharray="3 2"/>
-
-            <!-- Gyeongnam & Busan/Ulsan -->
-            <path class="province-polygon" data-province="gyeongnam" d="
-              M 450,650 
-              C 500,645 550,650 545,690 
-              C 540,735 500,760 450,765 
-              C 405,760 400,720 420,680 
-              C 435,660 445,655 450,650 Z
-            " fill="rgba(20, 184, 166, 0.07)" stroke="#14b8a6" stroke-width="1.2" stroke-dasharray="3 2"/>
-
-            <!-- Jeonbuk State -->
-            <path class="province-polygon" data-province="jeonbuk" d="
-              M 310,575 
-              C 355,570 395,580 415,615 
-              C 415,650 375,665 330,660 
-              C 290,655 268,636 270,622 
-              C 272,605 288,585 310,575 Z
-            " fill="rgba(99, 102, 241, 0.07)" stroke="#6366f1" stroke-width="1.2" stroke-dasharray="3 2"/>
-
-            <!-- Jeonnam & Gwangju -->
-            <path class="province-polygon" data-province="jeonnam" d="
-              M 300,655 
-              C 340,655 385,650 410,685 
-              C 415,730 380,775 330,785 
-              C 275,780 245,740 255,700 
-              C 265,670 285,660 300,655 Z
-            " fill="rgba(239, 68, 68, 0.07)" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="3 2"/>
-
-            <!-- Seoul Capital Highlight Border -->
-            <path class="province-polygon seoul-highlight" data-province="seoul" d="
-              M 338,388 C 344,385 356,386 362,392 C 364,398 360,405 352,406 C 344,407 336,400 338,388 Z
-            " fill="rgba(226, 180, 116, 0.25)" stroke="#e2b474" stroke-width="2"/>
+            <circle class="province-polygon seoul-highlight" data-province="seoul" cx="363" cy="544" r="14" fill="rgba(226, 180, 116, 0.16)" stroke="#e2b474" stroke-width="1.8"/>
           </g>
 
           <!-- National Parks & Marine Reserves Layer -->
           <g id="layer-parks" class="modern-parks-layer">
-            <!-- Byeonsanbando National Park (변산반도 국립공원 - Jeonbuk West Peninsula) -->
+            <!-- Byeonsanbando National Park (변산반도 국립공원 - Real WGS84 Headland) -->
             <path id="park-byeonsan-poly" class="national-park-zone" data-city-id="byeonsan" d="
-              M 284,606
-              C 265,609 258,622 264,637
-              C 272,646 289,644 295,631
-              C 297,618 292,608 284,606 Z
-            " fill="rgba(16, 185, 129, 0.22)" stroke="#10b981" stroke-width="1.6" stroke-dasharray="3 2" cursor="pointer"/>
-            <!-- Mt. Hallasan National Park Reserve (Jeju) -->
-            <ellipse cx="285" cy="920" rx="22" ry="11" fill="rgba(16, 185, 129, 0.18)" stroke="#10b981" stroke-width="1.1" stroke-dasharray="2 2"/>
+              M 321,717 L 325,709 L 336,708 L 341,717 L 336,725 L 325,725 Z
+            " fill="rgba(16, 185, 129, 0.24)" stroke="#10b981" stroke-width="1.6" stroke-dasharray="3 2" cursor="pointer"/>
+            <!-- Mt. Hallasan National Park Reserve (Jeju 33.36°N 126.53°E -> 330, 922) -->
+            <ellipse cx="330" cy="922" rx="18" ry="8.5" fill="rgba(16, 185, 129, 0.2)" stroke="#10b981" stroke-width="1.2" stroke-dasharray="2 2"/>
           </g>
 
-          <!-- Modern Military Demarcation Line (DMZ / 휴전선) -->
+          <!-- Authentic Modern Military Demarcation Line (DMZ / 휴전선) -->
           <g class="dmz-layer" stroke="#f43f5e" stroke-width="1.8" stroke-dasharray="5 3">
-            <path d="M 270,360 L 315,355 L 375,342 L 435,325 L 485,305"/>
-            <rect id="svg-i18n-dmzBox" class="dmz-box" x="352" y="328" width="96" height="15" rx="3" stroke="#f43f5e" stroke-width="0.8"/>
-            <text id="svg-i18n-dmzLabel" class="dmz-label" x="400" y="339" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="bold" text-anchor="middle">DMZ 휴전선 (MDL)</text>
+            <path d="M 335,527 L 341,509 L 378,480 L 408,470 L 462,450" fill="none"/>
+            <rect id="svg-i18n-dmzBox" class="dmz-box" x="348" y="458" width="96" height="15" rx="3" stroke="#f43f5e" stroke-width="0.9"/>
+            <text id="svg-i18n-dmzLabel" class="dmz-label" x="396" y="469" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="bold" text-anchor="middle">DMZ 휴전선 (MDL)</text>
           </g>
 
-          <!-- Modern Major River Systems (Han, Nakdong, Geum, Yeongsan) -->
-          <g class="modern-rivers" stroke-width="2" fill="none">
-            <path d="M 440,380 C 400,388 370,392 350,395 C 330,398 315,402 290,405"/>
-            <path d="M 495,490 C 465,550 460,620 480,680 C 495,710 515,725 520,730"/>
-            <path d="M 405,510 C 370,535 340,560 300,575"/>
-            <path d="M 345,690 C 330,710 310,740 285,760"/>
+          <!-- Authentic Major River Systems (Daedong, Han, Geum, Yeongsan, Nakdong) -->
+          <g class="modern-rivers" stroke-width="1.6" fill="none" stroke-linecap="round">
+            <!-- Han River & Bukhan River -->
+            <path d="M 470,579 C 435,565 405,552 387,547 C 375,546 368,546 363,546 C 350,542 338,535 332,528"/>
+            <path d="M 417,516 C 405,530 396,538 387,547"/>
+            <!-- Nakdong River -->
+            <path d="M 507,586 C 498,610 492,624 489,635 C 474,654 462,664 460,674 C 464,686 468,694 470,699 C 482,728 494,752 504,767"/>
+            <!-- Geum River -->
+            <path d="M 401,696 C 404,670 403,654 399,645 C 392,642 386,642 383,643 C 370,650 362,655 357,660 C 350,670 345,678 341,685"/>
+            <!-- Yeongsan River -->
+            <path d="M 363,746 C 358,754 354,758 351,762 C 347,768 345,771 343,773 C 334,782 327,789 320,795"/>
+            <!-- Daedong River -->
+            <path d="M 321,374 C 300,390 286,403 275,413 C 263,424 254,433 246,440"/>
           </g>
 
-          <!-- Islands (Jeju, Ulleungdo, Dokdo, Incheon Yeongjong Airport) -->
+          <!-- Islands Landmarks & Airport Hubs (Jeju, Ulleungdo, Dokdo, Incheon Yeongjong ICN) -->
           <g id="modern-islands">
-            <!-- Jeju Special Self-Governing Province (제주도) -->
+            <!-- Jeju Mt. Hallasan Peak & CJU Airport -->
             <g id="island-jeju" class="province-polygon" data-province="jeju">
-              <ellipse class="jeju-island-shape" cx="285" cy="920" rx="55" ry="28" fill="url(#modernLandGrad)" stroke-width="1.8"/>
-              <path class="jeju-hallasan-icon" d="M 280,922 L 285,912 L 290,922 Z"/>
-              <text id="svg-i18n-hallasan" class="jeju-hallasan-text" x="285" y="938" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" text-anchor="middle">한라산 1,947m</text>
-              <text id="svg-i18n-cjuAirport" class="jeju-cju-text" x="285" y="902" font-size="8" text-anchor="middle">✈️ CJU 제주국제공항</text>
+              <path class="jeju-hallasan-icon" d="M 326,925 L 330,917 L 334,925 Z"/>
+              <text id="svg-i18n-hallasan" class="jeju-hallasan-text" x="330" y="947" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="bold" text-anchor="middle">한라산 1,947m</text>
+              <text id="svg-i18n-cjuAirport" class="jeju-cju-text" x="330" y="898" font-size="8" font-weight="600" text-anchor="middle">✈️ CJU 제주국제공항</text>
             </g>
 
-            <!-- Ulleungdo & Dokdo Sovereign Territory -->
+            <!-- Ulleungdo & Dokdo Sovereign Territory (Exact WGS84 Coords) -->
             <g id="islands-dokdo-ulleung">
-              <ellipse class="island-outline" cx="690" cy="450" rx="16" ry="13" fill="url(#modernLandGrad)" stroke-width="1.5"/>
-              <text id="svg-i18n-ulleungdo" class="ulleung-label" x="690" y="475" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="bold" text-anchor="middle">울릉도</text>
+              <circle cx="642" cy="550" r="3" fill="none" stroke="rgba(56, 189, 248, 0.7)" stroke-width="1"/>
+              <text id="svg-i18n-ulleungdo" class="ulleung-label" x="642" y="571" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-weight="bold" text-anchor="middle">울릉도</text>
 
-              <ellipse cx="765" cy="470" rx="8" ry="7" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5"/>
-              <ellipse cx="778" cy="475" rx="7" ry="6" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5"/>
-              <g transform="translate(772, 498)">
-                <rect class="dokdo-box" x="-55" y="-12" width="110" height="24" rx="4" stroke-width="1"/>
-                <text id="svg-i18n-dokdoTitle" class="dokdo-title" x="0" y="0" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="bold" text-anchor="middle">독도 🇰🇷 DOKDO</text>
+              <circle cx="715" cy="573" r="6" fill="none" stroke="rgba(56, 189, 248, 0.65)" stroke-width="1" stroke-dasharray="2 2"/>
+              <g transform="translate(715, 601)">
+                <rect class="dokdo-box" x="-54" y="-12" width="108" height="24" rx="4" stroke-width="1"/>
+                <text id="svg-i18n-dokdoTitle" class="dokdo-title" x="0" y="0" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-weight="bold" text-anchor="middle">독도 🇰🇷 DOKDO</text>
                 <text class="dokdo-coords" x="0" y="9" font-family="'JetBrains Mono', monospace" font-size="6.5" text-anchor="middle">37°14'26"N 131°52'10"E</text>
               </g>
             </g>
 
             <!-- Yeongjongdo & Incheon International Airport (ICN) -->
-            <g transform="translate(295, 395)">
-              <ellipse class="icn-ellipse" cx="0" cy="0" rx="15" ry="12" stroke-width="1.2"/>
-              <line x1="-8" y1="-5" x2="8" y2="5" stroke="#38bdf8" stroke-width="1.5"/>
-              <line x1="-5" y1="-8" x2="5" y2="8" stroke="#38bdf8" stroke-width="1.5"/>
-              <text id="svg-i18n-icnAirport" class="icn-label" x="0" y="16" font-family="'JetBrains Mono', monospace" font-size="7.5" font-weight="bold" text-anchor="middle">ICN 인천공항</text>
+            <g transform="translate(324, 554)">
+              <ellipse class="icn-ellipse" cx="0" cy="0" rx="7.5" ry="5.5" stroke-width="1.2"/>
+              <line x1="-4.5" y1="-2.5" x2="4.5" y2="2.5" stroke="#38bdf8" stroke-width="1.3"/>
+              <line x1="-3" y1="-4.5" x2="3" y2="4.5" stroke="#38bdf8" stroke-width="1.3"/>
+              <text id="svg-i18n-icnAirport" class="icn-label" x="-11" y="3" font-family="'JetBrains Mono', monospace" font-size="7.5" font-weight="bold" text-anchor="end">ICN 인천공항</text>
             </g>
-
-            <!-- Geoje Island (거제도) -->
-            <ellipse class="geoje-island" cx="495" cy="760" rx="16" ry="13" fill="url(#modernLandGrad)" stroke-width="1.2"/>
           </g>
 
           <!-- ================= MODERN INFRASTRUCTURE NETWORKS ================= -->
 
           <!-- 1. Major Expressways -->
-          <g id="layer-expressways" class="modern-expressways" stroke-linecap="round">
-            <path class="expressway-main" d="M 352,398 L 360,430 L 370,480 L 392,525 L 480,615 L 526,720" stroke-width="2.2"/>
-            <path class="expressway-branch" d="M 330,420 L 310,470 L 300,540 L 295,620 L 290,750" stroke-width="1.6"/>
-            <path class="expressway-branch" d="M 305,420 L 365,430 L 430,410 L 495,372" stroke-width="1.6"/>
+          <g id="layer-expressways" class="modern-expressways" stroke-linecap="round" fill="none">
+            <path class="expressway-main" d="M 363,544 L 366,572 L 377,615 L 391,654 L 479,697 L 514,759" stroke-width="2.1"/>
+            <path class="expressway-branch" d="M 346,568 L 345,615 L 340,670 L 336,718 L 320,795" stroke-width="1.5"/>
+            <path class="expressway-branch" d="M 343,554 L 366,572 L 432,565 L 499,527" stroke-width="1.5"/>
           </g>
 
           <!-- 2. KTX / SRT High-Speed Railway Network -->
           <g id="layer-ktx" class="modern-ktx-network">
-            <path class="ktx-path gyeongbu" d="M 350,395 L 345,410 L 355,430 L 365,470 L 380,490 L 390,520 L 440,570 L 475,610 L 535,645 L 545,680 L 525,725" stroke="#0284c7" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-            <path class="ktx-path honam" d="M 380,490 L 360,525 L 340,590 L 330,640 L 320,695 L 315,730 L 295,765" stroke="#10b981" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-            <path class="ktx-path gangneung" d="M 350,395 L 375,390 L 405,395 L 430,395 L 450,385 L 470,380 L 485,375 L 495,370" stroke="#8b5cf6" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-            <path class="ktx-path srt" d="M 360,405 L 365,425 L 365,455 L 365,470" stroke="#ec4899" stroke-width="2" fill="none" stroke-dasharray="3 3"/>
+            <path class="ktx-path gyeongbu" d="M 363,544 L 355,558 L 372,614 L 389,628 L 391,654 L 445,675 L 479,697 L 524,698 L 517,726 L 514,759" stroke="#38bdf8" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+            <path class="ktx-path honam" d="M 389,628 L 371,652 L 362,690 L 354,725 L 349,763 L 320,795" stroke="#10b981" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+            <path class="ktx-path gangneung" d="M 363,544 L 399,551 L 432,565 L 464,544 L 478,537 L 499,527" stroke="#a78bfa" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+            <path class="ktx-path srt" d="M 371,552 L 370,577 L 370,593 L 372,614" stroke="#f472b6" stroke-width="1.8" fill="none" stroke-dasharray="3 3"/>
 
             <!-- Key KTX Station Nodes -->
-            <g class="ktx-station-nodes" stroke-width="1.5">
-              <circle cx="350" cy="395" r="4"/>
-              <circle cx="355" cy="430" r="3"/>
-              <circle cx="380" cy="490" r="3"/>
-              <circle cx="390" cy="520" r="3.5"/>
-              <circle cx="475" cy="610" r="3.5"/>
-              <circle cx="535" cy="645" r="3"/>
-              <circle cx="525" cy="725" r="4"/>
-              <circle cx="320" cy="695" r="3.5"/>
-              <circle cx="495" cy="370" r="3.5"/>
+            <g class="ktx-station-nodes" stroke-width="1.4">
+              <circle cx="363" cy="544" r="3.8"/>
+              <circle cx="372" cy="614" r="2.8"/>
+              <circle cx="389" cy="628" r="2.8"/>
+              <circle cx="391" cy="654" r="3.2"/>
+              <circle cx="479" cy="697" r="3.2"/>
+              <circle cx="524" cy="698" r="2.8"/>
+              <circle cx="514" cy="759" r="3.8"/>
+              <circle cx="349" cy="763" r="3.2"/>
+              <circle cx="499" cy="527" r="3.2"/>
             </g>
           </g>
 
-          <!-- ================= INTERACTIVE MODERN CITY & PARK NODES ================= -->
+          <!-- ================= INTERACTIVE MODERN CITY & PARK NODES (WGS84 PROJECTED) ================= -->
 
-          <!-- 1. SEOUL -->
-          <g class="map-city-pin active selected" data-city-id="seoul" transform="translate(350, 395)" cursor="pointer">
+          <!-- 1. SEOUL (37.57N, 126.98E -> 363, 544) -->
+          <g class="map-city-pin active selected" data-city-id="seoul" transform="translate(363, 544)" cursor="pointer">
             <circle class="radar-ring ring-1" cx="0" cy="0" r="14"/>
             <circle class="radar-ring ring-2" cx="0" cy="0" r="26"/>
             <circle class="radar-ring ring-3" cx="0" cy="0" r="38"/>
@@ -516,144 +451,144 @@ export const KOREA_MAP_MARKUP = `
             </g>
           </g>
 
-          <!-- 2. BUSAN -->
-          <g class="map-city-pin" data-city-id="busan" transform="translate(525, 725)" cursor="pointer">
+          <!-- 2. BUSAN (35.18N, 129.08E -> 514, 759) -->
+          <g class="map-city-pin" data-city-id="busan" transform="translate(514, 759)" cursor="pointer">
             <circle class="radar-ring ring-1" cx="0" cy="0" r="10" stroke="#38bdf8"/>
-            <circle cx="0" cy="0" r="7" fill="#0284c7"/>
-            <circle cx="0" cy="0" r="3.5" fill="#ffffff"/>
+            <circle cx="0" cy="0" r="6.8" fill="#0284c7"/>
+            <circle cx="0" cy="0" r="3.2" fill="#ffffff"/>
             <g class="city-label-banner" transform="translate(14, 4)">
               <rect class="pin-banner-bg" x="0" y="-11" width="94" height="20" rx="4" stroke="#0284c7" stroke-width="1.2"/>
               <text class="pin-banner-text" x="8" y="3" font-size="10.5" font-weight="600">🌊 부산광역시</text>
             </g>
           </g>
 
-          <!-- 3. INCHEON -->
-          <g class="map-city-pin" data-city-id="incheon" transform="translate(305, 405)" cursor="pointer">
-            <circle cx="0" cy="0" r="6.5" fill="#10b981"/>
-            <circle cx="0" cy="0" r="3" fill="#ffffff"/>
-            <g class="city-label-banner" transform="translate(-104, 4)">
+          <!-- 3. INCHEON (37.46N, 126.71E -> 343, 554) -->
+          <g class="map-city-pin" data-city-id="incheon" transform="translate(343, 554)" cursor="pointer">
+            <circle cx="0" cy="0" r="6" fill="#10b981"/>
+            <circle cx="0" cy="0" r="2.8" fill="#ffffff"/>
+            <g class="city-label-banner" transform="translate(-104, -20)">
               <rect class="pin-banner-bg" x="0" y="-11" width="96" height="20" rx="4" stroke="#10b981" stroke-width="1.2"/>
               <text class="pin-banner-text" x="8" y="3" font-size="10.5" font-weight="600">✈️ 인천광역시</text>
             </g>
           </g>
 
-          <!-- Incheon Bridge & Songdo Reclaimed Smart Bay Connector -->
-          <path d="M 295,407 Q 297,428 306,444" fill="none" stroke="#06b6d4" stroke-width="1.4" stroke-dasharray="2.5 2" opacity="0.75"/>
+          <!-- Incheon Bridge Connector (Yeongjong ICN -> Songdo) -->
+          <path d="M 324,555 Q 331,561 338,562" fill="none" stroke="#06b6d4" stroke-width="1.4" stroke-dasharray="2.5 2" opacity="0.85"/>
 
-          <!-- 3B. INCHEON SONGDO INTERNATIONAL CITY -->
-          <g class="map-city-pin" data-city-id="songdo" transform="translate(306, 444)" cursor="pointer">
-            <circle cx="0" cy="0" r="6.5" fill="#06b6d4"/>
-            <circle cx="0" cy="0" r="3" fill="#ffffff"/>
-            <g class="city-label-banner" transform="translate(-102, 4)">
+          <!-- 3B. INCHEON SONGDO INTERNATIONAL CITY (37.38N, 126.64E -> 338, 562) -->
+          <g class="map-city-pin" data-city-id="songdo" transform="translate(338, 562)" cursor="pointer">
+            <circle cx="0" cy="0" r="6" fill="#06b6d4"/>
+            <circle cx="0" cy="0" r="2.8" fill="#ffffff"/>
+            <g class="city-label-banner" transform="translate(-102, 14)">
               <rect class="pin-banner-bg" x="0" y="-11" width="94" height="20" rx="4" stroke="#06b6d4" stroke-width="1.2"/>
               <text class="pin-banner-text" x="8" y="3" font-size="10.5" font-weight="600">🌉 인천 송도</text>
             </g>
           </g>
 
-          <!-- 4. DAEGU -->
-          <g class="map-city-pin" data-city-id="daegu" transform="translate(475, 615)" cursor="pointer">
-            <circle cx="0" cy="0" r="6.5" fill="#ec4899"/>
-            <circle cx="0" cy="0" r="3" fill="#ffffff"/>
-            <g class="city-label-banner" transform="translate(14, 4)">
+          <!-- 4. DAEGU (35.87N, 128.60E -> 479, 697) -->
+          <g class="map-city-pin" data-city-id="daegu" transform="translate(479, 697)" cursor="pointer">
+            <circle cx="0" cy="0" r="6.2" fill="#ec4899"/>
+            <circle cx="0" cy="0" r="2.8" fill="#ffffff"/>
+            <g class="city-label-banner" transform="translate(-102, -16)">
               <rect class="pin-banner-bg" x="0" y="-11" width="94" height="20" rx="4" stroke="#ec4899" stroke-width="1.2"/>
               <text class="pin-banner-text" x="8" y="3" font-size="10.5" font-weight="600">⚡ 대구광역시</text>
             </g>
           </g>
 
-          <!-- 5. DAEJEON -->
-          <g class="map-city-pin" data-city-id="daejeon" transform="translate(390, 520)" cursor="pointer">
-            <circle cx="0" cy="0" r="6.5" fill="#06b6d4"/>
-            <circle cx="0" cy="0" r="3" fill="#ffffff"/>
+          <!-- 5. DAEJEON (36.35N, 127.38E -> 391, 654) -->
+          <g class="map-city-pin" data-city-id="daejeon" transform="translate(391, 654)" cursor="pointer">
+            <circle cx="0" cy="0" r="6.2" fill="#06b6d4"/>
+            <circle cx="0" cy="0" r="2.8" fill="#ffffff"/>
             <g class="city-label-banner" transform="translate(14, 4)">
               <rect class="pin-banner-bg" x="0" y="-11" width="94" height="20" rx="4" stroke="#06b6d4" stroke-width="1.2"/>
               <text class="pin-banner-text" x="8" y="3" font-size="10.5" font-weight="600">🔬 대전광역시</text>
             </g>
           </g>
 
-          <!-- 6. GWANGJU -->
-          <g class="map-city-pin" data-city-id="gwangju" transform="translate(320, 695)" cursor="pointer">
-            <circle cx="0" cy="0" r="6.5" fill="#ef4444"/>
-            <circle cx="0" cy="0" r="3" fill="#ffffff"/>
+          <!-- 6. GWANGJU (35.16N, 126.85E -> 353, 761) -->
+          <g class="map-city-pin" data-city-id="gwangju" transform="translate(353, 761)" cursor="pointer">
+            <circle cx="0" cy="0" r="6.2" fill="#ef4444"/>
+            <circle cx="0" cy="0" r="2.8" fill="#ffffff"/>
             <g class="city-label-banner" transform="translate(-104, 4)">
               <rect class="pin-banner-bg" x="0" y="-11" width="96" height="20" rx="4" stroke="#ef4444" stroke-width="1.2"/>
               <text class="pin-banner-text" x="8" y="3" font-size="10.5" font-weight="600">💡 광주광역시</text>
             </g>
           </g>
 
-          <!-- 7. SUWON -->
-          <g class="map-city-pin" data-city-id="suwon" transform="translate(355, 430)" cursor="pointer">
-            <circle cx="0" cy="0" r="6" fill="#3b82f6"/>
-            <circle cx="0" cy="0" r="2.8" fill="#ffffff"/>
-            <g class="city-label-banner" transform="translate(14, 4)">
+          <!-- 7. SUWON (37.26N, 127.03E -> 366, 572) -->
+          <g class="map-city-pin" data-city-id="suwon" transform="translate(366, 572)" cursor="pointer">
+            <circle cx="0" cy="0" r="5.8" fill="#3b82f6"/>
+            <circle cx="0" cy="0" r="2.6" fill="#ffffff"/>
+            <g class="city-label-banner" transform="translate(14, 6)">
               <rect class="pin-banner-bg" x="0" y="-10" width="84" height="19" rx="4" stroke="#3b82f6" stroke-width="1"/>
               <text class="pin-banner-text" x="8" y="3" font-size="10" font-weight="600">🏯 수원특례시</text>
             </g>
           </g>
 
-          <!-- 8. SEJONG -->
-          <g class="map-city-pin" data-city-id="sejong" transform="translate(375, 505)" cursor="pointer">
-            <circle cx="0" cy="0" r="6" fill="#10b981"/>
-            <circle cx="0" cy="0" r="2.8" fill="#ffffff"/>
-            <g class="city-label-banner" transform="translate(-94, 4)">
+          <!-- 8. SEJONG (36.48N, 127.29E -> 385, 642) -->
+          <g class="map-city-pin" data-city-id="sejong" transform="translate(385, 642)" cursor="pointer">
+            <circle cx="0" cy="0" r="5.8" fill="#10b981"/>
+            <circle cx="0" cy="0" r="2.6" fill="#ffffff"/>
+            <g class="city-label-banner" transform="translate(-94, -4)">
               <rect class="pin-banner-bg" x="0" y="-10" width="86" height="19" rx="4" stroke="#10b981" stroke-width="1"/>
               <text class="pin-banner-text" x="8" y="3" font-size="10" font-weight="600">🏛️ 세종특별자치시</text>
             </g>
           </g>
 
-          <!-- 9. GYEONGJU -->
-          <g class="map-city-pin" data-city-id="gyeongju" transform="translate(535, 645)" cursor="pointer">
-            <circle cx="0" cy="0" r="6" fill="#f59e0b"/>
-            <circle cx="0" cy="0" r="2.8" fill="#ffffff"/>
+          <!-- 9. GYEONGJU (35.86N, 129.22E -> 524, 698) -->
+          <g class="map-city-pin" data-city-id="gyeongju" transform="translate(524, 698)" cursor="pointer">
+            <circle cx="0" cy="0" r="5.8" fill="#f59e0b"/>
+            <circle cx="0" cy="0" r="2.6" fill="#ffffff"/>
             <g class="city-label-banner" transform="translate(14, 4)">
               <rect class="pin-banner-bg" x="0" y="-10" width="76" height="19" rx="4" stroke="#f59e0b" stroke-width="1"/>
               <text class="pin-banner-text" x="8" y="3" font-size="10" font-weight="600">🏛️ 경주시</text>
             </g>
           </g>
 
-          <!-- 10. JEONJU (Banner moved right so it never overlaps Byeonsanbando on west coast) -->
-          <g class="map-city-pin" data-city-id="jeonju" transform="translate(350, 625)" cursor="pointer">
-            <circle cx="0" cy="0" r="6" fill="#6366f1"/>
-            <circle cx="0" cy="0" r="2.8" fill="#ffffff"/>
-            <g class="city-label-banner" transform="translate(14, 4)">
+          <!-- 10. JEONJU (35.82N, 127.15E -> 375, 701) -->
+          <g class="map-city-pin" data-city-id="jeonju" transform="translate(375, 701)" cursor="pointer">
+            <circle cx="0" cy="0" r="5.8" fill="#6366f1"/>
+            <circle cx="0" cy="0" r="2.6" fill="#ffffff"/>
+            <g class="city-label-banner" transform="translate(14, 6)">
               <rect class="pin-banner-bg" x="0" y="-10" width="78" height="19" rx="4" stroke="#6366f1" stroke-width="1"/>
               <text class="pin-banner-text" x="8" y="3" font-size="10" font-weight="600">🏮 전주시</text>
             </g>
           </g>
 
-          <!-- 11. BYEONSANBANDO NATIONAL PARK (변산반도 국립공원) -->
-          <g class="map-city-pin park-pin" data-city-id="byeonsan" transform="translate(276, 628)" cursor="pointer">
-            <circle cx="0" cy="0" r="7" fill="#10b981"/>
-            <circle cx="0" cy="0" r="3" fill="#ecfdf5"/>
+          <!-- 11. BYEONSANBANDO NATIONAL PARK (35.63N, 126.53E -> 330, 718) -->
+          <g class="map-city-pin park-pin" data-city-id="byeonsan" transform="translate(330, 718)" cursor="pointer">
+            <circle cx="0" cy="0" r="6.8" fill="#10b981"/>
+            <circle cx="0" cy="0" r="2.8" fill="#ecfdf5"/>
             <g class="city-label-banner" transform="translate(-142, 4)">
               <rect class="park-banner-bg" x="0" y="-10" width="134" height="20" rx="4" stroke="#10b981" stroke-width="1.3"/>
               <text class="park-banner-text" x="8" y="3" font-size="10" font-weight="600">🏞️ 변산반도 국립공원</text>
             </g>
           </g>
 
-          <!-- 12. GANGNEUNG -->
-          <g class="map-city-pin" data-city-id="gangneung" transform="translate(495, 370)" cursor="pointer">
-            <circle cx="0" cy="0" r="6" fill="#8b5cf6"/>
-            <circle cx="0" cy="0" r="2.8" fill="#ffffff"/>
+          <!-- 12. GANGNEUNG (37.75N, 128.88E -> 499, 527) -->
+          <g class="map-city-pin" data-city-id="gangneung" transform="translate(499, 527)" cursor="pointer">
+            <circle cx="0" cy="0" r="5.8" fill="#8b5cf6"/>
+            <circle cx="0" cy="0" r="2.6" fill="#ffffff"/>
             <g class="city-label-banner" transform="translate(14, 4)">
               <rect class="pin-banner-bg" x="0" y="-10" width="76" height="19" rx="4" stroke="#8b5cf6" stroke-width="1"/>
               <text class="pin-banner-text" x="8" y="3" font-size="10" font-weight="600">🌲 강릉시</text>
             </g>
           </g>
 
-          <!-- 13. JEJU -->
-          <g class="map-city-pin" data-city-id="jeju" transform="translate(285, 920)" cursor="pointer">
-            <circle cx="0" cy="0" r="6.5" fill="#eab308"/>
-            <circle cx="0" cy="0" r="3" fill="#ffffff"/>
-            <g class="city-label-banner" transform="translate(14, 4)">
+          <!-- 13. JEJU (33.43N, 126.53E -> 330, 916) -->
+          <g class="map-city-pin" data-city-id="jeju" transform="translate(330, 916)" cursor="pointer">
+            <circle cx="0" cy="0" r="6.2" fill="#eab308"/>
+            <circle cx="0" cy="0" r="2.8" fill="#ffffff"/>
+            <g class="city-label-banner" transform="translate(16, 4)">
               <rect class="pin-banner-bg" x="0" y="-10" width="86" height="19" rx="4" stroke="#eab308" stroke-width="1"/>
               <text class="pin-banner-text" x="8" y="3" font-size="10" font-weight="600">🌴 제주특별자치도</text>
             </g>
           </g>
 
-          <!-- 14. PYONGYANG -->
-          <g class="map-city-pin" data-city-id="pyongyang" transform="translate(280, 220)" cursor="pointer">
-            <circle cx="0" cy="0" r="6" fill="#64748b"/>
-            <circle cx="0" cy="0" r="2.8" fill="#ffffff"/>
+          <!-- 14. PYONGYANG (39.04N, 125.76E -> 275, 411) -->
+          <g class="map-city-pin" data-city-id="pyongyang" transform="translate(275, 411)" cursor="pointer">
+            <circle cx="0" cy="0" r="5.8" fill="#64748b"/>
+            <circle cx="0" cy="0" r="2.6" fill="#ffffff"/>
             <g class="city-label-banner" transform="translate(14, 4)">
               <rect class="pin-banner-bg" x="0" y="-10" width="80" height="19" rx="4" stroke="#64748b" stroke-width="1"/>
               <text class="pin-banner-text" x="8" y="3" font-size="10" font-weight="600">🏔️ 평양직할시</text>
@@ -661,7 +596,7 @@ export const KOREA_MAP_MARKUP = `
           </g>
         </svg>
 
-        <!-- Modern Map Footer Legend -->
+        <!-- Modern Map Footer Legend & Cartographic Scale -->
         <div class="map-modern-legend">
           <div class="legend-item"><span class="legend-marker gold-star">★</span> <span data-i18n-legend="capital">수도/활성화</span></div>
           <div class="legend-item"><span class="legend-line ktx-blue"></span> <span data-i18n-legend="ktx">KTX 고속철도</span></div>
@@ -669,6 +604,18 @@ export const KOREA_MAP_MARKUP = `
           <div class="legend-item"><span class="legend-dot metro"></span> <span data-i18n-legend="metro">광역시/거점</span></div>
           <div class="legend-item"><span class="legend-dot park"></span> <span data-i18n-legend="park">국립공원</span></div>
           <div class="legend-item"><span class="legend-line dmz-red"></span> <span data-i18n-legend="dmz">DMZ 휴전선</span></div>
+        </div>
+
+        <div class="map-scale-bar" aria-hidden="true">
+          <div class="scale-ticks">
+            <span>0</span>
+            <span>50</span>
+            <span>100 km</span>
+          </div>
+          <div class="scale-rule">
+            <span class="scale-seg dark"></span>
+            <span class="scale-seg light"></span>
+          </div>
         </div>
       </div>
     </div>

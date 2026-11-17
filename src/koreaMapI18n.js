@@ -30,7 +30,10 @@ export const MAP_UI_TRANSLATIONS = {
       railStudios: '스튜디오',
       railLayers: '레이어',
       railLang: '언어',
-      railTheme: '테마'
+      railTheme: '테마',
+      searchPlaceholder: '도시 · 국립공원 검색...',
+      emptySearchTitle: '일치하는 지역이 없습니다',
+      resetFilters: '필터 초기화'
     },
     theme: {
       lightFull: '☀️ 화이트 모드',
@@ -50,6 +53,7 @@ export const MAP_UI_TRANSLATIONS = {
       north: '이북권 (평양)'
     },
     toggles: {
+      satellite: '실사 위성·지형 지도',
       ktx: 'KTX / SRT 고속철도망',
       roads: '주요 고속도로망',
       parks: '국립공원 및 자연보전구역'
@@ -82,6 +86,8 @@ export const MAP_UI_TRANSLATIONS = {
     dossier: {
       populationLabel: '규모/인구',
       transitTitle: '고속철도 및 모빌리티 연계',
+      ktxLabel: '고속철도',
+      airportsLabel: '항공 연계',
       erasTitle: '선택 가능한 시대 & 테마',
       presetsTitle: '추천 16×16 레이아웃 프리셋으로 바로 시작',
       launchSuffix: '16×16 스튜디오 입장하기'
@@ -105,7 +111,10 @@ export const MAP_UI_TRANSLATIONS = {
       railStudios: 'Studios',
       railLayers: 'Layers',
       railLang: 'Lang',
-      railTheme: 'Theme'
+      railTheme: 'Theme',
+      searchPlaceholder: 'Search city or park...',
+      emptySearchTitle: 'No matching locations',
+      resetFilters: 'Reset filters'
     },
     theme: {
       lightFull: '☀️ Light Mode',
@@ -125,6 +134,7 @@ export const MAP_UI_TRANSLATIONS = {
       north: 'Northern (Pyongyang)'
     },
     toggles: {
+      satellite: 'Satellite & Relief Imagery',
       ktx: 'KTX / SRT Rail Network',
       roads: 'Major Expressways',
       parks: 'National Parks & Reserves'
@@ -157,6 +167,8 @@ export const MAP_UI_TRANSLATIONS = {
     dossier: {
       populationLabel: 'Scale / Pop.',
       transitTitle: 'High-Speed Rail & Aviation Connectivity',
+      ktxLabel: 'Rail',
+      airportsLabel: 'Airports',
       erasTitle: 'Available Eras & Themes',
       presetsTitle: 'Quick-Start 16×16 Layout Presets',
       launchSuffix: 'Enter 16×16 Studio'
@@ -180,7 +192,10 @@ export const MAP_UI_TRANSLATIONS = {
       railStudios: '工作室',
       railLayers: '图层',
       railLang: '语言',
-      railTheme: '主题'
+      railTheme: '主题',
+      searchPlaceholder: '搜索城市或国家公园...',
+      emptySearchTitle: '未找到匹配地点',
+      resetFilters: '重置筛选'
     },
     theme: {
       lightFull: '☀️ 浅色模式',
@@ -200,6 +215,7 @@ export const MAP_UI_TRANSLATIONS = {
       north: '北部圈 (平壤)'
     },
     toggles: {
+      satellite: '高清卫星地形图',
       ktx: 'KTX / SRT 高铁网',
       roads: '主要高速公路网',
       parks: '国立公园与自然保护区'
@@ -232,6 +248,8 @@ export const MAP_UI_TRANSLATIONS = {
     dossier: {
       populationLabel: '规模/人口',
       transitTitle: '高速铁路与交通枢纽',
+      ktxLabel: '高速铁路',
+      airportsLabel: '机场交通',
       erasTitle: '可选时代与城市主题',
       presetsTitle: '选择 16×16 推荐布局快速开始',
       launchSuffix: '进入 16×16 建造工作室'
@@ -255,7 +273,10 @@ export const MAP_UI_TRANSLATIONS = {
       railStudios: 'スタジオ',
       railLayers: 'レイヤー',
       railLang: '言語',
-      railTheme: 'テーマ'
+      railTheme: 'テーマ',
+      searchPlaceholder: '都市・国立公園を検索...',
+      emptySearchTitle: '一致する地域がありません',
+      resetFilters: 'フィルター解除'
     },
     theme: {
       lightFull: '☀️ ライトモード',
@@ -275,6 +296,7 @@ export const MAP_UI_TRANSLATIONS = {
       north: '北朝鮮圏 (平壌)'
     },
     toggles: {
+      satellite: '衛星・地形マップ',
       ktx: 'KTX / SRT 高速鉄道網',
       roads: '主要高速道路網',
       parks: '国立公園・自然保全区域'
@@ -307,6 +329,8 @@ export const MAP_UI_TRANSLATIONS = {
     dossier: {
       populationLabel: '規模/人口',
       transitTitle: '高速鉄道・空港アクセス',
+      ktxLabel: '高速鉄道',
+      airportsLabel: '空港連携',
       erasTitle: '選択可能な時代とテーマ',
       presetsTitle: 'おすすめ 16×16 プリセットですぐ開始',
       launchSuffix: '16×16 スタジオに入場'
@@ -330,7 +354,10 @@ export const MAP_UI_TRANSLATIONS = {
       railStudios: 'Estudios',
       railLayers: 'Capas',
       railLang: 'Idioma',
-      railTheme: 'Tema'
+      railTheme: 'Tema',
+      searchPlaceholder: 'Buscar ciudad o parque...',
+      emptySearchTitle: 'Sin coincidencias',
+      resetFilters: 'Restablecer'
     },
     theme: {
       lightFull: '☀️ Modo Claro',
@@ -350,6 +377,7 @@ export const MAP_UI_TRANSLATIONS = {
       north: 'Norte (Pionyang)'
     },
     toggles: {
+      satellite: 'Mapa Satelital y Relieve',
       ktx: 'Red Ferroviaria KTX / SRT',
       roads: 'Autopistas Principales',
       parks: 'Parques Nacionales'
@@ -382,6 +410,8 @@ export const MAP_UI_TRANSLATIONS = {
     dossier: {
       populationLabel: 'Escala / Pob.',
       transitTitle: 'Tren de Alta Velocidad y Aviación',
+      ktxLabel: 'Tren',
+      airportsLabel: 'Aeropuertos',
       erasTitle: 'Eras y Temas Disponibles',
       presetsTitle: 'Iniciar con Diseños 16×16 Recomendados',
       launchSuffix: 'Entrar al Estudio 16×16'

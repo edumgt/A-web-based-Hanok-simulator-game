@@ -10,7 +10,10 @@ const STUDIO_MARKUP = `
   <header class="top-bar">
     <div class="top-bar-left">
       <button type="button" class="builder-back-map-btn" id="builder-back-map-btn" title="한국 전체 지도로 돌아가기">
-        <span class="map-icon">🗺️</span> 전국 지도
+        <svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="12 15 7 10 12 5"/>
+        </svg>
+        <span>전국 지도</span>
       </button>
       <div class="top-bar-divider"></div>
       <span class="top-bar-title" id="app-title-display">서울 타임 빌더</span>
@@ -26,20 +29,28 @@ const STUDIO_MARKUP = `
     </div>
 
     <div class="top-bar-right">
-      <button type="button" class="builder-text-btn" id="builder-rotate-btn" title="건축 중인 가옥 90도 회전 (단축키: R)"><span class="rotate-icon">↻</span> 90° 회전 (<span id="top-rotate-label">0°</span>)</button>
-      <button type="button" class="builder-text-btn active" id="builder-traffic-toggle" title="살아 움직이는 차량 & 보행자 시뮬레이션 토글 (현재 ON)">🚗 트래픽 ON</button>
-      <button type="button" class="builder-text-btn active" id="builder-graphics-toggle" title="그래픽 고도화 모드 (입체 그림자 & 대기 효과 토글)">✨ 그래픽 고도화 (HD)</button>
-      <button type="button" class="builder-text-btn" id="builder-lighting-toggle" title="낮/밤 조명 모드 전환">☀️ 낮 (Day)</button>
-      <button type="button" class="builder-text-btn studio-theme-toggle-btn" id="studio-theme-toggle" title="화이트 / 다크 모드 전환">🌙 다크</button>
-      <button type="button" class="builder-text-btn active" id="builder-animate-toggle" title="애니메이션 토글">애니메이션</button>
-      <button type="button" class="builder-text-btn" id="builder-undo-btn">실행취소</button>
-      <div class="zoom-group">
-        <button type="button" class="zoom-btn" id="builder-zoom-out" title="축소">&minus;</button>
-        <span id="builder-zoom-readout" class="zoom-readout" title="100% 확대율로 초기화">100%</span>
-        <button type="button" class="zoom-btn" id="builder-zoom-in" title="확대">&plus;</button>
+      <div class="top-bar-cluster">
+        <button type="button" class="builder-text-btn" id="builder-rotate-btn" title="건축 중인 가옥 90도 회전 (단축키: R)"><span class="rotate-icon">↻</span> 90° 회전 (<span id="top-rotate-label">0°</span>)</button>
+        <button type="button" class="builder-text-btn" id="builder-undo-btn">실행취소</button>
       </div>
-      <button type="button" class="builder-text-btn" id="builder-reset-view-btn">화면 중앙</button>
-      <button type="button" class="builder-action-btn primary" id="builder-export-btn">스냅샷 PNG 저장</button>
+      <div class="top-bar-divider"></div>
+      <div class="top-bar-cluster">
+        <button type="button" class="builder-text-btn active" id="builder-traffic-toggle" title="살아 움직이는 차량 & 보행자 시뮬레이션 토글 (현재 ON)">🚗 트래픽 ON</button>
+        <button type="button" class="builder-text-btn active" id="builder-graphics-toggle" title="그래픽 고도화 모드 (입체 그림자 & 대기 효과 토글)">✨ HD 그래픽</button>
+        <button type="button" class="builder-text-btn" id="builder-lighting-toggle" title="낮/밤 조명 모드 전환">☀️ 낮 (Day)</button>
+        <button type="button" class="builder-text-btn active" id="builder-animate-toggle" title="애니메이션 토글">애니메이션</button>
+      </div>
+      <div class="top-bar-divider"></div>
+      <div class="top-bar-cluster">
+        <div class="zoom-group">
+          <button type="button" class="zoom-btn" id="builder-zoom-out" title="축소">&minus;</button>
+          <span id="builder-zoom-readout" class="zoom-readout" title="100% 확대율로 초기화">100%</span>
+          <button type="button" class="zoom-btn" id="builder-zoom-in" title="확대">&plus;</button>
+        </div>
+        <button type="button" class="builder-text-btn" id="builder-reset-view-btn">화면 중앙</button>
+        <button type="button" class="builder-text-btn studio-theme-toggle-btn" id="studio-theme-toggle" title="화이트 / 다크 모드 전환">🌙 다크</button>
+      </div>
+      <button type="button" class="builder-action-btn primary" id="builder-export-btn">PNG 저장</button>
     </div>
   </header>
 

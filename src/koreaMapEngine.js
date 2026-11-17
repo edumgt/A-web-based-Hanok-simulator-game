@@ -1,7 +1,31 @@
 import { MODERN_CITIES_REGISTRY } from './koreaModernMapData.js';
 import { MAP_LANGUAGES, MAP_UI_TRANSLATIONS, CITY_LOCALIZATIONS } from './koreaMapI18n.js';
+import {
+  renderKoreaSatelliteDataUrl,
+  KOREA_MAINLAND_GEO,
+  KOREA_ISLANDS_GEO,
+  buildSmoothGeoPath
+} from './koreaSatelliteTerrain.js';
 
 export const CITIES_DATA = MODERN_CITIES_REGISTRY;
+
+const CITY_DMS_COORDS = {
+  seoul: `37°33'59"N · 126°58'41"E`,
+  busan: `35°10'46"N · 129°04'32"E`,
+  incheon: `37°27'22"N · 126°42'19"E`,
+  songdo: `37°23'20"N · 126°38'24"E`,
+  daegu: `35°52'17"N · 128°36'05"E`,
+  daejeon: `36°21'01"N · 127°23'05"E`,
+  gwangju: `35°09'36"N · 126°51'05"E`,
+  suwon: `37°15'49"N · 127°01'43"E`,
+  sejong: `36°28'48"N · 127°17'20"E`,
+  gyeongju: `35°51'22"N · 129°13'29"E`,
+  jeonju: `35°49'27"N · 127°08'53"E`,
+  byeonsan: `35°37'48"N · 126°31'48"E`,
+  gangneung: `37°45'07"N · 128°52'34"E`,
+  jeju: `33°29'59"N · 126°31'54"E`,
+  pyongyang: `39°02'02"N · 125°45'47"E`
+};
 
 class KoreaMapEngine {
   constructor() {
@@ -9,8 +33,10 @@ class KoreaMapEngine {
     this.selectedEra = 'joseon';
     this.selectedPreset = 'village';
     this.activeFilter = 'all';
+    this.searchQuery = '';
     this.currentLang = 'ko';
     this.currentTheme = 'dark';
+    this.showSatellite = true;
     this.showKtx = true;
     this.showExpressways = true;
     this.showParks = true;
@@ -35,10 +61,38 @@ class KoreaMapEngine {
       // Ignore storage access restrictions
     }
 
+    this.hydrateRealGeography();
     this.applyTheme(this.currentTheme);
     this.bindEvents();
     this.applyLanguage(this.currentLang);
     this.highlightCityPin('seoul');
+  }
+
+  hydrateRealGeography() {
+    const peninsulaBase = document.getElementById('korea-peninsula-base');
+    if (peninsulaBase) {
+      peninsulaBase.setAttribute('d', buildSmoothGeoPath(KOREA_MAINLAND_GEO));
+    }
+
+    const islandsGroup = document.getElementById('korea-islands-vector');
+    if (islandsGroup && islandsGroup.children.length === 0) {
+      const svgNs = 'http://www.w3.org/2000/svg';
+      KOREA_ISLANDS_GEO.forEach(ring => {
+        const path = document.createElementNS(svgNs, 'path');
+        path.setAttribute('d', buildSmoothGeoPath(ring));
+        path.setAttribute('class', 'korea-island-poly');
+        islandsGroup.appendChild(path);
+      });
+    }
+  }
+
+  updateSatelliteBackdrop(theme) {
+    const satLayer = document.getElementById('korea-satellite-layer');
+    if (!satLayer) return;
+    const dataUrl = renderKoreaSatelliteDataUrl(theme);
+    if (dataUrl) {
+      satLayer.setAttribute('href', dataUrl);
+    }
   }
 
   getLocalizedCity(cityId) {
@@ -132,6 +186,30 @@ class KoreaMapEngine {
       }
     });
 
+    // LNB Live Search Input
+    const searchInput = document.getElementById('lnb-search-input');
+    const searchClear = document.getElementById('lnb-search-clear');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        this.searchQuery = (e.target.value || '').trim().toLowerCase();
+        if (searchClear) searchClear.hidden = !this.searchQuery;
+        this.renderLnbDirectory();
+        this.renderLnbStudioLinks();
+      });
+    }
+    if (searchClear) {
+      searchClear.addEventListener('click', () => {
+        this.searchQuery = '';
+        if (searchInput) {
+          searchInput.value = '';
+          searchInput.focus();
+        }
+        searchClear.hidden = true;
+        this.renderLnbDirectory();
+        this.renderLnbStudioLinks();
+      });
+    }
+
     // Language selector buttons
     const langBtns = document.querySelectorAll('#map-lang-selector .lang-pill');
     langBtns.forEach(btn => {
@@ -217,6 +295,24 @@ class KoreaMapEngine {
         this.filterCities(filter);
       });
     });
+
+    // Layer toggle: Satellite & Relief imagery
+    const satelliteToggleBtn = document.getElementById('toggle-layer-satellite');
+    if (satelliteToggleBtn) {
+      satelliteToggleBtn.addEventListener('click', () => {
+        this.showSatellite = !this.showSatellite;
+        satelliteToggleBtn.classList.toggle('active', this.showSatellite);
+        satelliteToggleBtn.setAttribute('aria-pressed', String(this.showSatellite));
+        const satLayer = document.getElementById('korea-satellite-layer');
+        const mapScreen = document.getElementById('korea-map-screen');
+        if (satLayer) {
+          satLayer.style.display = this.showSatellite ? 'inline' : 'none';
+        }
+        if (mapScreen) {
+          mapScreen.classList.toggle('no-satellite', !this.showSatellite);
+        }
+      });
+    }
 
     // Layer toggle: KTX rail network
     const ktxToggleBtn = document.getElementById('toggle-layer-ktx');
@@ -321,6 +417,10 @@ class KoreaMapEngine {
           el.textContent = t.lnb[key];
         }
       });
+      const searchInput = document.getElementById('lnb-search-input');
+      if (searchInput && t.lnb.searchPlaceholder) {
+        searchInput.placeholder = t.lnb.searchPlaceholder;
+      }
     }
 
     // Region filter pills inside LNB (sync labels and dynamic counts)
@@ -345,6 +445,9 @@ class KoreaMapEngine {
     });
 
     // Layer toggle labels inside LNB
+    const satelliteLabel = document.getElementById('toggle-label-satellite');
+    if (satelliteLabel && t.toggles.satellite) satelliteLabel.textContent = t.toggles.satellite;
+
     const ktxLabel = document.getElementById('toggle-label-ktx');
     if (ktxLabel) ktxLabel.textContent = t.toggles.ktx;
 
@@ -384,11 +487,19 @@ class KoreaMapEngine {
       const len = typeof dmzText.getComputedTextLength === 'function' ? dmzText.getComputedTextLength() : 84;
       const boxW = Math.max(76, Math.ceil(len) + 18);
       dmzBox.setAttribute('width', String(boxW));
-      dmzBox.setAttribute('x', String(400 - boxW / 2));
+      dmzBox.setAttribute('x', String(396 - boxW / 2));
     }
 
     // 4. SVG city & national park pin labels & dynamic banner box fitting
-    const leftAlignedCities = new Set(['incheon', 'songdo', 'gwangju', 'sejong', 'byeonsan']);
+    const leftAlignedCities = new Set(['incheon', 'songdo', 'daegu', 'gwangju', 'sejong', 'byeonsan']);
+    const yOffsetOverrides = {
+      incheon: -20,
+      songdo: 14,
+      daegu: -16,
+      sejong: -4,
+      suwon: 6,
+      jeonju: 6
+    };
     document.querySelectorAll('.map-city-pin').forEach(pin => {
       const cityId = pin.getAttribute('data-city-id');
       if (!cityId) return;
@@ -423,11 +534,12 @@ class KoreaMapEngine {
       if (textEl && rectEl) {
         const textW = typeof textEl.getComputedTextLength === 'function' ? textEl.getComputedTextLength() : 76;
         const boxW = Math.max(66, Math.ceil(textW) + 18);
+        const yOff = yOffsetOverrides[cityId] ?? 4;
         rectEl.setAttribute('width', String(boxW));
         if (leftAlignedCities.has(cityId)) {
-          banner.setAttribute('transform', `translate(-${boxW + 8}, 4)`);
+          banner.setAttribute('transform', `translate(-${boxW + 8}, ${yOff})`);
         } else {
-          banner.setAttribute('transform', 'translate(14, 4)');
+          banner.setAttribute('transform', `translate(${cityId === 'jeju' ? 16 : 14}, ${yOff})`);
         }
       }
     });
@@ -465,6 +577,7 @@ class KoreaMapEngine {
 
   applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
+    this.updateSatelliteBackdrop(theme);
     this.syncThemeLabels(this.currentLang);
   }
 
@@ -519,13 +632,56 @@ class KoreaMapEngine {
     if (langEl) langEl.textContent = `${langMeta.flag} ${langMeta.label}`;
   }
 
+  getFilteredCities() {
+    const q = this.searchQuery;
+    return Object.values(CITIES_DATA).filter(c => {
+      if (this.activeFilter !== 'all' && c.region !== this.activeFilter) return false;
+      if (!q) return true;
+      const loc = this.getLocalizedCity(c.id);
+      const haystack = `${c.id} ${c.name} ${c.nameShort} ${c.regionName} ${loc.name || ''} ${loc.nameShort || ''} ${loc.regionName || ''}`.toLowerCase();
+      return haystack.includes(q);
+    });
+  }
+
+  resetFilters() {
+    this.activeFilter = 'all';
+    this.searchQuery = '';
+    const searchInput = document.getElementById('lnb-search-input');
+    const searchClear = document.getElementById('lnb-search-clear');
+    if (searchInput) searchInput.value = '';
+    if (searchClear) searchClear.hidden = true;
+
+    document.querySelectorAll('.map-filter-pill').forEach(pill => {
+      pill.classList.toggle('active', pill.getAttribute('data-filter') === 'all');
+    });
+    this.filterCities('all');
+  }
+
+  renderEmptyStateHtml(t) {
+    const title = t.lnb?.emptySearchTitle || '일치하는 지역이 없습니다';
+    const resetLabel = t.lnb?.resetFilters || '필터 초기화';
+    return `
+      <div class="lnb-empty-state">
+        <span class="lnb-empty-text">${title}</span>
+        <button type="button" class="lnb-reset-filter-btn">${resetLabel}</button>
+      </div>
+    `;
+  }
+
   renderLnbDirectory() {
     const container = document.getElementById('lnb-city-directory');
     if (!container) return;
 
     const t = MAP_UI_TRANSLATIONS[this.currentLang] || MAP_UI_TRANSLATIONS.ko;
     const enterShort = t.lnb?.studioEnterShort || '스튜디오 →';
-    const cities = Object.values(CITIES_DATA).filter(c => this.activeFilter === 'all' || c.region === this.activeFilter);
+    const cities = this.getFilteredCities();
+
+    if (cities.length === 0) {
+      container.innerHTML = this.renderEmptyStateHtml(t);
+      const resetBtn = container.querySelector('.lnb-reset-filter-btn');
+      if (resetBtn) resetBtn.addEventListener('click', () => this.resetFilters());
+      return;
+    }
 
     container.innerHTML = cities.map(c => {
       const loc = this.getLocalizedCity(c.id);
@@ -577,7 +733,14 @@ class KoreaMapEngine {
 
     const t = MAP_UI_TRANSLATIONS[this.currentLang] || MAP_UI_TRANSLATIONS.ko;
     const enterShort = t.lnb?.studioEnterShort || '스튜디오 →';
-    const cities = Object.values(CITIES_DATA).filter(c => this.activeFilter === 'all' || c.region === this.activeFilter);
+    const cities = this.getFilteredCities();
+
+    if (cities.length === 0) {
+      container.innerHTML = this.renderEmptyStateHtml(t);
+      const resetBtn = container.querySelector('.lnb-reset-filter-btn');
+      if (resetBtn) resetBtn.addEventListener('click', () => this.resetFilters());
+      return;
+    }
 
     container.innerHTML = cities.map(c => {
       const loc = this.getLocalizedCity(c.id);
@@ -635,6 +798,11 @@ class KoreaMapEngine {
     this.renderLnbStudioLinks();
     this.updateContextBreadcrumb();
     this.renderCityDossier(cityId);
+
+    const coordsEl = document.getElementById('gis-active-coords');
+    if (coordsEl && CITY_DMS_COORDS[cityId]) {
+      coordsEl.textContent = CITY_DMS_COORDS[cityId];
+    }
   }
 
   highlightCityPin(cityId) {
@@ -699,9 +867,9 @@ class KoreaMapEngine {
     let statsHtml = '';
     if (city.stats) {
       statsHtml = `
-        <div class="dossier-stats-row">
+        <div class="dossier-stats-grid" style="--stat-cols: ${Math.min(city.stats.length, 3)}">
           ${city.stats.map(s => `
-            <div class="dossier-stat-item">
+            <div class="dossier-stat-cell">
               <span class="stat-label">${s.label}</span>
               <span class="stat-value">${s.value}</span>
             </div>
@@ -710,14 +878,26 @@ class KoreaMapEngine {
       `;
     }
 
-    let ktxPillsHtml = '';
-    if (city.ktx && city.ktx.length > 0) {
-      ktxPillsHtml = `
+    let transitRowsHtml = '';
+    if ((city.ktx && city.ktx.length > 0) || (city.airports && city.airports.length > 0)) {
+      const ktxLabel = t.dossier.ktxLabel || '고속철도';
+      const airLabel = t.dossier.airportsLabel || '항공 연계';
+      transitRowsHtml = `
         <div class="dossier-section">
           <div class="dossier-section-title">${t.dossier.transitTitle}</div>
-          <div class="dossier-transit-tags">
-            ${city.ktx.map(k => `<span class="transit-tag ktx">🚆 ${k}</span>`).join('')}
-            ${city.airports ? city.airports.map(a => `<span class="transit-tag airport">✈️ ${a}</span>`).join('') : ''}
+          <div class="dossier-transit-table">
+            ${city.ktx && city.ktx.length > 0 ? `
+              <div class="transit-spec-row">
+                <span class="transit-spec-key">${ktxLabel}</span>
+                <span class="transit-spec-val">${city.ktx.join(' · ')}</span>
+              </div>
+            ` : ''}
+            ${city.airports && city.airports.length > 0 ? `
+              <div class="transit-spec-row">
+                <span class="transit-spec-key">${airLabel}</span>
+                <span class="transit-spec-val">${city.airports.join(' · ')}</span>
+              </div>
+            ` : ''}
           </div>
         </div>
       `;
@@ -756,7 +936,7 @@ class KoreaMapEngine {
       <p class="dossier-desc">${city.desc}</p>
 
       ${statsHtml}
-      ${ktxPillsHtml}
+      ${transitRowsHtml}
       ${erasHtml}
       ${quickPresetsHtml}
     `;

@@ -190,29 +190,29 @@ export const MODERN_TRANSIT_NETWORK = {
       id: 'gyeongbu_ktx',
       name: '경부고속선 (KTX/SRT)',
       color: '#38bdf8',
-      stations: ['서울', '광명', '수원', '천안아산', '오송', '대전', '김천구미', '동대구', '경주', '울산', '부산'],
-      path: 'M 350,395 L 345,410 L 355,430 L 365,470 L 380,490 L 390,520 L 440,570 L 475,610 L 535,645 L 545,680 L 525,725'
+      stations: ['서울', '광명', '천안아산', '오송', '대전', '김천구미', '동대구', '경주', '울산', '부산'],
+      path: 'M 363,544 L 355,558 L 372,614 L 389,628 L 391,654 L 445,675 L 479,697 L 524,698 L 517,726 L 514,759'
     },
     {
       id: 'honam_ktx',
       name: '호남고속선 (KTX/SRT)',
       color: '#34d399',
-      stations: ['오송', '공주', '익산', '정읍', '광주송정', '나주', '목포'],
-      path: 'M 380,490 L 360,525 L 340,590 L 330,640 L 320,695 L 315,730 L 295,765'
+      stations: ['오송', '공주', '익산', '정읍', '광주송정', '목포'],
+      path: 'M 389,628 L 371,652 L 362,690 L 354,725 L 349,763 L 320,795'
     },
     {
       id: 'gangneung_ktx',
       name: '강릉선 KTX',
       color: '#a78bfa',
-      stations: ['서울', '청량리', '양평', '만종(원주)', '횡성', '평창', '진부(오대산)', '강릉'],
-      path: 'M 350,395 L 375,390 L 405,395 L 430,395 L 450,385 L 470,380 L 485,375 L 495,370'
+      stations: ['서울', '양평', '만종(원주)', '평창', '진부(오대산)', '강릉'],
+      path: 'M 363,544 L 399,551 L 432,565 L 464,544 L 478,537 L 499,527'
     },
     {
       id: 'srt_connection',
       name: '수서평택고속선 (SRT)',
       color: '#f472b6',
       stations: ['수서', '동탄', '지제(평택)'],
-      path: 'M 360,405 L 365,425 L 365,455 L 365,470'
+      path: 'M 371,552 L 370,577 L 370,593 L 372,614'
     }
   ],
   // Major Expressways (경부고속도로, 서해안고속도로, 영동고속도로)
@@ -220,28 +220,28 @@ export const MODERN_TRANSIT_NETWORK = {
     {
       id: 'gyeongbu_expressway',
       name: '경부고속도로 (1번)',
-      path: 'M 352,398 L 360,430 L 370,480 L 392,525 L 480,615 L 526,720',
+      path: 'M 363,544 L 366,572 L 377,615 L 391,654 L 479,697 L 514,759',
       color: 'rgba(226, 180, 116, 0.45)'
     },
     {
       id: 'seohaean_expressway',
       name: '서해안고속도로 (15번)',
-      path: 'M 330,420 L 310,470 L 300,540 L 295,620 L 290,750',
+      path: 'M 346,568 L 345,615 L 340,670 L 336,718 L 320,795',
       color: 'rgba(226, 180, 116, 0.35)'
     },
     {
       id: 'yeongdong_expressway',
       name: '영동고속도로 (50번)',
-      path: 'M 305,420 L 365,430 L 430,410 L 495,372',
+      path: 'M 343,554 L 366,572 L 432,565 L 499,527',
       color: 'rgba(226, 180, 116, 0.35)'
     }
   ],
   // Major Airports
   airports: [
-    { id: 'icn', name: '인천국제공항 (ICN)', code: 'ICN', x: 295, y: 400, runway: true },
-    { id: 'gmp', name: '김포국제공항 (GMP)', code: 'GMP', x: 335, y: 390 },
-    { id: 'pus', name: '김해국제공항 (PUS)', code: 'PUS', x: 505, y: 720 },
-    { id: 'cju', name: '제주국제공항 (CJU)', code: 'CJU', x: 285, y: 905 }
+    { id: 'icn', name: '인천국제공항 (ICN)', code: 'ICN', x: 324, y: 554, runway: true },
+    { id: 'gmp', name: '김포국제공항 (GMP)', code: 'GMP', x: 349, y: 545 },
+    { id: 'pus', name: '김해국제공항 (PUS)', code: 'PUS', x: 506, y: 760 },
+    { id: 'cju', name: '제주국제공항 (CJU)', code: 'CJU', x: 327, y: 909 }
   ]
 };
 
@@ -258,7 +258,7 @@ export const MODERN_CITIES_REGISTRY = {
     regionName: '수도권',
     status: 'active',
     statusBadge: '🌟 활성화 • 3대 시대 건축 플레이 가능',
-    coords: { x: 350, y: 395 },
+    coords: { x: 363, y: 544 },
     icon: '🌟',
     ktx: ['KTX 경부선', 'KTX 호남선', '강릉선 KTX', 'GTX-A/B/C'],
     airports: ['김포공항 (15km)', '인천공항 (52km)'],
@@ -293,7 +293,7 @@ export const MODERN_CITIES_REGISTRY = {
     regionName: '영남권',
     status: 'ready',
     statusBadge: '스튜디오 탐방 가능',
-    coords: { x: 525, y: 725 },
+    coords: { x: 514, y: 759 },
     icon: '🌊',
     ktx: ['KTX 경부선 종착역', 'SRT 경부선', '동해선 광역전철'],
     airports: ['김해국제공항 (PUS)', '가덕도신공항(예정)'],
@@ -324,7 +324,7 @@ export const MODERN_CITIES_REGISTRY = {
     regionName: '수도권',
     status: 'ready',
     statusBadge: '스튜디오 탐방 가능',
-    coords: { x: 305, y: 405 },
+    coords: { x: 343, y: 554 },
     icon: '✈️',
     ktx: ['인천발 KTX(송도)', '공항철도(AREX)'],
     airports: ['인천국제공항 (세계 3대 허브 공항)'],
@@ -355,7 +355,7 @@ export const MODERN_CITIES_REGISTRY = {
     regionName: '수도권 (인천 연수)',
     status: 'ready',
     statusBadge: '🌉 스튜디오 탐방 가능',
-    coords: { x: 306, y: 444 },
+    coords: { x: 338, y: 562 },
     icon: '🌉',
     ktx: ['인천발 KTX 송도역(예정)', 'GTX-B 인천대입구(예정)', '인천 1호선'],
     airports: ['인천국제공항 (인천대교 20분)'],
@@ -387,7 +387,7 @@ export const MODERN_CITIES_REGISTRY = {
     regionName: '영남권',
     status: 'ready',
     statusBadge: '스튜디오 탐방 가능',
-    coords: { x: 475, y: 615 },
+    coords: { x: 479, y: 697 },
     icon: '⚡',
     ktx: ['KTX/SRT 동대구역 (전국 승하차 2위)', '대구권 광역철도'],
     airports: ['대구국제공항 (TAE)', '대구경북신공항(예정)'],
@@ -416,7 +416,7 @@ export const MODERN_CITIES_REGISTRY = {
     regionName: '충청권',
     status: 'ready',
     statusBadge: '스튜디오 탐방 가능',
-    coords: { x: 390, y: 520 },
+    coords: { x: 391, y: 654 },
     icon: '🔬',
     ktx: ['KTX/SRT 대전역 • 서대전역', '충청권 광역철도'],
     airports: ['청주국제공항 (연계 35분)'],
@@ -445,7 +445,7 @@ export const MODERN_CITIES_REGISTRY = {
     regionName: '호남권',
     status: 'ready',
     statusBadge: '스튜디오 탐방 가능',
-    coords: { x: 320, y: 695 },
+    coords: { x: 353, y: 761 },
     icon: '💡',
     ktx: ['KTX/SRT 광주송정역', '달빛철도(광주-대구 예정)'],
     airports: ['광주공항 (KWJ)'],
@@ -474,7 +474,7 @@ export const MODERN_CITIES_REGISTRY = {
     regionName: '수도권',
     status: 'ready',
     statusBadge: '스튜디오 탐방 가능',
-    coords: { x: 355, y: 430 },
+    coords: { x: 366, y: 572 },
     icon: '🏯',
     ktx: ['KTX 수원역', 'GTX-C(예정)', '신분당선'],
     airports: ['김포/인천공항 광역버스 연계'],
@@ -503,7 +503,7 @@ export const MODERN_CITIES_REGISTRY = {
     regionName: '충청권',
     status: 'ready',
     statusBadge: '스튜디오 탐방 가능',
-    coords: { x: 375, y: 505 },
+    coords: { x: 385, y: 642 },
     icon: '🏛️',
     ktx: ['KTX 오송역(인접)', '충청권 광역급행철도(CTX)'],
     airports: ['청주국제공항 (25분)'],
@@ -532,7 +532,7 @@ export const MODERN_CITIES_REGISTRY = {
     regionName: '영남권',
     status: 'ready',
     statusBadge: '스튜디오 탐방 가능',
-    coords: { x: 535, y: 645 },
+    coords: { x: 524, y: 698 },
     icon: '🏛️',
     ktx: ['KTX 신경주역'],
     airports: ['울산/포항공항 연계'],
@@ -561,7 +561,7 @@ export const MODERN_CITIES_REGISTRY = {
     regionName: '호남권',
     status: 'ready',
     statusBadge: '스튜디오 탐방 가능',
-    coords: { x: 350, y: 625 },
+    coords: { x: 375, y: 701 },
     icon: '🏮',
     ktx: ['전라선 KTX 전주역 (한옥형 역사)'],
     airports: ['군산공항 연계'],
@@ -590,7 +590,7 @@ export const MODERN_CITIES_REGISTRY = {
     regionName: '강원권',
     status: 'ready',
     statusBadge: '스튜디오 탐방 가능',
-    coords: { x: 495, y: 370 },
+    coords: { x: 499, y: 527 },
     icon: '🌲',
     ktx: ['강릉선 KTX 종착역', '동해선 KTX(예정)'],
     airports: ['양양국제공항 (40분)'],
@@ -619,7 +619,7 @@ export const MODERN_CITIES_REGISTRY = {
     regionName: '제주권',
     status: 'ready',
     statusBadge: '스튜디오 탐방 가능',
-    coords: { x: 285, y: 920 },
+    coords: { x: 330, y: 916 },
     icon: '🌴',
     ktx: ['목포/완도 쾌속선 연계'],
     airports: ['제주국제공항 (CJU - 세계 최다 운항 노선)'],
@@ -648,7 +648,7 @@ export const MODERN_CITIES_REGISTRY = {
     regionName: '이북권',
     status: 'ready',
     statusBadge: '스튜디오 탐방 가능',
-    coords: { x: 280, y: 220 },
+    coords: { x: 275, y: 411 },
     icon: '🏔️',
     ktx: ['경의선 고속철도(구상안)'],
     airports: ['순안국제공항'],
@@ -678,7 +678,7 @@ export const MODERN_CITIES_REGISTRY = {
     category: 'park',
     status: 'ready',
     statusBadge: '국립공원 탐방 가능',
-    coords: { x: 276, y: 628 },
+    coords: { x: 330, y: 718 },
     icon: '🏞️',
     ktx: ['호남선 KTX 정읍역 (30분 연계)', '서해안고속도로 부안IC'],
     airports: ['새만금 · 군산공항 (40분)'],
