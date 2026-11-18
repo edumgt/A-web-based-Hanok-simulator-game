@@ -2,6 +2,8 @@
 ### Korea Spacetime Atlas & 16×16 Isometric City Builder
 
 > **▶ [Play the live demo](https://edumgt.github.io/A-web-based-Hanok-simulator-game/)** — Explore Korea and build a Joseon-era Hanok village directly in your browser.
+>
+> Enjoyed it? Please give the project a ⭐ **Star** — it helps others discover the demo.
 
 **[🇰🇷 한국어 안내](#-한국어-안내) · [🇺🇸 English Guide](#-english-guide) · [📸 주요 화면 캡처 (Screenshots)](#-주요-화면-캡처--key-screenshots)**
 
