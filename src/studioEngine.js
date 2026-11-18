@@ -2282,12 +2282,32 @@ export function initIsometricStudio() {
         }
       }
 
+      // Tactile tile/building placement pop-up bounce state
+      const placementBounces = new Map();
+      const prefersReducedMotionQuery = (typeof window !== 'undefined' && window.matchMedia)
+        ? window.matchMedia('(prefers-reduced-motion: reduce)')
+        : null;
+
+      function triggerPlacementBounce(row, col, tid) {
+        if (prefersReducedMotionQuery && prefersReducedMotionQuery.matches) return;
+        const baseTid = getBaseTileId(tid);
+        const isBuilding = baseTid.startsWith('b') || baseTid.startsWith('s');
+        const isDecor = baseTid.startsWith('d') || baseTid.startsWith('l');
+        placementBounces.set(`${row},${col}`, {
+          startTime: performance.now(),
+          duration: isBuilding ? 380 : (isDecor ? 320 : 240),
+          peakLift: isBuilding ? 18 : (isDecor ? 12 : 6),
+          isElevated: isBuilding || isDecor
+        });
+      }
+
       function placeTile(row, col) {
         if (row < 0 || row >= ROWS || col < 0 || col >= COLS) return;
         const effectiveBrush = getEffectiveBrush(activeBrush, currentBrushRotation);
         if (currentGrid[row][col] === effectiveBrush) return;
         pushUndo();
         currentGrid[row][col] = effectiveBrush;
+        triggerPlacementBounce(row, col, effectiveBrush);
         requestRender();
       }
 
@@ -2359,6 +2379,8 @@ export function initIsometricStudio() {
         // Scenic World-Space Landscape (Mountains, River & Sea, Shorelines, Foundation)
         scenicEnvironment.renderWorldBackdrop(ctx, animTime, lightingState, isHDEnhanced, currentEra);
 
+        const renderNow = performance.now();
+
         // Painter algorithm depth-sorted rendering (0 to 30)
         for (let depth = 0; depth <= (ROWS + COLS - 2); depth++) {
           for (let i = 0; i < ROWS; i++) {
@@ -2368,12 +2390,71 @@ export function initIsometricStudio() {
               const ox = ORIGIN_X + (j - i) * HALF_W;
               const oy = ORIGIN_Y + (i + j) * QUARTER_W;
 
-              // HD Dynamic Isometric Ground Cast Shadow for buildings & elevated structures
-              if (isHDEnhanced && (tid.startsWith('b') || tid.startsWith('d08') || tid.startsWith('d01') || tid.startsWith('d02') || tid.startsWith('s05') || tid.startsWith('s08'))) {
+              // Evaluate active placement pop/bounce animation for this cell
+              const cellKey = `${i},${j}`;
+              const bounce = placementBounces.get(cellKey);
+              let bounceDy = 0;
+              let bounceScaleX = 1;
+              let bounceScaleY = 1;
+              let bounceAirFactor = 0;
+              let bounceProgress = 1;
+
+              if (bounce) {
+                const elapsed = renderNow - bounce.startTime;
+                if (elapsed >= bounce.duration) {
+                  placementBounces.delete(cellKey);
+                } else {
+                  const t = Math.max(0, elapsed / bounce.duration);
+                  bounceProgress = t;
+                  // Primary light upward pop (0..0.76) + gentle landing rebound (0.76..1.0)
+                  if (t <= 0.76) {
+                    const phase = t / 0.76;
+                    bounceAirFactor = Math.sin(phase * Math.PI);
+                    bounceDy = -bounce.peakLift * bounceAirFactor;
+                    bounceScaleX = 1 - 0.025 * bounceAirFactor;
+                    bounceScaleY = 1 + 0.045 * bounceAirFactor;
+                  } else {
+                    const settlePhase = (t - 0.76) / 0.24;
+                    const rebound = Math.sin(settlePhase * Math.PI);
+                    bounceAirFactor = rebound * 0.18;
+                    bounceDy = -bounce.peakLift * 0.16 * rebound;
+                    const cushion = Math.sin(Math.min(1, settlePhase * 2) * Math.PI) * (1 - settlePhase);
+                    bounceScaleX = 1 + 0.03 * cushion;
+                    bounceScaleY = 1 - 0.03 * cushion;
+                  }
+                }
+              }
+
+              // Grounded isometric socket & ripple ring while tile pops above the grid
+              if (bounceProgress < 1) {
+                const ringAlpha = (1 - bounceProgress) * (bounce && bounce.isElevated ? 0.62 : 0.36);
                 ctx.save();
                 ctx.beginPath();
-                ctx.ellipse(ox + 72, oy + 96, 42, 18, -0.32, 0, Math.PI * 2);
-                ctx.fillStyle = (lightingState === 'night') ? 'rgba(4, 7, 18, 0.44)' : 'rgba(28, 20, 16, 0.22)';
+                ctx.moveTo(ox + 64, oy + 64);
+                ctx.lineTo(ox + 128, oy + 96);
+                ctx.lineTo(ox + 64, oy + 128);
+                ctx.lineTo(ox, oy + 96);
+                ctx.closePath();
+                ctx.fillStyle = (lightingState === 'night')
+                  ? `rgba(10, 16, 34, ${0.38 * bounceAirFactor + 0.12})`
+                  : `rgba(42, 34, 26, ${0.26 * bounceAirFactor + 0.08})`;
+                ctx.fill();
+                ctx.strokeStyle = `rgba(232, 188, 118, ${ringAlpha})`;
+                ctx.lineWidth = 1.6;
+                ctx.stroke();
+                ctx.restore();
+              }
+
+              // HD Dynamic Isometric Ground Cast Shadow for buildings & elevated structures
+              if (isHDEnhanced && (tid.startsWith('b') || tid.startsWith('d08') || tid.startsWith('d01') || tid.startsWith('d02') || tid.startsWith('s05') || tid.startsWith('s08'))) {
+                const shadowScale = 1 - 0.22 * bounceAirFactor;
+                const shadowAlphaScale = 1 - 0.32 * bounceAirFactor;
+                ctx.save();
+                ctx.beginPath();
+                ctx.ellipse(ox + 72, oy + 96, 42 * shadowScale, 18 * shadowScale, -0.32, 0, Math.PI * 2);
+                ctx.fillStyle = (lightingState === 'night')
+                  ? `rgba(4, 7, 18, ${(0.44 * shadowAlphaScale).toFixed(3)})`
+                  : `rgba(28, 20, 16, ${(0.22 * shadowAlphaScale).toFixed(3)})`;
                 ctx.fill();
                 ctx.restore();
               }
@@ -2394,7 +2475,17 @@ export function initIsometricStudio() {
                 }
               }
               if (img && img.complete) {
-                ctx.drawImage(img, ox, oy);
+                if (bounceProgress < 1 && (bounceDy !== 0 || bounceScaleX !== 1 || bounceScaleY !== 1)) {
+                  const pivotX = ox + 64;
+                  const pivotY = oy + 96 + bounceDy;
+                  ctx.save();
+                  ctx.translate(pivotX, pivotY);
+                  ctx.scale(bounceScaleX, bounceScaleY);
+                  ctx.drawImage(img, -64, -96);
+                  ctx.restore();
+                } else {
+                  ctx.drawImage(img, ox, oy);
+                }
               }
 
               // HD Water ripple & specular shimmer
@@ -2612,6 +2703,11 @@ export function initIsometricStudio() {
 
         ctx.restore(); // Camera transform restore
         ctx.restore(); // DPR scale restore
+
+        // Keep driving smooth 60fps frames until any placement pop-up animations finish
+        if (placementBounces.size > 0 && (!isAnimated || !animLoopId)) {
+          requestRender();
+        }
       }
 
       // Pan & Zoom Event Handlers
