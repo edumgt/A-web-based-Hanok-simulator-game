@@ -48,7 +48,7 @@ export const MAP_UI_TRANSLATIONS = {
       chungcheong: '충청·세종 (대전·세종)',
       yeongnam: '영남권 (부산·대구·경주)',
       honam: '호남권 (광주·전주·변산)',
-      gangwon: '강원권 (강릉·원주)',
+      gangwon: '강원권 (강릉·영월)',
       jeju: '제주권',
       north: '이북권 (평양)'
     },
@@ -129,7 +129,7 @@ export const MAP_UI_TRANSLATIONS = {
       chungcheong: 'Chungcheong & Sejong',
       yeongnam: 'Yeongnam',
       honam: 'Honam & Byeonsan',
-      gangwon: 'Gangwon',
+      gangwon: 'Gangwon (Gangneung·Yeongwol)',
       jeju: 'Jeju',
       north: 'Northern (Pyongyang)'
     },
@@ -210,7 +210,7 @@ export const MAP_UI_TRANSLATIONS = {
       chungcheong: '忠清·世宗',
       yeongnam: '岭南圈 (釜山/大邱/庆州)',
       honam: '湖南圈 (光州/全州/边山)',
-      gangwon: '江原圈 (江陵)',
+      gangwon: '江原圈 (江陵/宁越)',
       jeju: '济州圈',
       north: '北部圈 (平壤)'
     },
@@ -291,7 +291,7 @@ export const MAP_UI_TRANSLATIONS = {
       chungcheong: '忠清・世宗',
       yeongnam: '嶺南圏 (釜山/大邱/慶州)',
       honam: '湖南圏 (光州/全州/辺山)',
-      gangwon: '江原圏 (江陵)',
+      gangwon: '江原圏 (江陵・寧越)',
       jeju: '済州圏',
       north: '北朝鮮圏 (平壌)'
     },
@@ -372,7 +372,7 @@ export const MAP_UI_TRANSLATIONS = {
       chungcheong: 'Chungcheong y Sejong',
       yeongnam: 'Yeongnam',
       honam: 'Honam y Byeonsan',
-      gangwon: 'Gangwon',
+      gangwon: 'Gangwon (Gangneung·Yeongwol)',
       jeju: 'Jeju',
       north: 'Norte (Pionyang)'
     },
@@ -1482,6 +1482,113 @@ export const CITY_LOCALIZATIONS = {
       ],
       eras: [{ id: 'joseon', label: '🏯 Lago Gwandong', sub: 'Jardín de Pinos', preset: 'riverside' }],
       presets: [{ id: 'riverside', label: 'Jardín junto al Lago', era: 'joseon' }]
+    }
+  },
+  yeongwol: {
+    ko: { pinLabel: '🌌 영월군' },
+    en: {
+      pinLabel: '🌌 Yeongwol',
+      name: 'Yeongwol County, Gangwon',
+      nameShort: 'Yeongwol',
+      tier: 'Donggang River Gorge • Royal Heritage & Starlight Town',
+      population: '37,500',
+      regionName: 'Gangwon (Southern Gangwon)',
+      statusBadge: '🌌 Studio Ready',
+      ktx: ['Taebaek Line ITX-Maum Yeongwol Sta.', 'Jecheon–Yeongwol Expwy (Planned)'],
+      airports: ['Wonju Airport (65 min link)'],
+      tagline: 'Korean Peninsula Cliffs • Cheongnyeongpo Exile Site & Byeolmaro Observatory',
+      desc: 'Nestled in southern Gangwon Province where the Donggang and Seogang rivers carve dramatic meanders, Yeongwol blends the iconic Korean Peninsula-shaped landform, UNESCO-listed Jangneung Royal Tomb of King Danjong, Cheongnyeongpo, and the starry summit of Byeolmaro Observatory.',
+      stats: [
+        { label: 'Landmarks', value: 'Peninsula Cliffs • Cheongnyeongpo • Jangneung • Byeolmaro' },
+        { label: 'Terrain', value: 'Donggang River Meanders & Mt. Bongnaesan' }
+      ],
+      eras: [
+        { id: 'joseon', label: '🏯 Cheongnyeongpo', sub: 'Royal Heritage & River', preset: 'riverside' },
+        { id: 'modern', label: '🌌 Byeolmaro & Donggang', sub: 'Museum & Starlight Town', preset: 'village' }
+      ],
+      presets: [
+        { id: 'riverside', label: 'Donggang Waterfront', era: 'joseon' },
+        { id: 'village', label: 'Mountain Hanok Valley', era: 'joseon' },
+        { id: 'meadow', label: 'Peninsula Cliffs Forest', era: 'joseon' }
+      ]
+    },
+    zh: {
+      pinLabel: '🌌 宁越郡',
+      name: '江原道 宁越郡 (Yeongwol)',
+      nameShort: '宁越',
+      tier: '东江秘境 · 端宗历史文化与星空天文之乡',
+      population: '37,500人',
+      regionName: '江原圈 (江原南部)',
+      statusBadge: '🌌 可进入工作室探索',
+      ktx: ['太白线 ITX-Maum 宁越站', '堤川–宁越高速公路(规划)'],
+      airports: ['原州机场 (65分钟)'],
+      tagline: '韩半岛地形奇观与东江曲流 • 清泠浦与别马鲁天文台',
+      desc: '位于江原道南部，汇聚西江雕琢而成的韩半岛地形奇观、天赐东江峡谷、朝鲜端宗流放地清泠浦与世界遗产庄陵，以及仰望银河的蓬莱山别马鲁天文台。',
+      stats: [
+        { label: '主要名胜', value: '韩半岛地形 • 清泠浦 • 庄陵 • 别马鲁天文台' },
+        { label: '特色地形', value: '东江·西江曲流峡谷与蓬莱山' }
+      ],
+      eras: [
+        { id: 'joseon', label: '🏯 清泠浦与庄陵', sub: '端宗历史·江畔韩屋', preset: 'riverside' },
+        { id: 'modern', label: '🌌 别马鲁与东江', sub: '博物馆之乡·生态村', preset: 'village' }
+      ],
+      presets: [
+        { id: 'riverside', label: '东江·清泠浦水岸', era: 'joseon' },
+        { id: 'village', label: '宁越山村韩屋', era: 'joseon' },
+        { id: 'meadow', label: '韩半岛地形自然林', era: 'joseon' }
+      ]
+    },
+    ja: {
+      pinLabel: '🌌 寧越郡',
+      name: '江原特別自治道 寧越郡 (Yeongwol)',
+      nameShort: '寧越',
+      tier: '東江渓谷・端宗の歴史＆星空天文の郷',
+      population: '37,500人',
+      regionName: '江原圏 (江原南部)',
+      statusBadge: '🌌 スタジオ探索可能',
+      ktx: ['太白線 ITX-マウム 寧越駅', '堤川–寧越高速道路(計画)'],
+      airports: ['原州空港 (連絡65分)'],
+      tagline: '韓半島地形と東江の蛇行渓谷 • 清泠浦と星マロ天文台',
+      desc: '西江が創り出した神秘の韓半島地形や東江の清流、朝鮮第6代王・端宗ゆかりの清泠浦と世界遺産・荘陵、満天の星を望む星マロ天文台が調和する江原南部の歴史・自然都市です。',
+      stats: [
+        { label: '主要名所', value: '韓半島地形 • 清泠浦 • 荘陵 • 星マロ天文台' },
+        { label: '特化地形', value: '東江・西江の蛇行渓谷＆蓬莱山' }
+      ],
+      eras: [
+        { id: 'joseon', label: '🏯 清泠浦＆荘陵', sub: '歴史と川辺の韓屋', preset: 'riverside' },
+        { id: 'modern', label: '🌌 星マロ＆東江', sub: '博物館の郷・自然村', preset: 'village' }
+      ],
+      presets: [
+        { id: 'riverside', label: '東江・清泠浦水辺', era: 'joseon' },
+        { id: 'village', label: '寧越の山里韓屋', era: 'joseon' },
+        { id: 'meadow', label: '韓半島地形の自然林', era: 'joseon' }
+      ]
+    },
+    es: {
+      pinLabel: '🌌 Yeongwol',
+      name: 'Condado de Yeongwol, Gangwon',
+      nameShort: 'Yeongwol',
+      tier: 'Río Donggang • Patrimonio Real y Cielo Estrellado',
+      population: '37,500 hab.',
+      regionName: 'Gangwon (Sur)',
+      statusBadge: '🌌 Estudio Disponible',
+      ktx: ['Estación Yeongwol ITX-Maum (Línea Taebaek)'],
+      airports: ['Aeropuerto de Wonju (65 min)'],
+      tagline: 'Acantilados de la Península • Cheongnyeongpo y Observatorio Byeolmaro',
+      desc: 'En el sur de Gangwon, los ríos Donggang y Seogang esculpen la célebre formación de la Península Coreana junto a Cheongnyeongpo, la tumba real Jangneung (UNESCO) y el Observatorio Byeolmaro.',
+      stats: [
+        { label: 'Hitos', value: 'Península Seogang • Cheongnyeongpo • Byeolmaro' },
+        { label: 'Terreno', value: 'Meandros del Donggang y Monte Bongnaesan' }
+      ],
+      eras: [
+        { id: 'joseon', label: '🏯 Cheongnyeongpo', sub: 'Ribera Histórica', preset: 'riverside' },
+        { id: 'modern', label: '🌌 Byeolmaro y Donggang', sub: 'Valle de Museos', preset: 'village' }
+      ],
+      presets: [
+        { id: 'riverside', label: 'Ribera del Donggang', era: 'joseon' },
+        { id: 'village', label: 'Aldea Hanok de Montaña', era: 'joseon' },
+        { id: 'meadow', label: 'Bosque de la Península', era: 'joseon' }
+      ]
     }
   },
   jeju: {

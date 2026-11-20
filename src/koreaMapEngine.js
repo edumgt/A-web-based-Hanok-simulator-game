@@ -23,6 +23,7 @@ const CITY_DMS_COORDS = {
   jeonju: `35°49'27"N · 127°08'53"E`,
   byeonsan: `35°37'48"N · 126°31'48"E`,
   gangneung: `37°45'07"N · 128°52'34"E`,
+  yeongwol: `37°11'01"N · 128°27'42"E`,
   jeju: `33°29'59"N · 126°31'54"E`,
   pyongyang: `39°02'02"N · 125°45'47"E`
 };

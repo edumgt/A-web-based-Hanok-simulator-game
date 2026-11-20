@@ -607,6 +607,38 @@ export const MODERN_CITIES_REGISTRY = {
       { id: 'riverside', label: '호반 솔숲정원', era: 'joseon' }
     ]
   },
+  yeongwol: {
+    id: 'yeongwol',
+    name: '영월군 (Yeongwol)',
+    nameShort: '영월',
+    hanja: '寧越郡 • 東江',
+    tier: '동강 비경 · 단종 역사문화 & 별빛 천문 고을',
+    population: '37,500명',
+    area: '1,127.5 km²',
+    region: 'gangwon',
+    regionName: '강원권 (강원 남부)',
+    status: 'ready',
+    statusBadge: '🌌 스튜디오 탐방 가능',
+    coords: { x: 469, y: 579 },
+    icon: '🌌',
+    ktx: ['태백선 ITX-마음 영월역', '제천–영월 고속도로(추진)'],
+    airports: ['원주공항 (65분 연계)'],
+    tagline: '한반도 지형과 동강 굽이길 • 청령포 단종 유배지와 별마로천문대',
+    desc: '서강이 빚은 신비로운 한반도 지형과 천혜의 동강 협곡, 조선 단종의 역사가 서린 청령포와 세계유산 장릉, 밤하늘 은하수를 품은 봉래산 별마로천문대와 다채로운 박물관이 어우러진 강원특별자치도 대표 역사·생태 문화 고을입니다.',
+    stats: [
+      { label: '주요 명소', value: '한반도지형 • 청령포 • 장릉 • 별마로천문대' },
+      { label: '특화 지형', value: '동강·서강 감입곡류 & 봉래산' }
+    ],
+    eras: [
+      { id: 'joseon', label: '🏯 청령포 & 장릉', sub: '단종 역사·강변 한옥', preset: 'riverside' },
+      { id: 'modern', label: '🌌 별마로 & 동강', sub: '박물관 고을·생태 마을', preset: 'village' }
+    ],
+    presets: [
+      { id: 'riverside', label: '동강·청령포 수변', era: 'joseon' },
+      { id: 'village', label: '영월 산촌 한옥', era: 'joseon' },
+      { id: 'meadow', label: '한반도지형 자연림', era: 'joseon' }
+    ]
+  },
   jeju: {
     id: 'jeju',
     name: '제주특별자치도 (Jeju)',

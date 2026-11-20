@@ -13,8 +13,8 @@
 
 ### 1. 실사 위성·음영기복 대한민국 현대 전도 · *Photorealistic Korea Satellite & GIS Atlas*
 ![대한민국 현대 실사 위성 전도](docs/screenshots/01-korea-satellite-map.png)
-> **KR**: WGS84 실측 해안선·도서 지형과 산맥 음영기복(태백·소백·한라산·개마고원), 동·서·남해 수심, KTX/SRT 고속철도망, 주요 고속도로, 변산반도 국립공원, 인천 송도, 울릉도·독도 등 15개 주요 거점을 수록한 인터랙티브 전국 지도 화면입니다.  
-> **EN**: Interactive full-peninsula WGS84 satellite & shaded-relief atlas featuring hypsometric mountain relief, bathymetric seas, KTX/SRT high-speed rail, expressways, DMZ, Ulleungdo & Dokdo, and 15 interactive cities & national parks.
+> **KR**: WGS84 실측 해안선·도서 지형과 산맥 음영기복(태백·소백·한라산·개마고원), 동·서·남해 수심, KTX/SRT 고속철도망, 주요 고속도로, 변산반도 국립공원, 인천 송도, 강원 영월, 울릉도·독도 등 16개 주요 거점을 수록한 인터랙티브 전국 지도 화면입니다.  
+> **EN**: Interactive full-peninsula WGS84 satellite & shaded-relief atlas featuring hypsometric mountain relief, bathymetric seas, KTX/SRT high-speed rail, expressways, DMZ, Ulleungdo & Dokdo, and 16 interactive cities & national parks.
 
 ---
 
@@ -43,7 +43,7 @@
 
 ### 1. 실사 위성·지형 기반 대한민국 현대 전도 (WGS84 GIS)
 - **실사 위성 & 음영기복 렌더링**: 실제 한반도 WGS84 해안선과 주요 섬(제주도, 강화도, 영종도, 거제도, 남해도, 진도, 완도, 울릉도, 독도 등), 산맥 고도별 식생·음영기복, 서해 갯벌·대륙붕과 동해 심해 수심을 정밀하게 합성한 실사형 베이스맵을 제공합니다.
-- **15개 주요 도시 및 국립공원 수록**: 서울특별시, 부산광역시, 인천광역시, **인천 송도국제도시**, 대구광역시, 대전광역시, 광주광역시, 수원특례시, 세종특별자치시, 경주시, 전주시, **변산반도 국립공원**, 강릉시, 제주특별자치도, 평양직할시를 클릭해 상세 도시에(Dossier)와 프리셋을 확인할 수 있습니다.
+- **16개 주요 도시 및 국립공원 수록**: 서울특별시, 부산광역시, 인천광역시, **인천 송도국제도시**, 대구광역시, 대전광역시, 광주광역시, 수원특례시, 세종특별자치시, 경주시, 전주시, **변산반도 국립공원**, 강릉시, **강원 영월군**, 제주특별자치도, 평양직할시를 클릭해 상세 도시에(Dossier)와 프리셋을 확인할 수 있습니다.
 - **국가 기간망 레이어 토글**: 실사 위성·지형 지도, KTX/SRT 고속철도망, 주요 고속도로망, 국립공원 및 자연보전구역 레이어를 개별 ON/OFF 할 수 있습니다.
 
 ### 2. 모던 LNB 오프캔버스 네비게이션 & 다국어 · 테마 지원
@@ -121,13 +121,13 @@ npm run lint
 ## Overview
 **Korea Spacetime Atlas & Isometric City Builder** combines a **photorealistic WGS84 satellite & shaded-relief GIS map of the Korean Peninsula** with an interactive **16×16 dimetric (2:1) isometric city-building studio** spanning three distinct eras: **Joseon Dynasty**, **Modern Seoul**, and **2099 Future Megacity**.
 
-Explore 15 major Korean cities and national parks in **5 languages**, toggle national rail and highway infrastructure layers, switch seamlessly between **Light and Dark modes**, and launch directly into the isometric studio to craft living dioramas complete with tactile placement animations, autonomous traffic, and Day/Night atmosphere.
+Explore 16 major Korean cities and national parks in **5 languages**, toggle national rail and highway infrastructure layers, switch seamlessly between **Light and Dark modes**, and launch directly into the isometric studio to craft living dioramas complete with tactile placement animations, autonomous traffic, and Day/Night atmosphere.
 
 ## Key Features
 
 ### 1. Photorealistic WGS84 Korea Satellite & Shaded-Relief Map
 - **Procedural Satellite & Hypsometric Relief**: Synthesizes authentic WGS84 Korean Peninsula mainland & island coastlines (Jeju, Ganghwa, Yeongjong/ICN, Geoje, Ulleungdo, Dokdo) with directional hillshading across major mountain ranges (Taebaek, Sobaek, Hallasan, Kaema Plateau) and bathymetric depth gradients across the West, South, and East Seas.
-- **15 Interactive Cities & National Parks**: Inspect detailed geographic dossiers and launch regional presets for Seoul, Busan, Incheon, **Incheon Songdo International City**, Daegu, Daejeon, Gwangju, Suwon, Sejong, Gyeongju, Jeonju, **Byeonsanbando National Park**, Gangneung, Jeju, and Pyongyang.
+- **16 Interactive Cities & National Parks**: Inspect detailed geographic dossiers and launch regional presets for Seoul, Busan, Incheon, **Incheon Songdo International City**, Daegu, Daejeon, Gwangju, Suwon, Sejong, Gyeongju, Jeonju, **Byeonsanbando National Park**, Gangneung, **Yeongwol (Gangwon)**, Jeju, and Pyongyang.
 - **Infrastructure & Conservation Layers**: Independently toggle Satellite Terrain, KTX/SRT High-Speed Rail, Expressways, and National Park Reserve overlays.
 
 ### 2. Modern Offcanvas LNB UX, 5 Languages & Dual Themes

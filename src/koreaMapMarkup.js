@@ -125,7 +125,7 @@ export const KOREA_MAP_MARKUP = `
           <div class="lnb-nav-list" role="tablist" aria-label="권역 선택">
             <button type="button" class="lnb-nav-item map-filter-pill active" data-filter="all">
               <span class="lnb-nav-label">전국 전체</span>
-              <span class="lnb-nav-count">15</span>
+              <span class="lnb-nav-count">16</span>
             </button>
             <button type="button" class="lnb-nav-item map-filter-pill" data-filter="capital">
               <span class="lnb-nav-label">수도권 (서울·인천·송도·수원)</span>
@@ -144,8 +144,8 @@ export const KOREA_MAP_MARKUP = `
               <span class="lnb-nav-count">3</span>
             </button>
             <button type="button" class="lnb-nav-item map-filter-pill" data-filter="gangwon">
-              <span class="lnb-nav-label">강원권 (강릉·원주)</span>
-              <span class="lnb-nav-count">1</span>
+              <span class="lnb-nav-label">강원권 (강릉·영월)</span>
+              <span class="lnb-nav-count">2</span>
             </button>
             <button type="button" class="lnb-nav-item map-filter-pill" data-filter="jeju">
               <span class="lnb-nav-label">제주권</span>
@@ -572,6 +572,16 @@ export const KOREA_MAP_MARKUP = `
             <g class="city-label-banner" transform="translate(14, 4)">
               <rect class="pin-banner-bg" x="0" y="-10" width="76" height="19" rx="4" stroke="#8b5cf6" stroke-width="1"/>
               <text class="pin-banner-text" x="8" y="3" font-size="10" font-weight="600">🌲 강릉시</text>
+            </g>
+          </g>
+
+          <!-- 12B. YEONGWOL, GANGWON (37.18N, 128.46E -> 469, 579) -->
+          <g class="map-city-pin" data-city-id="yeongwol" transform="translate(469, 579)" cursor="pointer">
+            <circle cx="0" cy="0" r="5.8" fill="#14b8a6"/>
+            <circle cx="0" cy="0" r="2.6" fill="#ffffff"/>
+            <g class="city-label-banner" transform="translate(14, 4)">
+              <rect class="pin-banner-bg" x="0" y="-10" width="76" height="19" rx="4" stroke="#14b8a6" stroke-width="1"/>
+              <text class="pin-banner-text" x="8" y="3" font-size="10" font-weight="600">🌌 영월군</text>
             </g>
           </g>
 
